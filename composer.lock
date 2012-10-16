@@ -1,5 +1,5 @@
 {
-    "hash": "308473d073eea18aa0255b11a01ee1f1",
+    "hash": "679ef58332045eb32a3eaba18fca4351",
     "packages": [
         {
             "name": "eloquent/enumeration",
@@ -46,6 +46,54 @@
                 "enumeration",
                 "set",
                 "class"
+            ]
+        },
+        {
+            "name": "icecave/isolator",
+            "version": "2.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/IcecaveStudios/isolator.git",
+                "reference": "2.1.0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/IcecaveStudios/isolator/zipball/2.1.0",
+                "reference": "2.1.0",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "require-dev": {
+                "phake/phake": "1.*"
+            },
+            "time": "2012-08-12 03:37:39",
+            "type": "library",
+            "installation-source": "dist",
+            "autoload": {
+                "psr-0": {
+                    "Icecave\\Isolator": "lib"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "James Harris",
+                    "email": "james.harris@icecave.com.au"
+                }
+            ],
+            "description": "Mock out calls to built-in PHP functions.",
+            "homepage": "https://github.com/IcecaveStudios/isolator",
+            "keywords": [
+                "phpunit",
+                "test",
+                "mock",
+                "fake",
+                "unit",
+                "phake"
             ]
         }
     ],
@@ -99,54 +147,6 @@
                 "errorexception",
                 "fault",
                 "failure"
-            ]
-        },
-        {
-            "name": "icecave/isolator",
-            "version": "2.1.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/IcecaveStudios/isolator.git",
-                "reference": "2.1.0"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://github.com/IcecaveStudios/isolator/zipball/2.1.0",
-                "reference": "2.1.0",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.0"
-            },
-            "require-dev": {
-                "phake/phake": "1.*"
-            },
-            "time": "2012-08-12 03:37:39",
-            "type": "library",
-            "installation-source": "dist",
-            "autoload": {
-                "psr-0": {
-                    "Icecave\\Isolator": "lib"
-                }
-            },
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "James Harris",
-                    "email": "james.harris@icecave.com.au"
-                }
-            ],
-            "description": "Mock out calls to built-in PHP functions.",
-            "homepage": "https://github.com/IcecaveStudios/isolator",
-            "keywords": [
-                "phpunit",
-                "test",
-                "mock",
-                "fake",
-                "unit",
-                "phake"
             ]
         },
         {
