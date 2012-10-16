@@ -14,7 +14,8 @@
     "require": {
         "php": ">=5.3.0",
         "eloquent/enumeration": "3.*",
-        "icecave/isolator": "2.*"
+        "icecave/isolator": "2.*",
+        "justinrainbow/json-schema": "*"
     },
     "require-dev": {
         "eloquent/asplode": "1.*",

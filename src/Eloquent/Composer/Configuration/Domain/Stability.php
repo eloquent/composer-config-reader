@@ -11,7 +11,7 @@
 
 // @codeCoverageIgnoreStart
 
-namespace Eloquent\Composer\Configuration;
+namespace Eloquent\Composer\Configuration\Domain;
 
 use Eloquent\Enumeration\Enumeration;
 

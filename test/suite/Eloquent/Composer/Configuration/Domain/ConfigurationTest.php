@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Eloquent\Composer\Configuration;
+namespace Eloquent\Composer\Configuration\Domain;
 
 use Phake;
 use PHPUnit_Framework_TestCase;
