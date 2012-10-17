@@ -41,7 +41,7 @@ class ConfigurationTest extends PHPUnit_Framework_TestCase
             array('doom', 'splat'),
             'ping',
             $this->_time,
-            'pong',
+            array('pong', 'prong'),
             $this->_authors,
             $this->_support,
             array('pang' => 'peng'),
@@ -50,7 +50,7 @@ class ConfigurationTest extends PHPUnit_Framework_TestCase
             array('pep' => 'pup'),
             array('bat' => 'bet'),
             array('bit' => 'bot'),
-            array('but' => 'tat'),
+            array('but' => array('tat', 'tart')),
             array('tet', 'tit'),
             array('tot', 'tut'),
             array('mat', 'met'),
@@ -74,7 +74,7 @@ class ConfigurationTest extends PHPUnit_Framework_TestCase
         $this->assertSame(array('doom', 'splat'), $this->_configuration->keywords());
         $this->assertSame('ping', $this->_configuration->homepage());
         $this->assertSame($this->_time, $this->_configuration->time());
-        $this->assertSame('pong', $this->_configuration->license());
+        $this->assertSame(array('pong', 'prong'), $this->_configuration->license());
         $this->assertSame($this->_authors, $this->_configuration->authors());
         $this->assertSame($this->_support, $this->_configuration->support());
         $this->assertSame(array('pang' => 'peng'), $this->_configuration->dependencies());
@@ -83,7 +83,7 @@ class ConfigurationTest extends PHPUnit_Framework_TestCase
         $this->assertSame(array('pep' => 'pup'), $this->_configuration->replace());
         $this->assertSame(array('bat' => 'bet'), $this->_configuration->provide());
         $this->assertSame(array('bit' => 'bot'), $this->_configuration->suggest());
-        $this->assertSame(array('but' => 'tat'), $this->_configuration->autoloadPSR0());
+        $this->assertSame(array('but' => array('tat', 'tart')), $this->_configuration->autoloadPSR0());
         $this->assertSame(array('tet', 'tit'), $this->_configuration->autoloadClassmap());
         $this->assertSame(array('tot', 'tut'), $this->_configuration->autoloadFiles());
         $this->assertSame(array('mat', 'met'), $this->_configuration->includePath());
@@ -108,7 +108,7 @@ class ConfigurationTest extends PHPUnit_Framework_TestCase
         $this->assertSame(array(), $configuration->keywords());
         $this->assertNull($configuration->homepage());
         $this->assertNull($configuration->time());
-        $this->assertNull($configuration->license());
+        $this->assertSame(array(), $configuration->license());
         $this->assertSame(array(), $configuration->authors());
         $this->assertInstanceOf(__NAMESPACE__.'\SupportInformation', $configuration->support());
         $this->assertSame(array(), $configuration->dependencies());
@@ -143,6 +143,7 @@ class ConfigurationTest extends PHPUnit_Framework_TestCase
     {
         $this->assertSame(array(
             'tat',
+            'tart',
             'tet',
             'tit',
             'tot',

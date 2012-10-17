@@ -16,15 +16,19 @@ class Repository
     /**
      * @param string $type
      * @param string|null $url
-     * @param array<string,mixed> $options
+     * @param array<string,mixed>|null $options
      * @param mixed $rawData
      */
     public function __construct(
         $type,
         $url = null,
-        array $options = array(),
+        array $options = null,
         $rawData = null
     ) {
+        if (null === $options) {
+            $options = array();
+        }
+
         $this->type = $type;
         $this->url = $url;
         $this->options = $options;

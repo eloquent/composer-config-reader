@@ -9,8 +9,6 @@
  * file that was distributed with this source code.
  */
 
-// @codeCoverageIgnoreStart
-
 namespace Eloquent\Composer\Configuration\Domain;
 
 use Eloquent\Enumeration\Enumeration;
@@ -20,6 +18,16 @@ final class Stability extends Enumeration
     const DEV = 'dev';
     const ALPHA = 'alpha';
     const BETA = 'beta';
-    const RC = 'RC';
+    const RC = 'rc';
     const STABLE = 'stable';
+
+    /**
+     * @param scalar $value
+     *
+     * @return Stability
+     */
+    public static final function instanceByValueIgnoreCase($value)
+    {
+        return parent::instanceByValue(mb_strtolower($value));
+    }
 }

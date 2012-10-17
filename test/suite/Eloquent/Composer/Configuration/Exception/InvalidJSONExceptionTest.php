@@ -16,27 +16,47 @@ use PHPUnit_Framework_TestCase;
 
 class InvalidJSONExceptionTest extends PHPUnit_Framework_TestCase
 {
-    public function testConstructor()
+    public function exceptionData()
     {
-        $errors = array(
+        return array(
             array(
-                'property' => 'foo',
-                'message' => 'bar',
+                "Invalid JSON in Composer configuration at '/foo/bar': The maximum stack depth has been exceeded.",
+                JSON_ERROR_DEPTH
             ),
             array(
-                'property' => 'baz',
-                'message' => 'qux',
+                "Invalid JSON in Composer configuration at '/foo/bar': Invalid or malformed JSON.",
+                JSON_ERROR_STATE_MISMATCH
+            ),
+            array(
+                "Invalid JSON in Composer configuration at '/foo/bar': Control character error, possibly incorrectly encoded.",
+                JSON_ERROR_CTRL_CHAR
+            ),
+            array(
+                "Invalid JSON in Composer configuration at '/foo/bar': Syntax error.",
+                JSON_ERROR_SYNTAX
+            ),
+            array(
+                "Invalid JSON in Composer configuration at '/foo/bar': Malformed UTF-8 characters, possibly incorrectly encoded.",
+                JSON_ERROR_UTF8
+            ),
+            array(
+                "Invalid JSON in Composer configuration at '/foo/bar': Unknown error.",
+                'baz'
             ),
         );
-        $previous = Phake::mock('Exception');
-        $exception = new InvalidJSONException($errors, $previous);
-        $expectedMessage = <<<'EOD'
-The supplied JSON is invalid:
- * [foo] bar
- * [baz] qux
-EOD;
+    }
 
-        $this->assertSame($errors, $exception->errors());
+    /**
+     * @dataProvider exceptionData
+     */
+    public function testConstructor($expectedMessage, $jsonErrorCode)
+    {
+        $path = '/foo/bar';
+        $previous = Phake::mock('Exception');
+        $exception = new InvalidJSONException($path, $jsonErrorCode, $previous);
+
+        $this->assertSame($path, $exception->path());
+        $this->assertSame($jsonErrorCode, $exception->jsonErrorCode());
         $this->assertSame($expectedMessage, $exception->getMessage());
         $this->assertSame(0, $exception->getCode());
         $this->assertSame($previous, $exception->getPrevious());

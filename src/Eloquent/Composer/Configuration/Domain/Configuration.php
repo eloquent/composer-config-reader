@@ -19,23 +19,23 @@ class Configuration
       * @param string|null $name
       * @param string|null $description
       * @param string|null $version
-      * @param string $type
-      * @param array<string> $keywords
+      * @param string|null $type
+      * @param array<string>|null $keywords
       * @param string|null $homepage
       * @param DateTime|null $time
-      * @param string|null $license
-      * @param array<Author> $authors
+      * @param array<string>|null $license
+      * @param array<Author>|null $authors
       * @param SupportInformation|null $support
-      * @param array<string,string> $dependencies
-      * @param array<string,string> $devDependencies
-      * @param array<string,string> $conflict
-      * @param array<string,string> $replace
-      * @param array<string,string> $provide
-      * @param array<string,string> $suggest
-      * @param array<string,string> $autoloadPSR0
-      * @param array<string> $autoloadClassmap
-      * @param array<string> $autoloadFiles
-      * @param array<string> $includePath
+      * @param array<string,string>|null $dependencies
+      * @param array<string,string>|null $devDependencies
+      * @param array<string,string>|null $conflict
+      * @param array<string,string>|null $replace
+      * @param array<string,string>|null $provide
+      * @param array<string,string>|null $suggest
+      * @param array<string,array<string>>|null $autoloadPSR0
+      * @param array<string>|null $autoloadClassmap
+      * @param array<string>|null $autoloadFiles
+      * @param array<string>|null $includePath
       * @param string|null $targetDir
       * @param Stability|null $minimumStability
       * @param array<Repository> $repositories
@@ -49,43 +49,91 @@ class Configuration
         $name = null,
         $description = null,
         $version = null,
-        $type = 'library',
-        array $keywords = array(),
+        $type = null,
+        array $keywords = null,
         $homepage = null,
         DateTime $time = null,
-        $license = null,
-        array $authors = array(),
+        array $license = null,
+        array $authors = null,
         SupportInformation $support = null,
-        array $dependencies = array(),
-        array $devDependencies = array(),
-        array $conflict = array(),
-        array $replace = array(),
-        array $provide = array(),
-        array $suggest = array(),
-        array $autoloadPSR0 = array(),
-        array $autoloadClassmap = array(),
-        array $autoloadFiles = array(),
-        array $includePath = array(),
+        array $dependencies = null,
+        array $devDependencies = null,
+        array $conflict = null,
+        array $replace = null,
+        array $provide = null,
+        array $suggest = null,
+        array $autoloadPSR0 = null,
+        array $autoloadClassmap = null,
+        array $autoloadFiles = null,
+        array $includePath = null,
         $targetDir = null,
         Stability $minimumStability = null,
-        array $repositories = array(),
+        array $repositories = null,
         ProjectConfiguration $config = null,
         ScriptConfiguration $scripts = null,
         $extra = null,
-        array $bin = array(),
+        array $bin = null,
         $rawData = null
     ) {
+        if (null === $type) {
+            $type = 'library';
+        }
+        if (null === $keywords) {
+            $keywords = array();
+        }
+        if (null === $license) {
+            $license = array();
+        }
+        if (null === $authors) {
+            $authors = array();
+        }
         if (null === $support) {
             $support = new SupportInformation;
         }
+        if (null === $dependencies) {
+            $dependencies = array();
+        }
+        if (null === $devDependencies) {
+            $devDependencies = array();
+        }
+        if (null === $conflict) {
+            $conflict = array();
+        }
+        if (null === $replace) {
+            $replace = array();
+        }
+        if (null === $provide) {
+            $provide = array();
+        }
+        if (null === $suggest) {
+            $suggest = array();
+        }
+        if (null === $autoloadPSR0) {
+            $autoloadPSR0 = array();
+        }
+        if (null === $autoloadClassmap) {
+            $autoloadClassmap = array();
+        }
+        if (null === $autoloadFiles) {
+            $autoloadFiles = array();
+        }
+        if (null === $includePath) {
+            $includePath = array();
+        }
         if (null === $minimumStability) {
             $minimumStability = Stability::STABLE();
+        }
+        if (null === $repositories) {
+            $repositories = array();
         }
         if (null === $config) {
             $config = new ProjectConfiguration;
         }
         if (null === $scripts) {
             $scripts = new ScriptConfiguration;
+        }
+        if (null === $bin) {
+            $bin = array();
         }
 
         $this->name = $name;
@@ -175,7 +223,7 @@ class Configuration
     }
 
     /**
-     * @return string|null
+     * @return array<string>|null
      */
     public function license()
     {
@@ -258,7 +306,7 @@ class Configuration
     }
 
     /**
-     * @return array<string,string>
+     * @return array<string,array<string>>
      */
     public function autoloadPSR0()
     {
@@ -294,8 +342,13 @@ class Configuration
      */
     public function allSourcePaths()
     {
+        $autoloadPSR0Paths = array();
+        foreach ($this->autoloadPSR0() as $namespace => $paths) {
+          $autoloadPSR0Paths = array_merge($autoloadPSR0Paths, $paths);
+        }
+
         return array_merge(
-            array_values($this->autoloadPSR0()),
+            $autoloadPSR0Paths,
             $this->autoloadClassmap(),
             $this->autoloadFiles(),
             $this->includePath()

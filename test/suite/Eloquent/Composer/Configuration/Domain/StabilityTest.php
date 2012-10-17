@@ -28,4 +28,11 @@ class StabilityTest extends PHPUnit_Framework_TestCase
             Stability::multitonInstances()
         );
     }
+
+    public function testInstanceByValueIgnoreCase()
+    {
+        $this->assertSame(Stability::DEV(), Stability::instanceByValueIgnoreCase('dev'));
+        $this->assertSame(Stability::DEV(), Stability::instanceByValueIgnoreCase('Dev'));
+        $this->assertSame(Stability::DEV(), Stability::instanceByValueIgnoreCase('DEV'));
+    }
 }

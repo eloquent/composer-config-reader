@@ -1,7 +1,7 @@
 {
     "name": "eloquent/composer-config-reader",
     "description": "A light-weight component for reading Composer configuration files.",
-    "keywords": ["composer","configuration","reader","parser"],
+    "keywords": ["composer", "configuration", "reader", "parser"],
     "homepage": "https://github.com/eloquent/composer-config-reader",
     "license": "MIT",
     "authors": [

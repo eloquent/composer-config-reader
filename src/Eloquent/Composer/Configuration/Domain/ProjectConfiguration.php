@@ -14,21 +14,37 @@ namespace Eloquent\Composer\Configuration\Domain;
 class ProjectConfiguration
 {
     /**
-     * @param string $vendorDir
-     * @param string $binDir
-     * @param integer $processTimeout
-     * @param boolean $notifyOnInstall
-     * @param array<string> $githubProtocols
+     * @param string|null $vendorDir
+     * @param string|null $binDir
+     * @param integer|null $processTimeout
+     * @param boolean|null $notifyOnInstall
+     * @param array<string>|null $githubProtocols
      * @param mixed $rawData
      */
     public function __construct(
-        $vendorDir = 'vendor',
-        $binDir = 'vendor/bin',
-        $processTimeout = 300,
-        $notifyOnInstall = true,
-        array $githubProtocols = array('git', 'https', 'http'),
+        $vendorDir = null,
+        $binDir = null,
+        $processTimeout = null,
+        $notifyOnInstall = null,
+        array $githubProtocols = null,
         $rawData = null
     ) {
+        if (null === $vendorDir) {
+            $vendorDir = 'vendor';
+        }
+        if (null === $binDir) {
+            $binDir = 'vendor/bin';
+        }
+        if (null === $processTimeout) {
+            $processTimeout = 300;
+        }
+        if (null === $notifyOnInstall) {
+            $notifyOnInstall = true;
+        }
+        if (null === $githubProtocols) {
+            $githubProtocols = array('git', 'https', 'http');
+        }
+
         $this->vendorDir = $vendorDir;
         $this->binDir = $binDir;
         $this->processTimeout = $processTimeout;

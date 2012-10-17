@@ -14,52 +14,73 @@ namespace Eloquent\Composer\Configuration\Exception;
 use Exception;
 use RuntimeException;
 
-final class InvalidJSONException extends RuntimeException
+final class InvalidJSONException extends RuntimeException implements ConfigurationException
 {
     /**
-     * @param array<array<string>> $errors
+     * @param string $path
+     * @param integer $jsonErrorCode
      * @param Exception|null $previous
      */
-    public function __construct(array $errors, Exception $previous = null)
+    public function __construct($path, $jsonErrorCode, Exception $previous = null)
     {
-        $this->errors = $errors;
+        $this->path = $path;
+        $this->jsonErrorCode = $jsonErrorCode;
+        switch ($jsonErrorCode) {
+            case JSON_ERROR_DEPTH:
+                $this->jsonErrorMessage = 'The maximum stack depth has been exceeded.';
+                break;
+            case JSON_ERROR_STATE_MISMATCH:
+                $this->jsonErrorMessage = 'Invalid or malformed JSON.';
+                break;
+            case JSON_ERROR_CTRL_CHAR:
+                $this->jsonErrorMessage = 'Control character error, possibly incorrectly encoded.';
+                break;
+            case JSON_ERROR_SYNTAX:
+                $this->jsonErrorMessage = 'Syntax error.';
+                break;
+            case JSON_ERROR_UTF8:
+                $this->jsonErrorMessage = 'Malformed UTF-8 characters, possibly incorrectly encoded.';
+                break;
+            default:
+                $this->jsonErrorMessage = 'Unknown error.';
+        }
 
         parent::__construct(
-            $this->buildMessage($errors),
+            sprintf(
+                "Invalid JSON in Composer configuration at '%s': %s",
+                $this->path(),
+                $this->jsonErrorMessage()
+            ),
             0,
             $previous
         );
     }
 
     /**
-     * @return array<array<string>>
+     * @return string
      */
-    public function errors()
+    public function path()
     {
-        return $this->errors;
+        return $this->path;
     }
 
     /**
-     * @param array<array<string>> $errors
-     *
-     * @return string
+     * @return integer
      */
-    protected function buildMessage(array $errors)
+    public function jsonErrorCode()
     {
-        $errorList = array();
-        foreach ($errors as $error) {
-            $errorList[] = sprintf(
-                ' * [%s] %s',
-                $error['property'],
-                $error['message']
-            );
-        }
-
-        return sprintf(
-            "The supplied JSON is invalid:\n%s",
-            implode("\n", $errorList)
-        );
+        return $this->jsonErrorCode;
     }
 
-    private $errors;
+    /**
+     * @return string
+     */
+    public function jsonErrorMessage()
+    {
+        return $this->jsonErrorMessage;
+    }
+
+    private $path;
+    private $jsonErrorCode;
+    private $jsonErrorMessage;
 }

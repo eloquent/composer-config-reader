@@ -20,6 +20,7 @@ class ConfigurationValidator
     /**
      * @param stdClass|null $schema
      * @param Validator|null $validator
+     * @param Isolator|null $isolator
      */
     public function __construct(
         stdClass $schema = null,
@@ -50,7 +51,7 @@ class ConfigurationValidator
     /**
      * @param mixed $data
      *
-     * @throws Exception\InvalidJSONException
+     * @throws Exception\InvalidConfigurationException
      */
     public function validate($data)
     {
@@ -58,7 +59,7 @@ class ConfigurationValidator
         $this->validator->check($data, $this->schema());
 
         if (!$this->validator->isValid()) {
-            throw new Exception\InvalidJSONException(
+            throw new Exception\InvalidConfigurationException(
                 $this->validator->getErrors()
             );
         }

@@ -113,12 +113,12 @@ class ConfigurationValidatorTest extends PHPUnit_Framework_TestCase
         $error = null;
         try {
             $this->_validator->validate($data);
-        } catch (Exception\InvalidJSONException $error) {
+        } catch (Exception\InvalidConfigurationException $error) {
             // verified below
         }
 
         $this->assertInstanceOf(
-            __NAMESPACE__.'\Exception\InvalidJSONException',
+            __NAMESPACE__.'\Exception\InvalidConfigurationException',
             $error
         );
         $this->assertSame($this->_errors, $error->errors());

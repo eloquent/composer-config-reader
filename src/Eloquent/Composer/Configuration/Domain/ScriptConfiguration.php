@@ -14,31 +14,62 @@ namespace Eloquent\Composer\Configuration\Domain;
 class ScriptConfiguration
 {
     /**
-     * @param array<string> $preInstallCmd
-     * @param array<string> $postInstallCmd
-     * @param array<string> $preUpdateCmd
-     * @param array<string> $postUpdateCmd
-     * @param array<string> $prePackageInstall
-     * @param array<string> $postPackageInstall
-     * @param array<string> $prePackageUpdate
-     * @param array<string> $postPackageUpdate
-     * @param array<string> $prePackageUninstall
-     * @param array<string> $postPackageUninstall
+     * @param array<string>|null $preInstallCmd
+     * @param array<string>|null $postInstallCmd
+     * @param array<string>|null $preUpdateCmd
+     * @param array<string>|null $postUpdateCmd
+     * @param array<string>|null $prePackageInstall
+     * @param array<string>|null $postPackageInstall
+     * @param array<string>|null $prePackageUpdate
+     * @param array<string>|null $postPackageUpdate
+     * @param array<string>|null $prePackageUninstall
+     * @param array<string>|null $postPackageUninstall
      * @param mixed $rawData
      */
     public function __construct(
-        array $preInstallCmd = array(),
-        array $postInstallCmd = array(),
-        array $preUpdateCmd = array(),
-        array $postUpdateCmd = array(),
-        array $prePackageInstall = array(),
-        array $postPackageInstall = array(),
-        array $prePackageUpdate = array(),
-        array $postPackageUpdate = array(),
-        array $prePackageUninstall = array(),
-        array $postPackageUninstall = array(),
+        array $preInstallCmd = null,
+        array $postInstallCmd = null,
+        array $preUpdateCmd = null,
+        array $postUpdateCmd = null,
+        array $prePackageInstall = null,
+        array $postPackageInstall = null,
+        array $prePackageUpdate = null,
+        array $postPackageUpdate = null,
+        array $prePackageUninstall = null,
+        array $postPackageUninstall = null,
         $rawData = null
     ) {
+        if (null === $preInstallCmd) {
+            $preInstallCmd = array();
+        }
+        if (null === $postInstallCmd) {
+            $postInstallCmd = array();
+        }
+        if (null === $preUpdateCmd) {
+            $preUpdateCmd = array();
+        }
+        if (null === $postUpdateCmd) {
+            $postUpdateCmd = array();
+        }
+        if (null === $prePackageInstall) {
+            $prePackageInstall = array();
+        }
+        if (null === $postPackageInstall) {
+            $postPackageInstall = array();
+        }
+        if (null === $prePackageUpdate) {
+            $prePackageUpdate = array();
+        }
+        if (null === $postPackageUpdate) {
+            $postPackageUpdate = array();
+        }
+        if (null === $prePackageUninstall) {
+            $prePackageUninstall = array();
+        }
+        if (null === $postPackageUninstall) {
+            $postPackageUninstall = array();
+        }
+
         $this->preInstallCmd = $preInstallCmd;
         $this->postInstallCmd = $postInstallCmd;
         $this->preUpdateCmd = $preUpdateCmd;

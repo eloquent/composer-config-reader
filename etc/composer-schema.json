@@ -1,12 +1,12 @@
 {
     "name": "Package",
     "type": "object",
-    "additionalProperties": false,
+    "additionalProperties": true,
     "properties": {
         "name": {
             "type": "string",
             "description": "Package name, including 'vendor-name/' prefix.",
-            "required": true
+            "required": false
         },
         "type": {
             "description": "Package type, either 'library' for common packages, 'composer-installer' for custom installers, 'metapackage' for empty packages, or a custom type defined by whatever project this package applies to.",
@@ -19,7 +19,7 @@
         "description": {
             "type": "string",
             "description": "Short package description.",
-            "required": true
+            "required": false
         },
         "keywords": {
             "type": "array",
