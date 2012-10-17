@@ -89,7 +89,6 @@ class ConfigurationValidatorTest extends PHPUnit_Framework_TestCase
         $this->_validator->validate($data);
 
         Phake::inOrder(
-            Phake::verify($this->_innerValidator)->reset(),
             Phake::verify($this->_innerValidator)->check(
                 $this->identicalTo($data),
                 $this->identicalTo($this->_schema)
@@ -123,7 +122,6 @@ class ConfigurationValidatorTest extends PHPUnit_Framework_TestCase
         );
         $this->assertSame($this->_errors, $error->errors());
         Phake::inOrder(
-            Phake::verify($this->_innerValidator)->reset(),
             Phake::verify($this->_innerValidator)->check(
                 $this->identicalTo($data),
                 $this->identicalTo($this->_schema)

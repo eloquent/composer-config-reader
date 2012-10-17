@@ -11,6 +11,7 @@
 
 namespace Eloquent\Composer\Configuration;
 
+use Eloquent\Liberator\Liberator;
 use Icecave\Isolator\Isolator;
 use JsonSchema\Validator;
 use stdClass;
@@ -55,7 +56,7 @@ class ConfigurationValidator
      */
     public function validate($data)
     {
-        $this->validator->reset();
+        Liberator::liberate($this->validator)->errors = array();
         $this->validator->check($data, $this->schema());
 
         if (!$this->validator->isValid()) {

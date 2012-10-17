@@ -437,12 +437,12 @@ EOD;
             array(
                 'php' => '>=5.3.0',
                 'eloquent/enumeration' => '3.*',
+                'eloquent/liberator' => '1.*',
                 'icecave/isolator' => '2.*',
                 'justinrainbow/json-schema' => '1.*',
             ),
             array(
                 'eloquent/asplode' => '1.*',
-                'eloquent/liberator' => '1.*',
                 'phake/phake' => '1.*'
             ),
             null,
