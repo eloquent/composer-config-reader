@@ -247,12 +247,23 @@ class ConfigurationReader
      */
     protected function createRepository(ObjectAccess $repository)
     {
-        return new Domain\Repository(
-            $repository->get('type'),
-            $repository->getDefault('url'),
-            $this->objectToArray($repository->getDefault('options')),
-            $repository->data()
-        );
+        $type = $repository->get('type');
+        if ('package' === $type) {
+            $repository = new Domain\PackageRepository(
+                $this->objectToArray($repository->get('package')),
+                $this->objectToArray($repository->getDefault('options')),
+                $repository->data()
+            );
+        } else {
+            $repository = new Domain\Repository(
+                $type,
+                $repository->getDefault('url'),
+                $this->objectToArray($repository->getDefault('options')),
+                $repository->data()
+            );
+        }
+
+        return $repository;
     }
 
     /**

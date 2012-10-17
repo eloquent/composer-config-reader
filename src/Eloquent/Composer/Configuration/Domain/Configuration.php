@@ -38,7 +38,7 @@ class Configuration
       * @param array<string>|null $includePath
       * @param string|null $targetDir
       * @param Stability|null $minimumStability
-      * @param array<Repository> $repositories
+      * @param array<AbstractRepository> $repositories
       * @param ProjectConfiguration|null $config
       * @param ScriptConfiguration|null $scripts
       * @param mixed $extra
@@ -372,7 +372,7 @@ class Configuration
     }
 
     /**
-     * @return array<Repository>
+     * @return array<AbstractRepository>
      */
     public function repositories()
     {

@@ -11,36 +11,34 @@
 
 namespace Eloquent\Composer\Configuration\Domain;
 
-class Repository extends AbstractRepository
+class PackageRepository extends AbstractRepository
 {
     /**
-     * @param string $type
-     * @param string|null $url
+     * @param array $packageData
      * @param array<string,mixed>|null $options
      * @param mixed $rawData
      */
     public function __construct(
-        $type,
-        $url = null,
+        array $packageData,
         array $options = null,
         $rawData = null
     ) {
         parent::__construct(
-            $type,
+            'package',
             $options,
             $rawData
         );
 
-        $this->url = $url;
+        $this->packageData = $packageData;
     }
 
     /**
-     * @return string|null
+     * @return array
      */
-    public function url()
+    public function packageData()
     {
-        return $this->url;
+        return $this->packageData;
     }
 
-    private $url;
+    private $packageData;
 }
