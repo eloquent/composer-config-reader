@@ -50,7 +50,10 @@ class ConfigurationTest extends PHPUnit_Framework_TestCase
             array('pep' => 'pup'),
             array('bat' => 'bet'),
             array('bit' => 'bot'),
-            array('but' => array('tat', 'tart')),
+            array(
+                'but' => array('tat', 'tart'),
+                'wert' => array('wurt'),
+            ),
             array('tet', 'tit'),
             array('tot', 'tut'),
             array('mat', 'met'),
@@ -83,7 +86,10 @@ class ConfigurationTest extends PHPUnit_Framework_TestCase
         $this->assertSame(array('pep' => 'pup'), $this->_configuration->replace());
         $this->assertSame(array('bat' => 'bet'), $this->_configuration->provide());
         $this->assertSame(array('bit' => 'bot'), $this->_configuration->suggest());
-        $this->assertSame(array('but' => array('tat', 'tart')), $this->_configuration->autoloadPSR0());
+        $this->assertSame(array(
+            'but' => array('tat', 'tart'),
+            'wert' => array('wurt'),
+        ), $this->_configuration->autoloadPSR0());
         $this->assertSame(array('tet', 'tit'), $this->_configuration->autoloadClassmap());
         $this->assertSame(array('tot', 'tut'), $this->_configuration->autoloadFiles());
         $this->assertSame(array('mat', 'met'), $this->_configuration->includePath());
@@ -139,11 +145,21 @@ class ConfigurationTest extends PHPUnit_Framework_TestCase
         ), $this->_configuration->allDependencies());
     }
 
+    public function testAllPSR0SourcePaths()
+    {
+        $this->assertSame(array(
+            'tat',
+            'tart',
+            'wurt',
+        ), $this->_configuration->allPSR0SourcePaths());
+    }
+
     public function testAllSourcePaths()
     {
         $this->assertSame(array(
             'tat',
             'tart',
+            'wurt',
             'tet',
             'tit',
             'tot',

@@ -340,15 +340,23 @@ class Configuration
     /**
      * @return array<string>
      */
-    public function allSourcePaths()
+    public function allPSR0SourcePaths()
     {
         $autoloadPSR0Paths = array();
         foreach ($this->autoloadPSR0() as $namespace => $paths) {
           $autoloadPSR0Paths = array_merge($autoloadPSR0Paths, $paths);
         }
 
+        return $autoloadPSR0Paths;
+    }
+
+    /**
+     * @return array<string>
+     */
+    public function allSourcePaths()
+    {
         return array_merge(
-            $autoloadPSR0Paths,
+            $this->allPSR0SourcePaths(),
             $this->autoloadClassmap(),
             $this->autoloadFiles(),
             $this->includePath()
