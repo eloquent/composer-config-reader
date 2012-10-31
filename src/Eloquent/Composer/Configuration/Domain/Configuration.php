@@ -15,6 +15,8 @@ use DateTime;
 
 class Configuration
 {
+    const NAME_SEPARATOR = '/';
+
     /**
       * @param string|null $name
       * @param string|null $description
@@ -172,6 +174,40 @@ class Configuration
     public function name()
     {
         return $this->name;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function projectName()
+    {
+        $name = $this->name();
+        if (null === $name) {
+            return null;
+        }
+
+        $atoms = explode(static::NAME_SEPARATOR, $name);
+
+        return array_pop($atoms);
+    }
+
+    /**
+     * @return string|null
+     */
+    public function vendorName()
+    {
+        $name = $this->name();
+        if (null === $name) {
+            return null;
+        }
+
+        $atoms = explode(static::NAME_SEPARATOR, $name);
+        array_pop($atoms);
+        if (count($atoms) < 1) {
+            return null;
+        }
+
+        return implode(static::NAME_SEPARATOR, $atoms);
     }
 
     /**

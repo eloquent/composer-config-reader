@@ -137,6 +137,35 @@ class ConfigurationTest extends PHPUnit_Framework_TestCase
         $this->assertNull($configuration->rawData());
     }
 
+    public function testProjectName()
+    {
+        $configuration = new Configuration('foo/bar/baz');
+
+        $this->assertSame('baz', $configuration->projectName());
+
+
+        $configuration = new Configuration;
+
+        $this->assertNull($configuration->projectName());
+    }
+
+    public function testVendorName()
+    {
+        $configuration = new Configuration('foo/bar/baz');
+
+        $this->assertSame('foo/bar', $configuration->vendorName());
+
+
+        $configuration = new Configuration;
+
+        $this->assertNull($configuration->vendorName());
+
+
+        $configuration = new Configuration('foo');
+
+        $this->assertNull($configuration->vendorName());
+    }
+
     public function testAllDependencies()
     {
         $this->assertSame(array(
