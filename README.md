@@ -61,6 +61,8 @@ information available in the [Composer schema](http://getcomposer.org/doc/04-sch
 A number of helper methods exist on the main configuration object to simplify
 the process of extracting useful information:
 
+* `projectName()`: The project name without the vendor prefix.
+* `vendorName()`: The vendor name without the project suffix.
 * `allDependencies()`: Combines `require` and `require-dev` into a single array.
 * `allPSR0SourcePaths()`: A flat array of all PSR-0-compliant source paths.
 * `allSourcePaths()`: A flat array of all source paths.
