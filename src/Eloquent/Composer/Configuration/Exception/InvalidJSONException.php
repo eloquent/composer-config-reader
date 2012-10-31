@@ -17,8 +17,8 @@ use RuntimeException;
 final class InvalidJSONException extends RuntimeException implements ConfigurationException
 {
     /**
-     * @param string $path
-     * @param integer $jsonErrorCode
+     * @param string         $path
+     * @param integer        $jsonErrorCode
      * @param Exception|null $previous
      */
     public function __construct($path, $jsonErrorCode, Exception $previous = null)

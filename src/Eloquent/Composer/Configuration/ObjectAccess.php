@@ -57,7 +57,7 @@ class ObjectAccess
 
     /**
      * @param string $property
-     * @param mixed $default
+     * @param mixed  $default
      *
      * @return mixed
      */

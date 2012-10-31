@@ -26,7 +26,7 @@ final class Stability extends Enumeration
      *
      * @return Stability
      */
-    public static final function instanceByValueIgnoreCase($value)
+    final public static function instanceByValueIgnoreCase($value)
     {
         return parent::instanceByValue(mb_strtolower($value));
     }

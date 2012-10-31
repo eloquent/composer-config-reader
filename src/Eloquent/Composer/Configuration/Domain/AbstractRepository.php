@@ -14,9 +14,9 @@ namespace Eloquent\Composer\Configuration\Domain;
 abstract class AbstractRepository
 {
     /**
-     * @param string $type
+     * @param string                   $type
      * @param array<string,mixed>|null $options
-     * @param mixed $rawData
+     * @param mixed                    $rawData
      */
     public function __construct(
         $type,

@@ -19,9 +19,9 @@ use stdClass;
 class ConfigurationValidator
 {
     /**
-     * @param stdClass|null $schema
+     * @param stdClass|null  $schema
      * @param Validator|null $validator
-     * @param Isolator|null $isolator
+     * @param Isolator|null  $isolator
      */
     public function __construct(
         stdClass $schema = null,

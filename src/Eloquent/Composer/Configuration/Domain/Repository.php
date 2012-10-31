@@ -14,10 +14,10 @@ namespace Eloquent\Composer\Configuration\Domain;
 class Repository extends AbstractRepository
 {
     /**
-     * @param string $type
-     * @param string|null $url
+     * @param string                   $type
+     * @param string|null              $url
      * @param array<string,mixed>|null $options
-     * @param mixed $rawData
+     * @param mixed                    $rawData
      */
     public function __construct(
         $type,

@@ -18,7 +18,7 @@ final class InvalidConfigurationException extends RuntimeException implements Co
 {
     /**
      * @param array<array<string>> $errors
-     * @param Exception|null $previous
+     * @param Exception|null       $previous
      */
     public function __construct(array $errors, Exception $previous = null)
     {

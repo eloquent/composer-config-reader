@@ -17,7 +17,7 @@ use RuntimeException;
 final class ConfigurationReadException extends RuntimeException implements ConfigurationException
 {
     /**
-     * @param string $path
+     * @param string         $path
      * @param Exception|null $previous
      */
     public function __construct($path, Exception $previous = null)

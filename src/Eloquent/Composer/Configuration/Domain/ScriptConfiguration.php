@@ -24,7 +24,7 @@ class ScriptConfiguration
      * @param array<string>|null $postPackageUpdate
      * @param array<string>|null $prePackageUninstall
      * @param array<string>|null $postPackageUninstall
-     * @param mixed $rawData
+     * @param mixed              $rawData
      */
     public function __construct(
         array $preInstallCmd = null,

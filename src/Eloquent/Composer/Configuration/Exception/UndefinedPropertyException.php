@@ -17,7 +17,7 @@ use RuntimeException;
 final class UndefinedPropertyException extends RuntimeException implements ConfigurationException
 {
     /**
-     * @param string $property
+     * @param string         $property
      * @param Exception|null $previous
      */
     public function __construct($property, Exception $previous = null)

@@ -14,12 +14,12 @@ namespace Eloquent\Composer\Configuration\Domain;
 class ProjectConfiguration
 {
     /**
-     * @param string|null $vendorDir
-     * @param string|null $binDir
-     * @param integer|null $processTimeout
-     * @param boolean|null $notifyOnInstall
+     * @param string|null        $vendorDir
+     * @param string|null        $binDir
+     * @param integer|null       $processTimeout
+     * @param boolean|null       $notifyOnInstall
      * @param array<string>|null $githubProtocols
-     * @param mixed $rawData
+     * @param mixed              $rawData
      */
     public function __construct(
         $vendorDir = null,

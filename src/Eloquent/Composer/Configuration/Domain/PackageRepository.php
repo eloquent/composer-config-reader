@@ -14,9 +14,9 @@ namespace Eloquent\Composer\Configuration\Domain;
 class PackageRepository extends AbstractRepository
 {
     /**
-     * @param array $packageData
+     * @param array                    $packageData
      * @param array<string,mixed>|null $options
-     * @param mixed $rawData
+     * @param mixed                    $rawData
      */
     public function __construct(
         array $packageData,

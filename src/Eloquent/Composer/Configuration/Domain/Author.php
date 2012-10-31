@@ -14,11 +14,11 @@ namespace Eloquent\Composer\Configuration\Domain;
 class Author
 {
     /**
-     * @param string $name
+     * @param string      $name
      * @param string|null $email
      * @param string|null $homepage
      * @param string|null $role
-     * @param mixed $rawData
+     * @param mixed       $rawData
      */
     public function __construct(
         $name,

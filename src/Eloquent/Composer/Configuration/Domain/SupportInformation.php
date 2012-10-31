@@ -20,7 +20,7 @@ class SupportInformation
      * @param string|null $wiki
      * @param string|null $irc
      * @param string|null $source
-     * @param mixed $rawData
+     * @param mixed       $rawData
      */
     public function __construct(
         $email = null,

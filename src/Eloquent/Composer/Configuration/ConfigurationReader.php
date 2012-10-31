@@ -20,7 +20,7 @@ class ConfigurationReader
 {
     /**
      * @param ConfigurationValidator|null $validator
-     * @param Isolator|null $isolator
+     * @param Isolator|null               $isolator
      */
     public function __construct(
         ConfigurationValidator $validator = null,
