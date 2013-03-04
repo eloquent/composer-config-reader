@@ -2,22 +2,13 @@
 
 *A light-weight component for reading Composer configuration files.*
 
+[![Build Status]](http://travis-ci.org/eloquent/composer-config-reader)
+[![Test Coverage]](http://eloquent-software.com/composer-config-reader/artifacts/tests/coverage/)
+
 ## Installation
 
-Composer configuration reader requires PHP 5.3 or later.
-
-### With [Composer](http://getcomposer.org/)
-
-* Add 'eloquent/composer-config-reader' to the project's composer.json
-  dependencies
-* Run `composer install`
-
-### Bare installation
-
-* Clone from GitHub: `git clone git://github.com/eloquent/composer-config-reader.git`
-* Use a [PSR-0](https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-0.md)
-  compatible autoloader (namespace 'Eloquent\Composer\Configuration' in the
-  'src' directory)
+Available as [Composer](http://getcomposer.org/) package
+[eloquent/composer-config-reader](https://packagist.org/packages/eloquent/composer-config-reader).
 
 ## Usage
 
@@ -25,8 +16,6 @@ Composer configuration reader is very simple to use and a quick example should
 be self-explanatory:
 
 ````php
-<?php
-
 $reader = new Eloquent\Composer\Configuration\ConfigurationReader;
 $configuration = $reader->read('/path/to/composer.json');
 
@@ -142,13 +131,6 @@ See [Scripts](http://getcomposer.org/doc/articles/scripts.md).
 * `preInstallCmd()`: The pre-install scripts.
 * `postInstallCmd()`: The post-install scripts.
 
-## Code quality
-
-Composer configuration reader strives to attain a high level of quality. A full
-test suite is available, and code coverage is closely monitored.
-
-### Latest revision test suite results
-[![Build Status](https://secure.travis-ci.org/eloquent/composer-config-reader.png)](http://travis-ci.org/eloquent/composer-config-reader)
-
-### Latest revision test suite coverage
-<http://ci.ezzatron.com/report/composer-config-reader/coverage/>
+<!-- references -->
+[Build Status]: https://raw.github.com/eloquent/composer-config-reader/gh-pages/artifacts/images/icecave/regular/build-status.png
+[Test Coverage]: https://raw.github.com/eloquent/composer-config-reader/gh-pages/artifacts/images/icecave/regular/coverage.png

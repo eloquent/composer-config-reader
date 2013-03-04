@@ -3,7 +3,7 @@
 /*
  * This file is part of the Composer configuration reader package.
  *
- * Copyright © 2012 Erin Millard
+ * Copyright © 2013 Erin Millard
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -436,14 +436,13 @@ EOD;
             null,
             array(
                 'php' => '>=5.3.0',
-                'eloquent/enumeration' => '3.*',
-                'eloquent/liberator' => '1.*',
-                'icecave/isolator' => '2.*',
-                'justinrainbow/json-schema' => '1.*',
+                'eloquent/enumeration' => '~3',
+                'eloquent/liberator' => '~1',
+                'icecave/isolator' => '~2',
+                'justinrainbow/json-schema' => '~1',
             ),
             array(
-                'eloquent/asplode' => '1.*',
-                'phake/phake' => '1.*'
+                'icecave/archer' => '~0.2',
             ),
             null,
             null,
