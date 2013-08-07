@@ -9,17 +9,22 @@
  * file that was distributed with this source code.
  */
 
-namespace Eloquent\Composer\Configuration\Domain;
+namespace Eloquent\Composer\Configuration\Element;
 
+/**
+ * Represents configuration specific to project-type packages.
+ */
 class ProjectConfiguration
 {
     /**
-     * @param string|null        $vendorDir
-     * @param string|null        $binDir
-     * @param integer|null       $processTimeout
-     * @param boolean|null       $notifyOnInstall
-     * @param array<string>|null $githubProtocols
-     * @param mixed              $rawData
+     * Construct a new project configuration.
+     *
+     * @param string|null        $vendorDir       The vendor directory.
+     * @param string|null        $binDir          The binary executable directory.
+     * @param integer|null       $processTimeout  The process timeout.
+     * @param boolean|null       $notifyOnInstall True if Composer should notify the repository on installation.
+     * @param array<string>|null $githubProtocols The protocols to use when cloning from GitHub.
+     * @param mixed              $rawData         The raw data describing the project configuration.
      */
     public function __construct(
         $vendorDir = null,
@@ -54,7 +59,9 @@ class ProjectConfiguration
     }
 
     /**
-     * @return string
+     * Get the vendor directory.
+     *
+     * @return string The vendor directory.
      */
     public function vendorDir()
     {
@@ -62,7 +69,9 @@ class ProjectConfiguration
     }
 
     /**
-     * @return string
+     * Get the binary executable directory.
+     *
+     * @return string The binary executable directory.
      */
     public function binDir()
     {
@@ -70,7 +79,9 @@ class ProjectConfiguration
     }
 
     /**
-     * @return integer
+     * Get the process timeout.
+     *
+     * @return integer The process timeout.
      */
     public function processTimeout()
     {
@@ -78,7 +89,9 @@ class ProjectConfiguration
     }
 
     /**
-     * @return boolean
+     * Returns true if notify-on-install is enabled.
+     *
+     * @return boolean True if notify-on-install is enabled.
      */
     public function notifyOnInstall()
     {
@@ -86,7 +99,9 @@ class ProjectConfiguration
     }
 
     /**
-     * @return array<string>
+     * Get the protocols to use when cloning from GitHub.
+     *
+     * @return array<string> The protocols to use when cloning from GitHub.
      */
     public function githubProtocols()
     {
@@ -94,7 +109,9 @@ class ProjectConfiguration
     }
 
     /**
-     * @return mixed
+     * Get the raw configuration data.
+     *
+     * @return mixed The raw configuration data.
      */
     public function rawData()
     {

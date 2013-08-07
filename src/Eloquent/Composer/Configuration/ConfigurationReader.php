@@ -16,11 +16,16 @@ use ErrorException;
 use Icecave\Isolator\Isolator;
 use stdClass;
 
+/**
+ * Reads Composer configuration data.
+ */
 class ConfigurationReader
 {
     /**
-     * @param ConfigurationValidator|null $validator
-     * @param Isolator|null               $isolator
+     * Construct a new configuration reader.
+     *
+     * @param ConfigurationValidator|null $validator The validator to use.
+     * @param Isolator|null               $isolator  The isolator to use.
      */
     public function __construct(
         ConfigurationValidator $validator = null,
@@ -35,7 +40,9 @@ class ConfigurationReader
     }
 
     /**
-     * @return ConfigurationValidator
+     * Get the configuration validator.
+     *
+     * @return ConfigurationValidator The configuration validator.
      */
     public function validator()
     {
@@ -43,13 +50,15 @@ class ConfigurationReader
     }
 
     /**
-     * @param string $path
+     * Read a Composer configuration file.
      *
-     * @return Domain\Configuration
+     * @param string $path The configuration file path.
+     *
+     * @return Element\Configuration The parsed configuration.
      */
     public function read($path)
     {
-        $data = $this->readJSON($path);
+        $data = $this->readJson($path);
         $this->validator()->validate($data);
 
         return $this->createConfiguration($data);
@@ -60,7 +69,7 @@ class ConfigurationReader
      *
      * @return ObjectAccess
      */
-    protected function readJSON($path)
+    protected function readJson($path)
     {
         try {
             $jsonData = $this->isolator->file_get_contents($path);
@@ -80,7 +89,7 @@ class ConfigurationReader
     /**
      * @param ObjectAccess $data
      *
-     * @return Domain\Configuration
+     * @return Element\Configuration
      */
     protected function createConfiguration(ObjectAccess $data)
     {
@@ -88,7 +97,7 @@ class ConfigurationReader
             $data->getDefault('autoload', new stdClass)
         );
 
-        return new Domain\Configuration(
+        return new Element\Configuration(
             $data->getDefault('name'),
             $data->getDefault('description'),
             $data->getDefault('version'),
@@ -105,7 +114,7 @@ class ConfigurationReader
             $this->objectToArray($data->getDefault('replace')),
             $this->objectToArray($data->getDefault('provide')),
             $this->objectToArray($data->getDefault('suggest')),
-            $this->createAutoloadPSR0($autoloadData->getDefault('psr-0')),
+            $this->createAutoloadPsr0($autoloadData->getDefault('psr-0')),
             $autoloadData->getDefault('classmap'),
             $autoloadData->getDefault('files'),
             $data->getDefault('include-path'),
@@ -137,7 +146,7 @@ class ConfigurationReader
     /**
      * @param array|null $authors
      *
-     * @return array<Domain\Author>
+     * @return array<Element\Author>
      */
     protected function createAuthors(array $authors = null)
     {
@@ -155,11 +164,11 @@ class ConfigurationReader
     /**
      * @param ObjectAccess $author
      *
-     * @return Domain\Author
+     * @return Element\Author
      */
     protected function createAuthor(ObjectAccess $author)
     {
-        return new Domain\Author(
+        return new Element\Author(
             $author->get('name'),
             $author->getDefault('email'),
             $author->getDefault('homepage'),
@@ -171,13 +180,13 @@ class ConfigurationReader
     /**
      * @param stdClass|null $support
      *
-     * @return Domain\SupportInformation
+     * @return Element\SupportInformation
      */
     protected function createSupport(stdClass $support = null)
     {
         if (null !== $support) {
             $supportData = new ObjectAccess($support);
-            $support = new Domain\SupportInformation(
+            $support = new Element\SupportInformation(
                 $supportData->getDefault('email'),
                 $supportData->getDefault('issues'),
                 $supportData->getDefault('forum'),
@@ -192,31 +201,31 @@ class ConfigurationReader
     }
 
     /**
-     * @param stdClass|null $autoloadPSR0
+     * @param stdClass|null $autoloadPsr0
      *
      * @return array
      */
-    protected function createAutoloadPSR0(stdClass $autoloadPSR0 = null)
+    protected function createAutoloadPsr0(stdClass $autoloadPsr0 = null)
     {
-        if (null !== $autoloadPSR0) {
-            $autoloadPSR0 = $this->objectToArray($autoloadPSR0);
-            foreach ($autoloadPSR0 as $namespace => $paths) {
-                $autoloadPSR0[$namespace] = $this->arrayize($paths);
+        if (null !== $autoloadPsr0) {
+            $autoloadPsr0 = $this->objectToArray($autoloadPsr0);
+            foreach ($autoloadPsr0 as $namespace => $paths) {
+                $autoloadPsr0[$namespace] = $this->arrayize($paths);
             }
         }
 
-        return $autoloadPSR0;
+        return $autoloadPsr0;
     }
 
     /**
      * @param string|null $stability
      *
-     * @return Domain\Stability
+     * @return Element\Stability
      */
     protected function createMinimumStability($stability)
     {
         if (null !== $stability) {
-            $stability = Domain\Stability::instanceByValueIgnoreCase($stability);
+            $stability = Element\Stability::instanceByValueIgnoreCase($stability);
         }
 
         return $stability;
@@ -225,7 +234,7 @@ class ConfigurationReader
     /**
      * @param array|null $repositories
      *
-     * @return array<Domain\Author>
+     * @return array<Element\Author>
      */
     protected function createRepositories(array $repositories = null)
     {
@@ -243,19 +252,19 @@ class ConfigurationReader
     /**
      * @param ObjectAccess $repository
      *
-     * @return Domain\Repository
+     * @return Element\Repository
      */
     protected function createRepository(ObjectAccess $repository)
     {
         $type = $repository->get('type');
         if ('package' === $type) {
-            $repository = new Domain\PackageRepository(
+            $repository = new Element\PackageRepository(
                 $this->objectToArray($repository->get('package')),
                 $this->objectToArray($repository->getDefault('options')),
                 $repository->data()
             );
         } else {
-            $repository = new Domain\Repository(
+            $repository = new Element\Repository(
                 $type,
                 $repository->getDefault('url'),
                 $this->objectToArray($repository->getDefault('options')),
@@ -269,13 +278,13 @@ class ConfigurationReader
     /**
      * @param stdClass|null $config
      *
-     * @return Domain\ProjectConfiguration
+     * @return Element\ProjectConfiguration
      */
     protected function createProjectConfiguration(stdClass $config = null)
     {
         if (null !== $config) {
             $configData = new ObjectAccess($config);
-            $config = new Domain\ProjectConfiguration(
+            $config = new Element\ProjectConfiguration(
                 $configData->getDefault('vendor-dir'),
                 $configData->getDefault('bin-dir'),
                 $configData->getDefault('process-timeout'),
@@ -291,13 +300,13 @@ class ConfigurationReader
     /**
      * @param stdClass|null $scripts
      *
-     * @return Domain\ScriptConfiguration
+     * @return Element\ScriptConfiguration
      */
     protected function createScripts(stdClass $scripts = null)
     {
         if (null !== $scripts) {
             $scriptsData = new ObjectAccess($scripts);
-            $scripts = new Domain\ScriptConfiguration(
+            $scripts = new Element\ScriptConfiguration(
                 $this->arrayize($scriptsData->getDefault('pre-install-cmd')),
                 $this->arrayize($scriptsData->getDefault('post-install-cmd')),
                 $this->arrayize($scriptsData->getDefault('pre-update-cmd')),

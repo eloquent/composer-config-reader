@@ -20,37 +20,37 @@ class ObjectAccessTest extends PHPUnit_Framework_TestCase
     {
         parent::setUp();
 
-        $this->_data = new stdClass;
-        $this->_data->foo = 'bar';
-        $this->_objectAccess = new ObjectAccess($this->_data);
+        $this->data = new stdClass;
+        $this->data->foo = 'bar';
+        $this->objectAccess = new ObjectAccess($this->data);
     }
 
     public function testConstructor()
     {
-        $this->assertSame($this->_data, $this->_objectAccess->data());
+        $this->assertSame($this->data, $this->objectAccess->data());
     }
 
     public function testExists()
     {
-        $this->assertTrue($this->_objectAccess->exists('foo'));
-        $this->assertFalse($this->_objectAccess->exists('bar'));
+        $this->assertTrue($this->objectAccess->exists('foo'));
+        $this->assertFalse($this->objectAccess->exists('bar'));
     }
 
     public function testGet()
     {
-        $this->assertSame('bar', $this->_objectAccess->get('foo'));
+        $this->assertSame('bar', $this->objectAccess->get('foo'));
     }
 
     public function testGetFailure()
     {
         $this->setExpectedException(__NAMESPACE__.'\Exception\UndefinedPropertyException');
-        $this->_objectAccess->get('bar');
+        $this->objectAccess->get('bar');
     }
 
     public function testGetDefault()
     {
-        $this->assertSame('bar', $this->_objectAccess->getDefault('foo'));
-        $this->assertSame('baz', $this->_objectAccess->getDefault('bar', 'baz'));
-        $this->assertNull($this->_objectAccess->getDefault('bar'));
+        $this->assertSame('bar', $this->objectAccess->getDefault('foo'));
+        $this->assertSame('baz', $this->objectAccess->getDefault('bar', 'baz'));
+        $this->assertNull($this->objectAccess->getDefault('bar'));
     }
 }

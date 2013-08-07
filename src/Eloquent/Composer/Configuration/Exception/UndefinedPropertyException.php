@@ -14,11 +14,17 @@ namespace Eloquent\Composer\Configuration\Exception;
 use Exception;
 use RuntimeException;
 
-final class UndefinedPropertyException extends RuntimeException implements ConfigurationException
+/**
+ * An undefined propery was requested.
+ */
+final class UndefinedPropertyException extends RuntimeException implements
+    ConfigurationExceptionInterface
 {
     /**
-     * @param string         $property
-     * @param Exception|null $previous
+     * Construct a new undefined property exception.
+     *
+     * @param string         $property The requested property name.
+     * @param Exception|null $previous The cause, if available.
      */
     public function __construct($property, Exception $previous = null)
     {
@@ -35,7 +41,9 @@ final class UndefinedPropertyException extends RuntimeException implements Confi
     }
 
     /**
-     * @return string
+     * Get the requested property name.
+     *
+     * @return string The property name.
      */
     public function property()
     {

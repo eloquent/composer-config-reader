@@ -9,34 +9,34 @@
  * file that was distributed with this source code.
  */
 
-namespace Eloquent\Composer\Configuration\Domain;
+namespace Eloquent\Composer\Configuration\Element;
 
-use Phake;
 use PHPUnit_Framework_TestCase;
 
-class AbstractRepositoryTest extends PHPUnit_Framework_TestCase
+class RepositoryTest extends PHPUnit_Framework_TestCase
 {
     public function testConstructor()
     {
-        $repository = Phake::partialMock(
-            __NAMESPACE__.'\AbstractRepository',
+        $repository = new Repository(
             'foo',
-            array('bar' => 'baz'),
-            'qux'
+            'bar',
+            array('baz' => 'qux'),
+            'doom'
         );
 
         $this->assertSame('foo', $repository->type());
-        $this->assertSame(array('bar' => 'baz'), $repository->options());
-        $this->assertSame('qux', $repository->rawData());
+        $this->assertSame('bar', $repository->uri());
+        $this->assertSame(array('baz' => 'qux'), $repository->options());
+        $this->assertSame('doom', $repository->rawData());
     }
 
     public function testConstructorDefaults()
     {
-        $repository = Phake::partialMock(
-            __NAMESPACE__.'\AbstractRepository',
+        $repository = new Repository(
             'foo'
         );
 
+        $this->assertNull($repository->uri());
         $this->assertSame(array(), $repository->options());
         $this->assertNull($repository->rawData());
     }

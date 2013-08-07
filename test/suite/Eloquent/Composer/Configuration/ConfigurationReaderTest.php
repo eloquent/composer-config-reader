@@ -21,17 +21,17 @@ class ConfigurationReaderTest extends PHPUnit_Framework_TestCase
     {
         parent::setUp();
 
-        $this->_validator = new ConfigurationValidator;
-        $this->_isolator = Phake::mock('Icecave\Isolator\Isolator');
-        $this->_reader = new ConfigurationReader(
-            $this->_validator,
-            $this->_isolator
+        $this->validator = new ConfigurationValidator;
+        $this->isolator = Phake::mock('Icecave\Isolator\Isolator');
+        $this->reader = new ConfigurationReader(
+            $this->validator,
+            $this->isolator
         );
     }
 
     public function testConstructor()
     {
-        $this->assertSame($this->_validator, $this->_reader->validator());
+        $this->assertSame($this->validator, $this->reader->validator());
     }
 
     public function testConstructorDefaults()
@@ -52,7 +52,7 @@ class ConfigurationReaderTest extends PHPUnit_Framework_TestCase
 {}
 EOD;
         $rawData = json_decode($json);
-        $expected = new Domain\Configuration(
+        $expected = new Element\Configuration(
             null,
             null,
             null,
@@ -222,7 +222,7 @@ EOD;
 }
 EOD;
         $rawData = json_decode($json);
-        $expected = new Domain\Configuration(
+        $expected = new Element\Configuration(
             'monolog/monolog',
             'Logging for PHP 5.3',
             '1.1.0',
@@ -232,14 +232,14 @@ EOD;
             new DateTime('2011-11-11 11:11:11'),
             array('LGPL-2.1', 'GPL-3.0+'),
             array(
-                new Domain\Author(
+                new Element\Author(
                     'Nils Adermann',
                     'naderman@naderman.de',
                     'http://www.naderman.de',
                     'Developer',
                     $rawData->authors[0]
                 ),
-                new Domain\Author(
+                new Element\Author(
                     'Jordi Boggiano',
                     'j.boggiano@seld.be',
                     'http://seld.be',
@@ -247,7 +247,7 @@ EOD;
                     $rawData->authors[1]
                 ),
             ),
-            new Domain\SupportInformation(
+            new Element\SupportInformation(
                 'support@example.org',
                 'https://github.com/composer/composer/issues',
                 'http://example.org/forum',
@@ -288,15 +288,15 @@ EOD;
             array('src/MyLibrary/init.php', 'src/MyLibrary/functions.php'),
             array('lib-old', 'src-old'),
             'Symfony/Component/Yaml',
-            Domain\Stability::DEV(),
+            Element\Stability::DEV(),
             array(
-                new Domain\Repository(
+                new Element\Repository(
                     'composer',
                     'http://packages.example.com',
                     null,
                     $rawData->repositories[0]
                 ),
-                new Domain\Repository(
+                new Element\Repository(
                     'composer',
                     'https://packages.example.com',
                     array(
@@ -306,19 +306,19 @@ EOD;
                     ),
                     $rawData->repositories[1]
                 ),
-                new Domain\Repository(
+                new Element\Repository(
                     'vcs',
                     'https://github.com/Seldaek/monolog',
                     null,
                     $rawData->repositories[2]
                 ),
-                new Domain\Repository(
+                new Element\Repository(
                     'pear',
                     'http://pear2.php.net',
                     null,
                     $rawData->repositories[3]
                 ),
-                new Domain\PackageRepository(
+                new Element\PackageRepository(
                     array(
                         'name' => 'smarty/smarty',
                         'version' => '3.1.7',
@@ -336,7 +336,7 @@ EOD;
                     $rawData->repositories[4]
                 ),
             ),
-            new Domain\ProjectConfiguration(
+            new Element\ProjectConfiguration(
                 'ext',
                 'bin',
                 111,
@@ -344,7 +344,7 @@ EOD;
                 array('ftp', 'otp'),
                 $rawData->config
             ),
-            new Domain\ScriptConfiguration(
+            new Element\ScriptConfiguration(
                 array('MyVendor\MyClass::preInstall'),
                 array('MyVendor\MyClass::postInstall'),
                 array('MyVendor\MyClass::preUpdate'),
@@ -374,19 +374,19 @@ EOD;
      */
     public function testRead($expected, $json)
     {
-        Phake::when($this->_isolator)
+        Phake::when($this->isolator)
             ->file_get_contents(Phake::anyParameters())
             ->thenReturn($json)
         ;
 
-        $this->assertEquals($expected, $this->_reader->read('/path/to/configuration'));
-        Phake::verify($this->_isolator)->file_get_contents('/path/to/configuration');
+        $this->assertEquals($expected, $this->reader->read('/path/to/configuration'));
+        Phake::verify($this->isolator)->file_get_contents('/path/to/configuration');
     }
 
     public function testReadFailureFilesystem()
     {
         $error = Phake::mock('ErrorException');
-        Phake::when($this->_isolator)
+        Phake::when($this->isolator)
             ->file_get_contents(Phake::anyParameters())
             ->thenThrow($error)
         ;
@@ -394,12 +394,12 @@ EOD;
         $this->setExpectedException(
             __NAMESPACE__.'\Exception\ConfigurationReadException'
         );
-        $this->_reader->read('/path/to/configuration');
+        $this->reader->read('/path/to/configuration');
     }
 
     public function testReadFailureInvalidJSON()
     {
-        Phake::when($this->_isolator)
+        Phake::when($this->isolator)
             ->file_get_contents(Phake::anyParameters())
             ->thenReturn('{')
         ;
@@ -407,7 +407,7 @@ EOD;
         $this->setExpectedException(
             __NAMESPACE__.'\Exception\InvalidJSONException'
         );
-        $this->_reader->read('/path/to/configuration');
+        $this->reader->read('/path/to/configuration');
     }
 
     public function testReadReal()
@@ -415,7 +415,7 @@ EOD;
         $reader = new ConfigurationReader;
         $path = __DIR__.'/../../../../../composer.json';
         $rawData = json_decode(file_get_contents($path));
-        $expected = new Domain\Configuration(
+        $expected = new Element\Configuration(
             'eloquent/composer-config-reader',
             'A light-weight component for reading Composer configuration files.',
             null,
@@ -425,7 +425,7 @@ EOD;
             null,
             array('MIT'),
             array(
-                new Domain\Author(
+                new Element\Author(
                     'Erin Millard',
                     'ezzatron@gmail.com',
                     'http://ezzatron.com/',
@@ -435,14 +435,14 @@ EOD;
             ),
             null,
             array(
-                'php' => '>=5.3.0',
+                'php' => '>=5.3',
                 'eloquent/enumeration' => '~3',
                 'eloquent/liberator' => '~1',
                 'icecave/isolator' => '~2',
                 'justinrainbow/json-schema' => '~1',
             ),
             array(
-                'icecave/archer' => '~0.2',
+                'icecave/archer' => '1.0.0-alpha.2',
             ),
             null,
             null,

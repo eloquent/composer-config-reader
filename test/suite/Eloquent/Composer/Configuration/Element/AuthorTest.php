@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Eloquent\Composer\Configuration\Domain;
+namespace Eloquent\Composer\Configuration\Element;
 
 use PHPUnit_Framework_TestCase;
 

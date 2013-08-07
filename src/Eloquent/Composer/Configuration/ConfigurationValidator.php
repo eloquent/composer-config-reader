@@ -16,12 +16,17 @@ use Icecave\Isolator\Isolator;
 use JsonSchema\Validator;
 use stdClass;
 
+/**
+ * Validates composer data.
+ */
 class ConfigurationValidator
 {
     /**
-     * @param stdClass|null  $schema
-     * @param Validator|null $validator
-     * @param Isolator|null  $isolator
+     * Construct a new configuration validator.
+     *
+     * @param stdClass|null  $schema    The schema to use.
+     * @param Validator|null $validator The JSON schema validator to use.
+     * @param Isolator|null  $isolator  The isolator to use.
      */
     public function __construct(
         stdClass $schema = null,
@@ -42,7 +47,9 @@ class ConfigurationValidator
     }
 
     /**
-     * @return stdClass
+     * Get the schema.
+     *
+     * @return stdClass The schema.
      */
     public function schema()
     {
@@ -50,9 +57,12 @@ class ConfigurationValidator
     }
 
     /**
-     * @param mixed $data
+     * Validate Composer configuration data.
      *
-     * @throws Exception\InvalidConfigurationException
+     * @param mixed $data The configuration data.
+     *
+     * @throws Exception\InvalidConfigurationExceptionInterface If the data is
+     *     invalid.
      */
     public function validate($data)
     {

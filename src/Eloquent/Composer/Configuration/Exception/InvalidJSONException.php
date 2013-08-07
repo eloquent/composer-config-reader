@@ -14,12 +14,18 @@ namespace Eloquent\Composer\Configuration\Exception;
 use Exception;
 use RuntimeException;
 
-final class InvalidJSONException extends RuntimeException implements ConfigurationException
+/**
+ * The configuration contains invalid JSON data.
+ */
+final class InvalidJSONException extends RuntimeException implements
+    ConfigurationExceptionInterface
 {
     /**
-     * @param string         $path
-     * @param integer        $jsonErrorCode
-     * @param Exception|null $previous
+     * Construct a new invalid JSON exception.
+     *
+     * @param string         $path          The path to the configuration.
+     * @param integer        $jsonErrorCode The error code supplied by PHP.
+     * @param Exception|null $previous      The cause, if available.
      */
     public function __construct($path, $jsonErrorCode, Exception $previous = null)
     {
@@ -57,7 +63,9 @@ final class InvalidJSONException extends RuntimeException implements Configurati
     }
 
     /**
-     * @return string
+     * Get the path to the configuration.
+     *
+     * @return string The configuration path.
      */
     public function path()
     {
@@ -65,7 +73,9 @@ final class InvalidJSONException extends RuntimeException implements Configurati
     }
 
     /**
-     * @return integer
+     * Get the error code supplied by PHP.
+     *
+     * @return integer The error code.
      */
     public function jsonErrorCode()
     {
@@ -73,7 +83,9 @@ final class InvalidJSONException extends RuntimeException implements Configurati
     }
 
     /**
-     * @return string
+     * Get the internal error message.
+     *
+     * @return string The internal error message.
      */
     public function jsonErrorMessage()
     {

@@ -14,11 +14,17 @@ namespace Eloquent\Composer\Configuration\Exception;
 use Exception;
 use RuntimeException;
 
-final class ConfigurationReadException extends RuntimeException implements ConfigurationException
+/**
+ * The configuration could not be read.
+ */
+final class ConfigurationReadException extends RuntimeException implements
+    ConfigurationExceptionInterface
 {
     /**
-     * @param string         $path
-     * @param Exception|null $previous
+     * Construct a new configuration read exception.
+     *
+     * @param string         $path     The path to the configuration.
+     * @param Exception|null $previous The cause, if available.
      */
     public function __construct($path, Exception $previous = null)
     {
@@ -32,7 +38,9 @@ final class ConfigurationReadException extends RuntimeException implements Confi
     }
 
     /**
-     * @return string
+     * Get the path to the configuration.
+     *
+     * @return string The configuration path.
      */
     public function path()
     {

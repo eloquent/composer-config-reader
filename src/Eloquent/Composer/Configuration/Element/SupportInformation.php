@@ -9,18 +9,23 @@
  * file that was distributed with this source code.
  */
 
-namespace Eloquent\Composer\Configuration\Domain;
+namespace Eloquent\Composer\Configuration\Element;
 
+/**
+ * Represents the support information for a package.
+ */
 class SupportInformation
 {
     /**
-     * @param string|null $email
-     * @param string|null $issues
-     * @param string|null $forum
-     * @param string|null $wiki
-     * @param string|null $irc
-     * @param string|null $source
-     * @param mixed       $rawData
+     * Construct a new support information configuration.
+     *
+     * @param string|null $email   The support email address.
+     * @param string|null $issues  The URI of the issue tracker.
+     * @param string|null $forum   The URI of the forum.
+     * @param string|null $wiki    The URI of the wiki.
+     * @param string|null $irc     The URI of the IRC channel.
+     * @param string|null $source  The URI to the source code.
+     * @param mixed       $rawData The raw data describing the support information.
      */
     public function __construct(
         $email = null,
@@ -41,7 +46,9 @@ class SupportInformation
     }
 
     /**
-     * @return string|null
+     * Get the support email address.
+     *
+     * @return string|null The support email address.
      */
     public function email()
     {
@@ -49,7 +56,9 @@ class SupportInformation
     }
 
     /**
-     * @return string|null
+     * Get the URI of the issue tracker.
+     *
+     * @return string|null The URI of the issue tracker.
      */
     public function issues()
     {
@@ -57,7 +66,9 @@ class SupportInformation
     }
 
     /**
-     * @return string|null
+     * Get the URI of the forum.
+     *
+     * @return string|null The URI of the forum.
      */
     public function forum()
     {
@@ -65,7 +76,9 @@ class SupportInformation
     }
 
     /**
-     * @return string|null
+     * Get the URI of the wiki.
+     *
+     * @return string|null The URI of the wiki.
      */
     public function wiki()
     {
@@ -73,7 +86,9 @@ class SupportInformation
     }
 
     /**
-     * @return string|null
+     * Get the URI of the IRC channel.
+     *
+     * @return string|null The URI of the IRC channel.
      */
     public function irc()
     {
@@ -81,7 +96,9 @@ class SupportInformation
     }
 
     /**
-     * @return string|null
+     * Get the URI to the source code.
+     *
+     * @return string|null The URI to the source code.
      */
     public function source()
     {
@@ -89,7 +106,9 @@ class SupportInformation
     }
 
     /**
-     * @return mixed
+     * Get the raw configuration data.
+     *
+     * @return mixed The raw configuration data.
      */
     public function rawData()
     {

@@ -9,14 +9,20 @@
  * file that was distributed with this source code.
  */
 
-namespace Eloquent\Composer\Configuration\Domain;
+namespace Eloquent\Composer\Configuration\Element;
 
+/**
+ * Represents a package repository.
+ */
 class PackageRepository extends AbstractRepository
 {
     /**
-     * @param array                    $packageData
-     * @param array<string,mixed>|null $options
-     * @param mixed                    $rawData
+     * Construct a new package repository.
+     *
+     * @param array                    $packageData The raw package data.
+     * @param array<string,mixed>|null $options     The repository options.
+     * @param mixed                    $rawData     The raw data describing the
+     *     repository.
      */
     public function __construct(
         array $packageData,
@@ -33,7 +39,9 @@ class PackageRepository extends AbstractRepository
     }
 
     /**
-     * @return array
+     * Get the raw package data.
+     *
+     * @return array The raw package data.
      */
     public function packageData()
     {

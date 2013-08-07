@@ -22,16 +22,16 @@ class ConfigurationValidatorTest extends PHPUnit_Framework_TestCase
     {
         parent::setUp();
 
-        $this->_schema = Phake::mock('stdClass');
-        $this->_innerValidator = Phake::mock('JsonSchema\Validator');
-        $this->_isolator = Phake::mock('Icecave\Isolator\Isolator');
-        $this->_validator = new ConfigurationValidator(
-            $this->_schema,
-            $this->_innerValidator,
-            $this->_isolator
+        $this->schema = Phake::mock('stdClass');
+        $this->innerValidator = Phake::mock('JsonSchema\Validator');
+        $this->isolator = Phake::mock('Icecave\Isolator\Isolator');
+        $this->validator = new ConfigurationValidator(
+            $this->schema,
+            $this->innerValidator,
+            $this->isolator
         );
 
-        $this->_errors = array(
+        $this->errors = array(
             array(
                 'property' => 'foo',
                 'message' => 'bar',
@@ -45,20 +45,20 @@ class ConfigurationValidatorTest extends PHPUnit_Framework_TestCase
 
     public function testConstructor()
     {
-        $this->assertSame($this->_schema, $this->_validator->schema());
+        $this->assertSame($this->schema, $this->validator->schema());
     }
 
     public function testConstructorDefaults()
     {
         $schemaJSON = '{"foo": "bar"}';
-        Phake::when($this->_isolator)
+        Phake::when($this->isolator)
             ->file_get_contents(Phake::anyParameters())
             ->thenReturn($schemaJSON)
         ;
         $validator = new ConfigurationValidator(
             null,
             null,
-            $this->_isolator
+            $this->isolator
         );
         $expectedSchema = json_decode($schemaJSON);
         $expectedSchemaPathAtoms = array(
@@ -76,42 +76,42 @@ class ConfigurationValidatorTest extends PHPUnit_Framework_TestCase
             'JsonSchema\Validator',
             Liberator::liberate($validator)->validator
         );
-        Phake::verify($this->_isolator)->file_get_contents($expectedSchemaPath);
+        Phake::verify($this->isolator)->file_get_contents($expectedSchemaPath);
     }
 
     public function testValidate()
     {
-        Phake::when($this->_innerValidator)
+        Phake::when($this->innerValidator)
             ->isValid(Phake::anyParameters())
             ->thenReturn(true)
         ;
         $data = Phake::mock('stdClass');
-        $this->_validator->validate($data);
+        $this->validator->validate($data);
 
         Phake::inOrder(
-            Phake::verify($this->_innerValidator)->check(
+            Phake::verify($this->innerValidator)->check(
                 $this->identicalTo($data),
-                $this->identicalTo($this->_schema)
+                $this->identicalTo($this->schema)
             ),
-            Phake::verify($this->_innerValidator)->isValid()
+            Phake::verify($this->innerValidator)->isValid()
         );
     }
 
     public function testValidateFailure()
     {
-        Phake::when($this->_innerValidator)
+        Phake::when($this->innerValidator)
             ->isValid(Phake::anyParameters())
             ->thenReturn(false)
         ;
-        Phake::when($this->_innerValidator)
+        Phake::when($this->innerValidator)
             ->getErrors(Phake::anyParameters())
-            ->thenReturn($this->_errors)
+            ->thenReturn($this->errors)
         ;
         $data = Phake::mock('stdClass');
 
         $error = null;
         try {
-            $this->_validator->validate($data);
+            $this->validator->validate($data);
         } catch (Exception\InvalidConfigurationException $error) {
             // verified below
         }
@@ -120,13 +120,13 @@ class ConfigurationValidatorTest extends PHPUnit_Framework_TestCase
             __NAMESPACE__.'\Exception\InvalidConfigurationException',
             $error
         );
-        $this->assertSame($this->_errors, $error->errors());
+        $this->assertSame($this->errors, $error->errors());
         Phake::inOrder(
-            Phake::verify($this->_innerValidator)->check(
+            Phake::verify($this->innerValidator)->check(
                 $this->identicalTo($data),
-                $this->identicalTo($this->_schema)
+                $this->identicalTo($this->schema)
             ),
-            Phake::verify($this->_innerValidator)->isValid()
+            Phake::verify($this->innerValidator)->isValid()
         );
     }
 }

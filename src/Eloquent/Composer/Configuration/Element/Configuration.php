@@ -9,43 +9,52 @@
  * file that was distributed with this source code.
  */
 
-namespace Eloquent\Composer\Configuration\Domain;
+namespace Eloquent\Composer\Configuration\Element;
 
 use DateTime;
 
+/**
+ * Represents an entire Composer configuration.
+ */
 class Configuration
 {
+    /**
+     * The separator used to divide the package name into vendor name and
+     * project name.
+     */
     const NAME_SEPARATOR = '/';
 
     /**
-      * @param string|null $name
-      * @param string|null $description
-      * @param string|null $version
-      * @param string|null $type
-      * @param array<string>|null $keywords
-      * @param string|null $homepage
-      * @param DateTime|null $time
-      * @param array<string>|null $license
-      * @param array<Author>|null $authors
-      * @param SupportInformation|null $support
-      * @param array<string,string>|null $dependencies
-      * @param array<string,string>|null $devDependencies
-      * @param array<string,string>|null $conflict
-      * @param array<string,string>|null $replace
-      * @param array<string,string>|null $provide
-      * @param array<string,string>|null $suggest
-      * @param array<string,array<string>>|null $autoloadPSR0
-      * @param array<string>|null $autoloadClassmap
-      * @param array<string>|null $autoloadFiles
-      * @param array<string>|null $includePath
-      * @param string|null $targetDir
-      * @param Stability|null $minimumStability
-      * @param array<AbstractRepository> $repositories
-      * @param ProjectConfiguration|null $config
-      * @param ScriptConfiguration|null $scripts
-      * @param mixed $extra
-      * @param array<string> $bin
-      * @param mixed $rawData
+     * Construct a new configuration.
+     *
+     * @param string|null                      $name             The package name.
+     * @param string|null                      $description      The package description.
+     * @param string|null                      $version          The package version.
+     * @param string|null                      $type             The package type.
+     * @param array<string>|null               $keywords         The keywords the package is related to.
+     * @param string|null                      $homepage         The URI of the package's home page.
+     * @param DateTime|null                    $time             The release date of this version.
+     * @param array<string>|null               $license          The licences the package is released under.
+     * @param array<Author>|null               $authors          The authors of the package.
+     * @param SupportInformation|null          $support          Support information for the package.
+     * @param array<string,string>|null        $dependencies     The package's dependencies.
+     * @param array<string,string>|null        $devDependencies  The package's development dependencies.
+     * @param array<string,string>|null        $conflict         Packages that conflict with this version of the package.
+     * @param array<string,string>|null        $replace          Packages that are replaced by this package.
+     * @param array<string,string>|null        $provide          Packages that are provided by this package.
+     * @param array<string,string>|null        $suggest          Suggested packages for use with this package.
+     * @param array<string,array<string>>|null $autoloadPsr0     PSR-0 autoloading configuration for the package.
+     * @param array<string>|null               $autoloadClassmap Class map autoloading configuration for the package.
+     * @param array<string>|null               $autoloadFiles    File autoloading configuration for the package.
+     * @param array<string>|null               $includePath      Include path autoloading configuration for the package.
+     * @param string|null                      $targetDir        The target directory for installation.
+     * @param Stability|null                   $minimumStability The minimum stability for packages.
+     * @param array<AbstractRepository>        $repositories     The custom repositories used by this package.
+     * @param ProjectConfiguration|null        $config           The configuration options for the package that are specific to project-type repositories.
+     * @param ScriptConfiguration|null         $scripts          The hook scripts for the package.
+     * @param mixed                            $extra            Arbitrary extra data contained in the project's configuration.
+     * @param array<string>                    $bin              Binary executable files provided by the package.
+     * @param mixed                            $rawData          The raw data describing the configuration.
      */
     public function __construct(
         $name = null,
@@ -64,7 +73,7 @@ class Configuration
         array $replace = null,
         array $provide = null,
         array $suggest = null,
-        array $autoloadPSR0 = null,
+        array $autoloadPsr0 = null,
         array $autoloadClassmap = null,
         array $autoloadFiles = null,
         array $includePath = null,
@@ -110,8 +119,8 @@ class Configuration
         if (null === $suggest) {
             $suggest = array();
         }
-        if (null === $autoloadPSR0) {
-            $autoloadPSR0 = array();
+        if (null === $autoloadPsr0) {
+            $autoloadPsr0 = array();
         }
         if (null === $autoloadClassmap) {
             $autoloadClassmap = array();
@@ -154,7 +163,7 @@ class Configuration
         $this->replace = $replace;
         $this->provide = $provide;
         $this->suggest = $suggest;
-        $this->autoloadPSR0 = $autoloadPSR0;
+        $this->autoloadPsr0 = $autoloadPsr0;
         $this->autoloadClassmap = $autoloadClassmap;
         $this->autoloadFiles = $autoloadFiles;
         $this->includePath = $includePath;
@@ -169,7 +178,9 @@ class Configuration
     }
 
     /**
-     * @return string|null
+     * Get the package name, including vendor and project names.
+     *
+     * @return string|null The name.
      */
     public function name()
     {
@@ -177,7 +188,9 @@ class Configuration
     }
 
     /**
-     * @return string|null
+     * Get the project name, without the vendor prefix.
+     *
+     * @return string|null The project name.
      */
     public function projectName()
     {
@@ -192,7 +205,9 @@ class Configuration
     }
 
     /**
-     * @return string|null
+     * Get the vendor name, without the project suffix.
+     *
+     * @return string|null The vendor name.
      */
     public function vendorName()
     {
@@ -211,7 +226,9 @@ class Configuration
     }
 
     /**
-     * @return string|null
+     * Get the package description.
+     *
+     * @return string|null The description.
      */
     public function description()
     {
@@ -219,7 +236,9 @@ class Configuration
     }
 
     /**
-     * @return string|null
+     * Get the package version.
+     *
+     * @return string|null The version.
      */
     public function version()
     {
@@ -227,7 +246,9 @@ class Configuration
     }
 
     /**
-     * @return string
+     * Get the package type.
+     *
+     * @return string The type.
      */
     public function type()
     {
@@ -235,7 +256,9 @@ class Configuration
     }
 
     /**
-     * @return array<string>
+     * Get the package keywords.
+     *
+     * @return array<string> The keywords.
      */
     public function keywords()
     {
@@ -243,7 +266,9 @@ class Configuration
     }
 
     /**
-     * @return string|null
+     * Get the URI of the package's home page.
+     *
+     * @return string|null The home page.
      */
     public function homepage()
     {
@@ -251,7 +276,9 @@ class Configuration
     }
 
     /**
-     * @return DateTime|null
+     * Get the release date of this version.
+     *
+     * @return DateTime|null The release date.
      */
     public function time()
     {
@@ -259,7 +286,9 @@ class Configuration
     }
 
     /**
-     * @return array<string>|null
+     * Get the licences the package is released under.
+     *
+     * @return array<string>|null The licences.
      */
     public function license()
     {
@@ -267,7 +296,9 @@ class Configuration
     }
 
     /**
-     * @return array<Author>
+     * Get the authors of the package.
+     *
+     * @return array<Author> The authors.
      */
     public function authors()
     {
@@ -275,7 +306,9 @@ class Configuration
     }
 
     /**
-     * @return SupportInformation
+     * Get support information for the package.
+     *
+     * @return SupportInformation The support information.
      */
     public function support()
     {
@@ -283,7 +316,9 @@ class Configuration
     }
 
     /**
-     * @return array<string,string>
+     * Get the package's dependencies, excluding development dependencies.
+     *
+     * @return array<string,string> The dependencies.
      */
     public function dependencies()
     {
@@ -291,7 +326,9 @@ class Configuration
     }
 
     /**
-     * @return array<string,string>
+     * Get the package's development dependencies.
+     *
+     * @return array<string,string> The development dependencies.
      */
     public function devDependencies()
     {
@@ -299,7 +336,10 @@ class Configuration
     }
 
     /**
-     * @return array<string,string>
+     * Get all of the package's dependencies, including development, and
+     * non-development dependencies.
+     *
+     * @return array<string,string> All dependencies.
      */
     public function allDependencies()
     {
@@ -310,7 +350,9 @@ class Configuration
     }
 
     /**
-     * @return array<string,string>
+     * Get the packages that conflict with this version of the package.
+     *
+     * @return array<string,string> The conflicting packages.
      */
     public function conflict()
     {
@@ -318,7 +360,9 @@ class Configuration
     }
 
     /**
-     * @return array<string,string>
+     * Get the packages that are replaced by this package.
+     *
+     * @return array<string,string> The replaced packages.
      */
     public function replace()
     {
@@ -326,7 +370,9 @@ class Configuration
     }
 
     /**
-     * @return array<string,string>
+     * Get the packages that are provided by this package.
+     *
+     * @return array<string,string> The provided packages.
      */
     public function provide()
     {
@@ -334,7 +380,9 @@ class Configuration
     }
 
     /**
-     * @return array<string,string>
+     * Get suggested packages for use with this package.
+     *
+     * @return array<string,string> The suggested packages.
      */
     public function suggest()
     {
@@ -342,15 +390,19 @@ class Configuration
     }
 
     /**
-     * @return array<string,array<string>>
+     * Get the PSR-0 autoloading configuration for the package.
+     *
+     * @return array<string,array<string>> The PSR-0 autoloading configuration.
      */
-    public function autoloadPSR0()
+    public function autoloadPsr0()
     {
-        return $this->autoloadPSR0;
+        return $this->autoloadPsr0;
     }
 
     /**
-     * @return array<string>
+     * Get the class map autoloading configuration for the package.
+     *
+     * @return array<string> The class map autoloading configuration.
      */
     public function autoloadClassmap()
     {
@@ -358,7 +410,9 @@ class Configuration
     }
 
     /**
-     * @return array<string>
+     * Get the file autoloading configuration for the package.
+     *
+     * @return array<string> The file autoloading configuration for the package.
      */
     public function autoloadFiles()
     {
@@ -366,7 +420,10 @@ class Configuration
     }
 
     /**
-     * @return array<string>
+     * Get the include path autoloading configuration for the package.
+     *
+     * @return array<string> The include path autoloading configuration for the
+     *     package.
      */
     public function includePath()
     {
@@ -374,25 +431,29 @@ class Configuration
     }
 
     /**
-     * @return array<string>
+     * Get an array of all source paths containing PSR-0 conformant code.
+     *
+     * @return array<string> The PSR-0 source paths.
      */
-    public function allPSR0SourcePaths()
+    public function allPsr0SourcePaths()
     {
-        $autoloadPSR0Paths = array();
-        foreach ($this->autoloadPSR0() as $namespace => $paths) {
-          $autoloadPSR0Paths = array_merge($autoloadPSR0Paths, $paths);
+        $autoloadPsr0Paths = array();
+        foreach ($this->autoloadPsr0() as $namespace => $paths) {
+            $autoloadPsr0Paths = array_merge($autoloadPsr0Paths, $paths);
         }
 
-        return $autoloadPSR0Paths;
+        return $autoloadPsr0Paths;
     }
 
     /**
-     * @return array<string>
+     * Get an array of all source paths for this package.
+     *
+     * @return array<string> All source paths.
      */
     public function allSourcePaths()
     {
         return array_merge(
-            $this->allPSR0SourcePaths(),
+            $this->allPsr0SourcePaths(),
             $this->autoloadClassmap(),
             $this->autoloadFiles(),
             $this->includePath()
@@ -400,7 +461,9 @@ class Configuration
     }
 
     /**
-     * @return string|null
+     * Get the target directory for installation.
+     *
+     * @return string|null The target directory.
      */
     public function targetDir()
     {
@@ -408,7 +471,9 @@ class Configuration
     }
 
     /**
-     * @return Stability
+     * Get the minimum stability for packages.
+     *
+     * @return Stability The minimum stability.
      */
     public function minimumStability()
     {
@@ -416,7 +481,9 @@ class Configuration
     }
 
     /**
-     * @return array<AbstractRepository>
+     * Get the custom repositories used by this package.
+     *
+     * @return array<AbstractRepository> The custom repositories.
      */
     public function repositories()
     {
@@ -424,7 +491,10 @@ class Configuration
     }
 
     /**
-     * @return ProjectConfiguration
+     * Get the configuration options for the package that are specific to
+     * project-type repositories.
+     *
+     * @return ProjectConfiguration The project configuration.
      */
     public function config()
     {
@@ -432,7 +502,9 @@ class Configuration
     }
 
     /**
-     * @return ScriptConfiguration
+     * Get the hook scripts for the package.
+     *
+     * @return ScriptConfiguration The hook scripts.
      */
     public function scripts()
     {
@@ -440,7 +512,9 @@ class Configuration
     }
 
     /**
-     * @return mixed
+     * Get the arbitrary extra data contained in the project's configuration.
+     *
+     * @return mixed The extra data.
      */
     public function extra()
     {
@@ -448,7 +522,9 @@ class Configuration
     }
 
     /**
-     * @return array<string>
+     * Get the binary executable files provided by the package.
+     *
+     * @return array<string> The executable files.
      */
     public function bin()
     {
@@ -456,7 +532,9 @@ class Configuration
     }
 
     /**
-     * @return mixed
+     * Get the raw configuration data.
+     *
+     * @return mixed The raw configuration data.
      */
     public function rawData()
     {
@@ -479,7 +557,7 @@ class Configuration
     private $replace;
     private $provide;
     private $suggest;
-    private $autoloadPSR0;
+    private $autoloadPsr0;
     private $autoloadClassmap;
     private $autoloadFiles;
     private $includePath;

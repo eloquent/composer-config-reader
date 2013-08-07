@@ -9,22 +9,27 @@
  * file that was distributed with this source code.
  */
 
-namespace Eloquent\Composer\Configuration\Domain;
+namespace Eloquent\Composer\Configuration\Element;
 
+/**
+ * Represents the hook scripts for a package.
+ */
 class ScriptConfiguration
 {
     /**
-     * @param array<string>|null $preInstallCmd
-     * @param array<string>|null $postInstallCmd
-     * @param array<string>|null $preUpdateCmd
-     * @param array<string>|null $postUpdateCmd
-     * @param array<string>|null $prePackageInstall
-     * @param array<string>|null $postPackageInstall
-     * @param array<string>|null $prePackageUpdate
-     * @param array<string>|null $postPackageUpdate
-     * @param array<string>|null $prePackageUninstall
-     * @param array<string>|null $postPackageUninstall
-     * @param mixed              $rawData
+     * Construct a new script configuration.
+     *
+     * @param array<string>|null $preInstallCmd        The pre-install commands.
+     * @param array<string>|null $postInstallCmd       The post-install commands.
+     * @param array<string>|null $preUpdateCmd         The pre-update commands.
+     * @param array<string>|null $postUpdateCmd        The post-update commands.
+     * @param array<string>|null $prePackageInstall    The pre-package-install commands.
+     * @param array<string>|null $postPackageInstall   The post-package-install commands.
+     * @param array<string>|null $prePackageUpdate     The pre-package-update commands.
+     * @param array<string>|null $postPackageUpdate    The post-package-update commands.
+     * @param array<string>|null $prePackageUninstall  The pre-package-uninstall commands.
+     * @param array<string>|null $postPackageUninstall The post-package-uninstall commands.
+     * @param mixed              $rawData              The raw data describing the script configuration.
      */
     public function __construct(
         array $preInstallCmd = null,
@@ -84,7 +89,9 @@ class ScriptConfiguration
     }
 
     /**
-     * @return array<string>
+     * Get the pre-install commands.
+     *
+     * @return array<string> The pre-install commands.
      */
     public function preInstallCmd()
     {
@@ -92,7 +99,9 @@ class ScriptConfiguration
     }
 
     /**
-     * @return array<string>
+     * Get the post-install commands.
+     *
+     * @return array<string> The post-install commands.
      */
     public function postInstallCmd()
     {
@@ -100,7 +109,9 @@ class ScriptConfiguration
     }
 
     /**
-     * @return array<string>
+     * Get the pre-update commands.
+     *
+     * @return array<string> The pre-update commands.
      */
     public function preUpdateCmd()
     {
@@ -108,7 +119,9 @@ class ScriptConfiguration
     }
 
     /**
-     * @return array<string>
+     * Get the post-update commands.
+     *
+     * @return array<string> The post-update commands.
      */
     public function postUpdateCmd()
     {
@@ -116,7 +129,9 @@ class ScriptConfiguration
     }
 
     /**
-     * @return array<string>
+     * Get the pre-package-install commands.
+     *
+     * @return array<string> The pre-package-install commands.
      */
     public function prePackageInstall()
     {
@@ -124,7 +139,9 @@ class ScriptConfiguration
     }
 
     /**
-     * @return array<string>
+     * Get the post-package-install commands.
+     *
+     * @return array<string> The post-package-install commands.
      */
     public function postPackageInstall()
     {
@@ -132,7 +149,9 @@ class ScriptConfiguration
     }
 
     /**
-     * @return array<string>
+     * Get the pre-package-update commands.
+     *
+     * @return array<string> The pre-package-update commands.
      */
     public function prePackageUpdate()
     {
@@ -140,7 +159,9 @@ class ScriptConfiguration
     }
 
     /**
-     * @return array<string>
+     * Get the post-package-update commands.
+     *
+     * @return array<string> The post-package-update commands.
      */
     public function postPackageUpdate()
     {
@@ -148,7 +169,9 @@ class ScriptConfiguration
     }
 
     /**
-     * @return array<string>
+     * Get the pre-package-uninstall commands.
+     *
+     * @return array<string> The pre-package-uninstall commands.
      */
     public function prePackageUninstall()
     {
@@ -156,7 +179,9 @@ class ScriptConfiguration
     }
 
     /**
-     * @return array<string>
+     * Get the post-package-uninstall commands.
+     *
+     * @return array<string> The post-package-uninstall commands.
      */
     public function postPackageUninstall()
     {
@@ -164,7 +189,9 @@ class ScriptConfiguration
     }
 
     /**
-     * @return mixed
+     * Get the raw configuration data.
+     *
+     * @return mixed The raw configuration data.
      */
     public function rawData()
     {

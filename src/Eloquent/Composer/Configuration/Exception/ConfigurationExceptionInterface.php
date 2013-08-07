@@ -11,6 +11,10 @@
 
 namespace Eloquent\Composer\Configuration\Exception;
 
-interface ConfigurationException
+/**
+ * An interface for marking exceptions that are related to Composer
+ * configuration.
+ */
+interface ConfigurationExceptionInterface
 {
 }

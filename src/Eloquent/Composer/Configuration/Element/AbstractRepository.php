@@ -9,14 +9,20 @@
  * file that was distributed with this source code.
  */
 
-namespace Eloquent\Composer\Configuration\Domain;
+namespace Eloquent\Composer\Configuration\Element;
 
+/**
+ * An abstract base class for repositories.
+ */
 abstract class AbstractRepository
 {
     /**
-     * @param string                   $type
-     * @param array<string,mixed>|null $options
-     * @param mixed                    $rawData
+     * Construct a new repository.
+     *
+     * @param string                   $type    The repository type.
+     * @param array<string,mixed>|null $options The repository options.
+     * @param mixed                    $rawData The raw data describing the
+     *     repository.
      */
     public function __construct(
         $type,
@@ -33,7 +39,9 @@ abstract class AbstractRepository
     }
 
     /**
-     * @return string
+     * Get the repository type.
+     *
+     * @return string The repository type.
      */
     public function type()
     {
@@ -41,7 +49,9 @@ abstract class AbstractRepository
     }
 
     /**
-     * @return array<string,mixed>
+     * Get the repository options.
+     *
+     * @return array<string,mixed> The repository options.
      */
     public function options()
     {
@@ -49,7 +59,9 @@ abstract class AbstractRepository
     }
 
     /**
-     * @return mixed
+     * Get the raw repository data.
+     *
+     * @return mixed The raw repository data.
      */
     public function rawData()
     {

@@ -13,10 +13,15 @@ namespace Eloquent\Composer\Configuration;
 
 use stdClass;
 
+/**
+ * Facilitates easy access to an object's properties.
+ */
 class ObjectAccess
 {
     /**
-     * @param stdClass $data
+     * Construct a new object access utility.
+     *
+     * @param stdClass $data The internal object.
      */
     public function __construct(stdClass $data)
     {
@@ -24,7 +29,9 @@ class ObjectAccess
     }
 
     /**
-     * @return stdClass
+     * Get the internal object.
+     *
+     * @return stdClass The internal object.
      */
     public function data()
     {
@@ -32,9 +39,11 @@ class ObjectAccess
     }
 
     /**
-     * @param string $property
+     * Returns true if the specified property exists.
      *
-     * @return boolean
+     * @param string $property The property name.
+     *
+     * @return boolean True if the property exists.
      */
     public function exists($property)
     {
@@ -42,9 +51,13 @@ class ObjectAccess
     }
 
     /**
-     * @param string $property
+     * Get the value of the specified property.
      *
-     * @return mixed
+     * @param string $property The property name.
+     *
+     * @return mixed                                The value of the property.
+     * @throws Exception\UndefinedPropertyException If the property does not
+     *     exist.
      */
     public function get($property)
     {
@@ -56,10 +69,13 @@ class ObjectAccess
     }
 
     /**
-     * @param string $property
-     * @param mixed  $default
+     * Get the value of the specified property, and fall back to a default if
+     * the property does not exist.
      *
-     * @return mixed
+     * @param string $property The property name.
+     * @param mixed  $default  The default value to fall back to.
+     *
+     * @return mixed The value of the property, or the supplied default.
      */
     public function getDefault($property, $default = null)
     {

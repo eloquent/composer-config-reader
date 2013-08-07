@@ -32,8 +32,8 @@ class InvalidConfigurationExceptionTest extends PHPUnit_Framework_TestCase
         $exception = new InvalidConfigurationException($errors, $previous);
         $expectedMessage = <<<'EOD'
 The supplied Composer configuration is invalid:
- * [foo] bar
- * [baz] qux
+  - [foo] bar
+  - [baz] qux
 EOD;
 
         $this->assertSame($errors, $exception->errors());

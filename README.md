@@ -2,13 +2,13 @@
 
 *A light-weight component for reading Composer configuration files.*
 
-[![Build Status]](http://travis-ci.org/eloquent/composer-config-reader)
-[![Test Coverage]](http://eloquent-software.com/composer-config-reader/artifacts/tests/coverage/)
+[![Build Status]][Latest build]
+[![Test Coverage]][Test coverage report]
 
-## Installation
+## Installation and documentation
 
-Available as [Composer](http://getcomposer.org/) package
-[eloquent/composer-config-reader](https://packagist.org/packages/eloquent/composer-config-reader).
+* Available as [Composer] package [eloquent/composer-config-reader].
+* [API documentation] available.
 
 ## Usage
 
@@ -24,17 +24,17 @@ echo $configuration->name(); // outputs the package name
 
 ## Configuration objects
 
-The following are the domain objects used to represent the configuration
-information. For a more detailed overview of the data available, simply look
-through the class definition (these classes are very simple).
+The following are the objects used to represent the configuration information.
+For a more detailed overview of the data available, simply look through the
+class definition (these classes are very simple).
 
-The following classes all exist in the `Eloquent\Composer\Configuration\Domain`
+The following classes all exist in the `Eloquent\Composer\Configuration\Element`
 namespace.
 
-### [Configuration](https://github.com/eloquent/composer-config-reader/blob/master/src/Eloquent/Composer/Configuration/Domain/Configuration.php)
+### [Configuration]
 
 This is the main configuration object and has methods to access all the
-information available in the [Composer schema](http://getcomposer.org/doc/04-schema.md).
+information available in the [Composer schema].
 
 #### Example methods
 
@@ -56,24 +56,23 @@ the process of extracting useful information:
 * `allPSR0SourcePaths()`: A flat array of all PSR-0-compliant source paths.
 * `allSourcePaths()`: A flat array of all source paths.
 
-### [Repository](https://github.com/eloquent/composer-config-reader/blob/master/src/Eloquent/Composer/Configuration/Domain/Repository.php), [PackageRepository](https://github.com/eloquent/composer-config-reader/blob/master/src/Eloquent/Composer/Configuration/Domain/PackageRepository.php)
+### [Repository], [PackageRepository]
 
 These objects describe the package's defined repositories.
 
 All repositories are represented by the `Repository` class, except for
 package-type repositories which use the `PackageRepository` class.
 
-See [Repositories](http://getcomposer.org/doc/05-repositories.md).
+See [Repositories].
 
 #### Example methods
 
 * `type()`: The repository type.
 * `url()`: The repository URL (not available for `PackageRepository`).
 
-### [Stability](https://github.com/eloquent/composer-config-reader/blob/master/src/Eloquent/Composer/Configuration/Domain/Stability.php)
+### [Stability]
 
-This object is a simple [enumeration](https://github.com/eloquent/enumeration)
-with the following members:
+This object is a simple [enumeration] with the following members:
 
 * DEV
 * ALPHA
@@ -81,26 +80,25 @@ with the following members:
 * RC
 * STABLE
 
-It is currently only used to represent the value of the
-[minimum-stability](http://getcomposer.org/doc/04-schema.md#minimum-stability)
+It is currently only used to represent the value of the [minimum-stability]
 option.
 
-### [Author](https://github.com/eloquent/composer-config-reader/blob/master/src/Eloquent/Composer/Configuration/Domain/Author.php)
+### [Author]
 
 This object contains all information provided for a specific author.
 
-See [authors](http://getcomposer.org/doc/04-schema.md#authors).
+See [authors].
 
 #### Example methods
 
 * `name()`: The author's name.
 * `email()`: The author's email address.
 
-### [SupportInformation](https://github.com/eloquent/composer-config-reader/blob/master/src/Eloquent/Composer/Configuration/Domain/SupportInformation.php)
+### [SupportInformation]
 
 This object describes the package's support contact information.
 
-See [support](http://getcomposer.org/doc/04-schema.md#support).
+See [support].
 
 #### Example methods
 
@@ -108,29 +106,52 @@ See [support](http://getcomposer.org/doc/04-schema.md#support).
 * `issues()`: The URL of the issue tracking system.
 * `wiki()`: The URL of the wiki system.
 
-### [ProjectConfiguration](https://github.com/eloquent/composer-config-reader/blob/master/src/Eloquent/Composer/Configuration/Domain/ProjectConfiguration.php)
+### [ProjectConfiguration]
 
 This object describes configuration options specific to end-projects, such as
 the target directories for various resources provided by Composer.
 
-See [config](http://getcomposer.org/doc/04-schema.md#config).
+See [config].
 
 #### Example methods
 
 * `vendorDir()`: The project's vendor directory path.
 * `binDir()`: The project's binary directory path.
 
-### [ScriptConfiguration](https://github.com/eloquent/composer-config-reader/blob/master/src/Eloquent/Composer/Configuration/Domain/ScriptConfiguration.php)
+### [ScriptConfiguration]
 
 This object describes the Composer scripts defined by the package.
 
-See [Scripts](http://getcomposer.org/doc/articles/scripts.md).
+See [Scripts].
 
 #### Example methods
 
 * `preInstallCmd()`: The pre-install scripts.
 * `postInstallCmd()`: The post-install scripts.
 
-<!-- references -->
-[Build Status]: https://raw.github.com/eloquent/composer-config-reader/gh-pages/artifacts/images/icecave/regular/build-status.png
-[Test Coverage]: https://raw.github.com/eloquent/composer-config-reader/gh-pages/artifacts/images/icecave/regular/coverage.png
+<!-- References -->
+
+[API documentation]: http://lqnt.co/composer-config-reader/artifacts/documentation/api/
+[Author]: src/Eloquent/Composer/Configuration/Element/Author.php
+[authors]: http://getcomposer.org/doc/04-schema.md#authors
+[Composer schema]: http://getcomposer.org/doc/04-schema.md
+[config]: http://getcomposer.org/doc/04-schema.md#config
+[Configuration]: src/Eloquent/Composer/Configuration/Element/Configuration.php
+[Composer]: http://getcomposer.org/
+[eloquent/composer-config-reader]: https://packagist.org/packages/eloquent/composer-config-reader
+[enumeration]: https://github.com/eloquent/enumeration
+[minimum-stability]: http://getcomposer.org/doc/04-schema.md#minimum-stability
+[PackageRepository]: src/Eloquent/Composer/Configuration/Element/PackageRepository.php
+[ProjectConfiguration]: src/Eloquent/Composer/Configuration/Element/ProjectConfiguration.php
+[Repositories]: http://getcomposer.org/doc/05-repositories.md
+[Repository]: src/Eloquent/Composer/Configuration/Element/Repository.php
+[ScriptConfiguration]: src/Eloquent/Composer/Configuration/Element/ScriptConfiguration.php
+[Scripts]: http://getcomposer.org/doc/articles/scripts.md
+[Stability]: src/Eloquent/Composer/Configuration/Element/Stability.php
+[support]: http://getcomposer.org/doc/04-schema.md#support
+[SupportInformation]: src/Eloquent/Composer/Configuration/Element/SupportInformation.php
+
+[Build Status]: https://api.travis-ci.org/eloquent/composer-config-reader.png?branch=master
+[Latest build]: https://travis-ci.org/eloquent/composer-config-reader
+[Test coverage report]: https://coveralls.io/r/eloquent/composer-config-reader
+[Test Coverage]: https://coveralls.io/repos/eloquent/composer-config-reader/badge.png?branch=master

@@ -9,22 +9,46 @@
  * file that was distributed with this source code.
  */
 
-namespace Eloquent\Composer\Configuration\Domain;
+namespace Eloquent\Composer\Configuration\Element;
 
 use Eloquent\Enumeration\Enumeration;
 
+/**
+ * An enumeration of package stabilities.
+ */
 final class Stability extends Enumeration
 {
+    /**
+     * Development stability.
+     */
     const DEV = 'dev';
+
+    /**
+     * Alpha stability.
+     */
     const ALPHA = 'alpha';
+
+    /**
+     * Beta stability.
+     */
     const BETA = 'beta';
+
+    /**
+     * Release candidate stability.
+     */
     const RC = 'rc';
+
+    /**
+     * Stable stability.
+     */
     const STABLE = 'stable';
 
     /**
-     * @param scalar $value
+     * Get a stability by value, ignoring case.
      *
-     * @return Stability
+     * @param scalar $value The stability string.
+     *
+     * @return Stability The stability enumeration value.
      */
     final public static function instanceByValueIgnoreCase($value)
     {

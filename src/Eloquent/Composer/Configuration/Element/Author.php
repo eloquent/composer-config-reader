@@ -9,16 +9,21 @@
  * file that was distributed with this source code.
  */
 
-namespace Eloquent\Composer\Configuration\Domain;
+namespace Eloquent\Composer\Configuration\Element;
 
+/**
+ * Represents an author.
+ */
 class Author
 {
     /**
-     * @param string      $name
-     * @param string|null $email
-     * @param string|null $homepage
-     * @param string|null $role
-     * @param mixed       $rawData
+     * Construct a new author.
+     *
+     * @param string      $name     The author's name.
+     * @param string|null $email    The author's email address.
+     * @param string|null $homepage The URI of the author's home page.
+     * @param string|null $role     The author's role.
+     * @param mixed       $rawData  The raw data describing the author.
      */
     public function __construct(
         $name,
@@ -35,7 +40,9 @@ class Author
     }
 
     /**
-     * @return string
+     * Get the author's name.
+     *
+     * @return string The author's name.
      */
     public function name()
     {
@@ -43,7 +50,9 @@ class Author
     }
 
     /**
-     * @return string|null
+     * Get the author's email address.
+     *
+     * @return string|null The author's email address.
      */
     public function email()
     {
@@ -51,7 +60,9 @@ class Author
     }
 
     /**
-     * @return string|null
+     * Get the URI of the author's home page.
+     *
+     * @return string|null The URI of the author's home page.
      */
     public function homepage()
     {
@@ -59,7 +70,9 @@ class Author
     }
 
     /**
-     * @return string|null
+     * Get the author's role.
+     *
+     * @return string|null The author's role.
      */
     public function role()
     {
@@ -67,7 +80,9 @@ class Author
     }
 
     /**
-     * @return mixed
+     * Get the raw author data.
+     *
+     * @return mixed The raw author data.
      */
     public function rawData()
     {

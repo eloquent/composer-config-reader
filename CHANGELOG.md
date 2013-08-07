@@ -1,6 +1,13 @@
 # Composer configuration reader changelog
 
-### 1.1.2
+### 2.0.0 (unreleased)
 
-* [Archer](https://github.com/IcecaveStudios/archer) integration
-* Implemented changelog
+- **[BC BREAK]** `Domain` namespace renamed to `Element`
+- **[BC BREAK]** Interfaces renamed to match naming conventions
+- **[BC BREAK]** Method names containing acronyms are now CamelCased properly
+- **[MAINTENANCE]** General repository maintenance
+
+### 1.1.2 (2013-03-04)
+
+- **[NEW]** [Archer](https://github.com/IcecaveStudios/archer) integration
+- **[NEW]** Implemented changelog

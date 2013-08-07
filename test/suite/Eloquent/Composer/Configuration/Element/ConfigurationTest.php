@@ -9,10 +9,11 @@
  * file that was distributed with this source code.
  */
 
-namespace Eloquent\Composer\Configuration\Domain;
+namespace Eloquent\Composer\Configuration\Element;
 
 use Phake;
 use PHPUnit_Framework_TestCase;
+use ReflectionObject;
 
 class ConfigurationTest extends PHPUnit_Framework_TestCase
 {
@@ -20,30 +21,30 @@ class ConfigurationTest extends PHPUnit_Framework_TestCase
     {
         parent::setUp();
 
-        $this->_time = Phake::mock('DateTime');
-        $this->_authors = array(
+        $this->time = Phake::mock('DateTime');
+        $this->authors = array(
             Phake::mock(__NAMESPACE__.'\Author'),
             Phake::mock(__NAMESPACE__.'\Author'),
         );
-        $this->_support = Phake::mock(__NAMESPACE__.'\SupportInformation');
-        $this->_minimumStability = Stability::DEV();
-        $this->_repositories = array(
+        $this->support = Phake::mock(__NAMESPACE__.'\SupportInformation');
+        $this->minimumStability = Stability::DEV();
+        $this->repositories = array(
             Phake::mock(__NAMESPACE__.'\Repository'),
             Phake::mock(__NAMESPACE__.'\Repository'),
         );
-        $this->_config = Phake::mock(__NAMESPACE__.'\ProjectConfiguration');
-        $this->_scripts = Phake::mock(__NAMESPACE__.'\ScriptConfiguration');
-        $this->_configuration = new Configuration(
+        $this->config = Phake::mock(__NAMESPACE__.'\ProjectConfiguration');
+        $this->scripts = Phake::mock(__NAMESPACE__.'\ScriptConfiguration');
+        $this->configuration = new Configuration(
             'foo',
             'bar',
             'baz',
             'qux',
             array('doom', 'splat'),
             'ping',
-            $this->_time,
+            $this->time,
             array('pong', 'prong'),
-            $this->_authors,
-            $this->_support,
+            $this->authors,
+            $this->support,
             array('pang' => 'peng'),
             array('pung' => 'pip'),
             array('pop' => 'pap'),
@@ -58,49 +59,57 @@ class ConfigurationTest extends PHPUnit_Framework_TestCase
             array('tot', 'tut'),
             array('mat', 'met'),
             'mit',
-            $this->_minimumStability,
-            $this->_repositories,
-            $this->_config,
-            $this->_scripts,
+            $this->minimumStability,
+            $this->repositories,
+            $this->config,
+            $this->scripts,
             'mot',
             array('mut', 'rat'),
             'ret'
         );
     }
 
+    public function testNoPublicMembers()
+    {
+        $reflector = new ReflectionObject($this->configuration);
+        foreach ($reflector->getProperties() as $property) {
+            $this->assertFalse($property->isPublic());
+        }
+    }
+
     public function testConstructor()
     {
-        $this->assertSame('foo', $this->_configuration->name());
-        $this->assertSame('bar', $this->_configuration->description());
-        $this->assertSame('baz', $this->_configuration->version());
-        $this->assertSame('qux', $this->_configuration->type());
-        $this->assertSame(array('doom', 'splat'), $this->_configuration->keywords());
-        $this->assertSame('ping', $this->_configuration->homepage());
-        $this->assertSame($this->_time, $this->_configuration->time());
-        $this->assertSame(array('pong', 'prong'), $this->_configuration->license());
-        $this->assertSame($this->_authors, $this->_configuration->authors());
-        $this->assertSame($this->_support, $this->_configuration->support());
-        $this->assertSame(array('pang' => 'peng'), $this->_configuration->dependencies());
-        $this->assertSame(array('pung' => 'pip'), $this->_configuration->devDependencies());
-        $this->assertSame(array('pop' => 'pap'), $this->_configuration->conflict());
-        $this->assertSame(array('pep' => 'pup'), $this->_configuration->replace());
-        $this->assertSame(array('bat' => 'bet'), $this->_configuration->provide());
-        $this->assertSame(array('bit' => 'bot'), $this->_configuration->suggest());
+        $this->assertSame('foo', $this->configuration->name());
+        $this->assertSame('bar', $this->configuration->description());
+        $this->assertSame('baz', $this->configuration->version());
+        $this->assertSame('qux', $this->configuration->type());
+        $this->assertSame(array('doom', 'splat'), $this->configuration->keywords());
+        $this->assertSame('ping', $this->configuration->homepage());
+        $this->assertSame($this->time, $this->configuration->time());
+        $this->assertSame(array('pong', 'prong'), $this->configuration->license());
+        $this->assertSame($this->authors, $this->configuration->authors());
+        $this->assertSame($this->support, $this->configuration->support());
+        $this->assertSame(array('pang' => 'peng'), $this->configuration->dependencies());
+        $this->assertSame(array('pung' => 'pip'), $this->configuration->devDependencies());
+        $this->assertSame(array('pop' => 'pap'), $this->configuration->conflict());
+        $this->assertSame(array('pep' => 'pup'), $this->configuration->replace());
+        $this->assertSame(array('bat' => 'bet'), $this->configuration->provide());
+        $this->assertSame(array('bit' => 'bot'), $this->configuration->suggest());
         $this->assertSame(array(
             'but' => array('tat', 'tart'),
             'wert' => array('wurt'),
-        ), $this->_configuration->autoloadPSR0());
-        $this->assertSame(array('tet', 'tit'), $this->_configuration->autoloadClassmap());
-        $this->assertSame(array('tot', 'tut'), $this->_configuration->autoloadFiles());
-        $this->assertSame(array('mat', 'met'), $this->_configuration->includePath());
-        $this->assertSame('mit', $this->_configuration->targetDir());
-        $this->assertSame($this->_minimumStability, $this->_configuration->minimumStability());
-        $this->assertSame($this->_repositories, $this->_configuration->repositories());
-        $this->assertSame($this->_config, $this->_configuration->config());
-        $this->assertSame($this->_scripts, $this->_configuration->scripts());
-        $this->assertSame('mot', $this->_configuration->extra());
-        $this->assertSame(array('mut', 'rat'), $this->_configuration->bin());
-        $this->assertSame('ret', $this->_configuration->rawData());
+        ), $this->configuration->autoloadPsr0());
+        $this->assertSame(array('tet', 'tit'), $this->configuration->autoloadClassmap());
+        $this->assertSame(array('tot', 'tut'), $this->configuration->autoloadFiles());
+        $this->assertSame(array('mat', 'met'), $this->configuration->includePath());
+        $this->assertSame('mit', $this->configuration->targetDir());
+        $this->assertSame($this->minimumStability, $this->configuration->minimumStability());
+        $this->assertSame($this->repositories, $this->configuration->repositories());
+        $this->assertSame($this->config, $this->configuration->config());
+        $this->assertSame($this->scripts, $this->configuration->scripts());
+        $this->assertSame('mot', $this->configuration->extra());
+        $this->assertSame(array('mut', 'rat'), $this->configuration->bin());
+        $this->assertSame('ret', $this->configuration->rawData());
     }
 
     public function testConstructorDefaults()
@@ -123,7 +132,7 @@ class ConfigurationTest extends PHPUnit_Framework_TestCase
         $this->assertSame(array(), $configuration->replace());
         $this->assertSame(array(), $configuration->provide());
         $this->assertSame(array(), $configuration->suggest());
-        $this->assertSame(array(), $configuration->autoloadPSR0());
+        $this->assertSame(array(), $configuration->autoloadPsr0());
         $this->assertSame(array(), $configuration->autoloadClassmap());
         $this->assertSame(array(), $configuration->autoloadFiles());
         $this->assertSame(array(), $configuration->includePath());
@@ -143,7 +152,6 @@ class ConfigurationTest extends PHPUnit_Framework_TestCase
 
         $this->assertSame('baz', $configuration->projectName());
 
-
         $configuration = new Configuration;
 
         $this->assertNull($configuration->projectName());
@@ -155,11 +163,9 @@ class ConfigurationTest extends PHPUnit_Framework_TestCase
 
         $this->assertSame('foo/bar', $configuration->vendorName());
 
-
         $configuration = new Configuration;
 
         $this->assertNull($configuration->vendorName());
-
 
         $configuration = new Configuration('foo');
 
@@ -171,16 +177,16 @@ class ConfigurationTest extends PHPUnit_Framework_TestCase
         $this->assertSame(array(
             'pang' => 'peng',
             'pung' => 'pip',
-        ), $this->_configuration->allDependencies());
+        ), $this->configuration->allDependencies());
     }
 
-    public function testAllPSR0SourcePaths()
+    public function testAllPsr0SourcePaths()
     {
         $this->assertSame(array(
             'tat',
             'tart',
             'wurt',
-        ), $this->_configuration->allPSR0SourcePaths());
+        ), $this->configuration->allPsr0SourcePaths());
     }
 
     public function testAllSourcePaths()
@@ -195,6 +201,6 @@ class ConfigurationTest extends PHPUnit_Framework_TestCase
             'tut',
             'mat',
             'met',
-        ), $this->_configuration->allSourcePaths());
+        ), $this->configuration->allSourcePaths());
     }
 }
