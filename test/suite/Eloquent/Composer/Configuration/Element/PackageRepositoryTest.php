@@ -12,6 +12,7 @@
 namespace Eloquent\Composer\Configuration\Element;
 
 use PHPUnit_Framework_TestCase;
+use ReflectionObject;
 
 class PackageRepositoryTest extends PHPUnit_Framework_TestCase
 {
@@ -37,5 +38,15 @@ class PackageRepositoryTest extends PHPUnit_Framework_TestCase
 
         $this->assertSame(array(), $repository->options());
         $this->assertNull($repository->rawData());
+    }
+
+    public function testNoPublicMembers()
+    {
+        $reflector = new ReflectionObject(
+            new PackageRepository(array('foo' => 'bar'))
+        );
+        foreach ($reflector->getProperties() as $property) {
+            $this->assertFalse($property->isPublic());
+        }
     }
 }

@@ -12,6 +12,7 @@
 namespace Eloquent\Composer\Configuration\Element;
 
 use PHPUnit_Framework_TestCase;
+use ReflectionObject;
 
 class AuthorTest extends PHPUnit_Framework_TestCase
 {
@@ -42,5 +43,13 @@ class AuthorTest extends PHPUnit_Framework_TestCase
         $this->assertNull($author->homepage());
         $this->assertNull($author->role());
         $this->assertNull($author->rawData());
+    }
+
+    public function testNoPublicMembers()
+    {
+        $reflector = new ReflectionObject(new Author('foo'));
+        foreach ($reflector->getProperties() as $property) {
+            $this->assertFalse($property->isPublic());
+        }
     }
 }

@@ -12,6 +12,7 @@
 namespace Eloquent\Composer\Configuration\Element;
 
 use PHPUnit_Framework_TestCase;
+use ReflectionObject;
 
 class ProjectConfigurationTest extends PHPUnit_Framework_TestCase
 {
@@ -44,5 +45,13 @@ class ProjectConfigurationTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($config->notifyOnInstall());
         $this->assertSame(array('git', 'https', 'http'), $config->githubProtocols());
         $this->assertNull($config->rawData());
+    }
+
+    public function testNoPublicMembers()
+    {
+        $reflector = new ReflectionObject(new ProjectConfiguration);
+        foreach ($reflector->getProperties() as $property) {
+            $this->assertFalse($property->isPublic());
+        }
     }
 }

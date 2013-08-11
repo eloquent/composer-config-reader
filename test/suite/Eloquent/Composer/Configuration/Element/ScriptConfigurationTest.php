@@ -12,6 +12,7 @@
 namespace Eloquent\Composer\Configuration\Element;
 
 use PHPUnit_Framework_TestCase;
+use ReflectionObject;
 
 class ScriptConfigurationTest extends PHPUnit_Framework_TestCase
 {
@@ -59,5 +60,13 @@ class ScriptConfigurationTest extends PHPUnit_Framework_TestCase
         $this->assertSame(array(), $scripts->prePackageUninstall());
         $this->assertSame(array(), $scripts->postPackageUninstall());
         $this->assertNull($scripts->rawData());
+    }
+
+    public function testNoPublicMembers()
+    {
+        $reflector = new ReflectionObject(new ScriptConfiguration);
+        foreach ($reflector->getProperties() as $property) {
+            $this->assertFalse($property->isPublic());
+        }
     }
 }

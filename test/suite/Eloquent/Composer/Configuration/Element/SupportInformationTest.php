@@ -12,6 +12,7 @@
 namespace Eloquent\Composer\Configuration\Element;
 
 use PHPUnit_Framework_TestCase;
+use ReflectionObject;
 
 class SupportInformationTest extends PHPUnit_Framework_TestCase
 {
@@ -47,5 +48,13 @@ class SupportInformationTest extends PHPUnit_Framework_TestCase
         $this->assertNull($repository->irc());
         $this->assertNull($repository->source());
         $this->assertNull($repository->rawData());
+    }
+
+    public function testNoPublicMembers()
+    {
+        $reflector = new ReflectionObject(new SupportInformation);
+        foreach ($reflector->getProperties() as $property) {
+            $this->assertFalse($property->isPublic());
+        }
     }
 }
