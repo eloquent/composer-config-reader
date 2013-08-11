@@ -80,6 +80,8 @@ EOD;
             null,
             null,
             null,
+            null,
+            null,
             $rawData
         );
         $data['Empty configuration'] = array($expected, $json);
@@ -154,6 +156,7 @@ EOD;
     "include-path": ["lib-old", "src-old"],
     "target-dir": "Symfony/Component/Yaml",
     "minimum-stability": "dev",
+    "prefer-stable": true,
     "repositories": [
         {
             "type": "composer",
@@ -218,7 +221,10 @@ EOD;
         ]
     },
     "extra": {"foo": "bar"},
-    "bin": ["bin/my-script", "bin/my-other-script"]
+    "bin": ["bin/my-script", "bin/my-other-script"],
+    "archive": {
+        "exclude": ["patternA", "patternB"]
+    }
 }
 EOD;
         $rawData = json_decode($json);
@@ -289,6 +295,7 @@ EOD;
             array('lib-old', 'src-old'),
             'Symfony/Component/Yaml',
             Element\Stability::DEV(),
+            true,
             array(
                 new Element\Repository(
                     'composer',
@@ -362,8 +369,13 @@ EOD;
             ),
             $rawData->extra,
             array('bin/my-script', 'bin/my-other-script'),
+            new Element\ArchiveConfiguration(
+                array('patternA', 'patternB'),
+                $rawData->archive
+            ),
             $rawData
         );
+
         $data['Full configuration'] = array($expected, $json);
 
         return $data;
@@ -451,6 +463,8 @@ EOD;
             array(
                 'Eloquent\Composer\Configuration' => array('src'),
             ),
+            null,
+            null,
             null,
             null,
             null,

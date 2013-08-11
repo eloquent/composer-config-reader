@@ -34,6 +34,7 @@ class ConfigurationTest extends PHPUnit_Framework_TestCase
         );
         $this->config = Phake::mock(__NAMESPACE__.'\ProjectConfiguration');
         $this->scripts = Phake::mock(__NAMESPACE__.'\ScriptConfiguration');
+        $this->archive = Phake::mock(__NAMESPACE__.'\ArchiveConfiguration');
         $this->configuration = new Configuration(
             'foo',
             'bar',
@@ -60,11 +61,13 @@ class ConfigurationTest extends PHPUnit_Framework_TestCase
             array('mat', 'met'),
             'mit',
             $this->minimumStability,
+            true,
             $this->repositories,
             $this->config,
             $this->scripts,
             'mot',
             array('mut', 'rat'),
+            $this->archive,
             'ret'
         );
     }
@@ -104,46 +107,50 @@ class ConfigurationTest extends PHPUnit_Framework_TestCase
         $this->assertSame(array('mat', 'met'), $this->configuration->includePath());
         $this->assertSame('mit', $this->configuration->targetDir());
         $this->assertSame($this->minimumStability, $this->configuration->minimumStability());
+        $this->assertTrue($this->configuration->preferStable());
         $this->assertSame($this->repositories, $this->configuration->repositories());
         $this->assertSame($this->config, $this->configuration->config());
         $this->assertSame($this->scripts, $this->configuration->scripts());
         $this->assertSame('mot', $this->configuration->extra());
         $this->assertSame(array('mut', 'rat'), $this->configuration->bin());
+        $this->assertSame($this->archive, $this->configuration->archive());
         $this->assertSame('ret', $this->configuration->rawData());
     }
 
     public function testConstructorDefaults()
     {
-        $configuration = new Configuration;
+        $this->configuration = new Configuration;
 
-        $this->assertNull($configuration->name());
-        $this->assertNull($configuration->description());
-        $this->assertNull($configuration->version());
-        $this->assertSame('library', $configuration->type());
-        $this->assertSame(array(), $configuration->keywords());
-        $this->assertNull($configuration->homepage());
-        $this->assertNull($configuration->time());
-        $this->assertSame(array(), $configuration->license());
-        $this->assertSame(array(), $configuration->authors());
-        $this->assertInstanceOf(__NAMESPACE__.'\SupportInformation', $configuration->support());
-        $this->assertSame(array(), $configuration->dependencies());
-        $this->assertSame(array(), $configuration->devDependencies());
-        $this->assertSame(array(), $configuration->conflict());
-        $this->assertSame(array(), $configuration->replace());
-        $this->assertSame(array(), $configuration->provide());
-        $this->assertSame(array(), $configuration->suggest());
-        $this->assertSame(array(), $configuration->autoloadPsr0());
-        $this->assertSame(array(), $configuration->autoloadClassmap());
-        $this->assertSame(array(), $configuration->autoloadFiles());
-        $this->assertSame(array(), $configuration->includePath());
-        $this->assertNull($configuration->targetDir());
-        $this->assertSame(Stability::STABLE(), $configuration->minimumStability());
-        $this->assertSame(array(), $configuration->repositories());
-        $this->assertInstanceOf(__NAMESPACE__.'\ProjectConfiguration', $configuration->config());
-        $this->assertInstanceOf(__NAMESPACE__.'\ScriptConfiguration', $configuration->scripts());
-        $this->assertNull($configuration->extra());
-        $this->assertSame(array(), $configuration->bin());
-        $this->assertNull($configuration->rawData());
+        $this->assertNull($this->configuration->name());
+        $this->assertNull($this->configuration->description());
+        $this->assertNull($this->configuration->version());
+        $this->assertSame('library', $this->configuration->type());
+        $this->assertSame(array(), $this->configuration->keywords());
+        $this->assertNull($this->configuration->homepage());
+        $this->assertNull($this->configuration->time());
+        $this->assertSame(array(), $this->configuration->license());
+        $this->assertSame(array(), $this->configuration->authors());
+        $this->assertInstanceOf(__NAMESPACE__.'\SupportInformation', $this->configuration->support());
+        $this->assertSame(array(), $this->configuration->dependencies());
+        $this->assertSame(array(), $this->configuration->devDependencies());
+        $this->assertSame(array(), $this->configuration->conflict());
+        $this->assertSame(array(), $this->configuration->replace());
+        $this->assertSame(array(), $this->configuration->provide());
+        $this->assertSame(array(), $this->configuration->suggest());
+        $this->assertSame(array(), $this->configuration->autoloadPsr0());
+        $this->assertSame(array(), $this->configuration->autoloadClassmap());
+        $this->assertSame(array(), $this->configuration->autoloadFiles());
+        $this->assertSame(array(), $this->configuration->includePath());
+        $this->assertNull($this->configuration->targetDir());
+        $this->assertSame(Stability::STABLE(), $this->configuration->minimumStability());
+        $this->assertFalse($this->configuration->preferStable());
+        $this->assertSame(array(), $this->configuration->repositories());
+        $this->assertInstanceOf(__NAMESPACE__.'\ProjectConfiguration', $this->configuration->config());
+        $this->assertInstanceOf(__NAMESPACE__.'\ScriptConfiguration', $this->configuration->scripts());
+        $this->assertNull($this->configuration->extra());
+        $this->assertSame(array(), $this->configuration->bin());
+        $this->assertInstanceOf(__NAMESPACE__.'\ArchiveConfiguration', $this->configuration->archive());
+        $this->assertNull($this->configuration->rawData());
     }
 
     public function testProjectName()

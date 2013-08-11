@@ -120,11 +120,13 @@ class ConfigurationReader
             $data->getDefault('include-path'),
             $data->getDefault('target-dir'),
             $this->createMinimumStability($data->getDefault('minimum-stability')),
+            $data->getDefault('prefer-stable'),
             $this->createRepositories($data->getDefault('repositories')),
             $this->createProjectConfiguration($data->getDefault('config')),
             $this->createScripts($data->getDefault('scripts')),
             $data->getDefault('extra'),
             $data->getDefault('bin'),
+            $this->createArchiveConfiguration($data->getDefault('archive')),
             $data->data()
         );
     }
@@ -322,6 +324,24 @@ class ConfigurationReader
         }
 
         return $scripts;
+    }
+
+    /**
+     * @param stdClass|null $archive
+     *
+     * @return Element\ArchiveConfiguration
+     */
+    protected function createArchiveConfiguration(stdClass $archive = null)
+    {
+        if (null !== $archive) {
+            $archiveData = new ObjectAccess($archive);
+            $archive = new Element\ArchiveConfiguration(
+                $archiveData->getDefault('exclude'),
+                $archiveData->data()
+            );
+        }
+
+        return $archive;
     }
 
     /**

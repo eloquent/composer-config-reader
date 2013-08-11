@@ -49,11 +49,13 @@ class Configuration
      * @param array<string>|null               $includePath      Include path autoloading configuration for the package.
      * @param string|null                      $targetDir        The target directory for installation.
      * @param Stability|null                   $minimumStability The minimum stability for packages.
+     * @param boolean|null                     $preferStable     True if stable packages should take precedence.
      * @param array<AbstractRepository>        $repositories     The custom repositories used by this package.
      * @param ProjectConfiguration|null        $config           The configuration options for the package that are specific to project-type repositories.
      * @param ScriptConfiguration|null         $scripts          The hook scripts for the package.
      * @param mixed                            $extra            Arbitrary extra data contained in the project's configuration.
-     * @param array<string>                    $bin              Binary executable files provided by the package.
+     * @param array<string>|null               $bin              Binary executable files provided by the package.
+     * @param ArchiveConfiguration|null        $archive          The archive configuration for the package.
      * @param mixed                            $rawData          The raw data describing the configuration.
      */
     public function __construct(
@@ -79,11 +81,13 @@ class Configuration
         array $includePath = null,
         $targetDir = null,
         Stability $minimumStability = null,
+        $preferStable = null,
         array $repositories = null,
         ProjectConfiguration $config = null,
         ScriptConfiguration $scripts = null,
         $extra = null,
         array $bin = null,
+        ArchiveConfiguration $archive = null,
         $rawData = null
     ) {
         if (null === $type) {
@@ -134,6 +138,9 @@ class Configuration
         if (null === $minimumStability) {
             $minimumStability = Stability::STABLE();
         }
+        if (null === $preferStable) {
+            $preferStable = false;
+        }
         if (null === $repositories) {
             $repositories = array();
         }
@@ -142,6 +149,9 @@ class Configuration
         }
         if (null === $scripts) {
             $scripts = new ScriptConfiguration;
+        }
+        if (null === $archive) {
+            $archive = new ArchiveConfiguration;
         }
         if (null === $bin) {
             $bin = array();
@@ -169,11 +179,13 @@ class Configuration
         $this->includePath = $includePath;
         $this->targetDir = $targetDir;
         $this->minimumStability = $minimumStability;
+        $this->preferStable = $preferStable;
         $this->repositories = $repositories;
         $this->config = $config;
         $this->scripts = $scripts;
         $this->extra = $extra;
         $this->bin = $bin;
+        $this->archive = $archive;
         $this->rawData = $rawData;
     }
 
@@ -481,6 +493,16 @@ class Configuration
     }
 
     /**
+     * Returns true if stable packages should take precedence.
+     *
+     * @return boolean True if stable packages should take precedence.
+     */
+    public function preferStable()
+    {
+        return $this->preferStable;
+    }
+
+    /**
      * Get the custom repositories used by this package.
      *
      * @return array<AbstractRepository> The custom repositories.
@@ -532,6 +554,16 @@ class Configuration
     }
 
     /**
+     * Get the archive configuration for the package.
+     *
+     * @return ArchiveConfiguration The archive configuration.
+     */
+    public function archive()
+    {
+        return $this->archive;
+    }
+
+    /**
      * Get the raw configuration data.
      *
      * @return mixed The raw configuration data.
@@ -563,10 +595,12 @@ class Configuration
     private $includePath;
     private $targetDir;
     private $minimumStability;
+    private $preferStable;
     private $repositories;
     private $config;
     private $scripts;
     private $extra;
     private $bin;
+    private $archive;
     private $rawData;
 }
