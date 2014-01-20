@@ -15,7 +15,7 @@ use PHPUnit_Framework_TestCase;
 
 class StabilityTest extends PHPUnit_Framework_TestCase
 {
-    public function testMultitonInstances()
+    public function testMembers()
     {
         $this->assertSame(
             array(
@@ -25,14 +25,7 @@ class StabilityTest extends PHPUnit_Framework_TestCase
                 'RC' => Stability::RC(),
                 'STABLE' => Stability::STABLE(),
             ),
-            Stability::multitonInstances()
+            Stability::members()
         );
-    }
-
-    public function testInstanceByValueIgnoreCase()
-    {
-        $this->assertSame(Stability::DEV(), Stability::instanceByValueIgnoreCase('dev'));
-        $this->assertSame(Stability::DEV(), Stability::instanceByValueIgnoreCase('Dev'));
-        $this->assertSame(Stability::DEV(), Stability::instanceByValueIgnoreCase('DEV'));
     }
 }

@@ -56,8 +56,7 @@ class ObjectAccess
      * @param string $property The property name.
      *
      * @return mixed                                The value of the property.
-     * @throws Exception\UndefinedPropertyException If the property does not
-     *     exist.
+     * @throws Exception\UndefinedPropertyException If the property does not exist.
      */
     public function get($property)
     {

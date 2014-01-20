@@ -1,4 +1,4 @@
-<?php
+<?php // @codeCoverageIgnoreStart
 
 /*
  * This file is part of the Composer configuration reader package.
@@ -11,12 +11,12 @@
 
 namespace Eloquent\Composer\Configuration\Element;
 
-use Eloquent\Enumeration\Enumeration;
+use Eloquent\Enumeration\AbstractEnumeration;
 
 /**
  * An enumeration of package stabilities.
  */
-final class Stability extends Enumeration
+final class Stability extends AbstractEnumeration
 {
     /**
      * Development stability.
@@ -42,16 +42,4 @@ final class Stability extends Enumeration
      * Stable stability.
      */
     const STABLE = 'stable';
-
-    /**
-     * Get a stability by value, ignoring case.
-     *
-     * @param scalar $value The stability string.
-     *
-     * @return Stability The stability enumeration value.
-     */
-    final public static function instanceByValueIgnoreCase($value)
-    {
-        return parent::instanceByValue(mb_strtolower($value));
-    }
 }

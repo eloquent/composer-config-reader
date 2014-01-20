@@ -21,8 +21,7 @@ class PackageRepository extends AbstractRepository
      *
      * @param array                    $packageData The raw package data.
      * @param array<string,mixed>|null $options     The repository options.
-     * @param mixed                    $rawData     The raw data describing the
-     *     repository.
+     * @param mixed                    $rawData     The raw data describing the repository.
      */
     public function __construct(
         array $packageData,

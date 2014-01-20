@@ -61,8 +61,7 @@ class ConfigurationValidator
      *
      * @param mixed $data The configuration data.
      *
-     * @throws Exception\InvalidConfigurationExceptionInterface If the data is
-     *     invalid.
+     * @throws Exception\InvalidConfigurationExceptionInterface If the data is invalid.
      */
     public function validate($data)
     {
@@ -91,13 +90,10 @@ class ConfigurationValidator
      */
     protected function defaultSchemaPath()
     {
-        $atoms = array(
-            dirname(dirname(dirname(dirname(__DIR__)))),
-            'etc',
-            'composer-schema.json',
+        return implode(
+            DIRECTORY_SEPARATOR,
+            array(dirname(__DIR__), 'etc', 'composer-schema.json')
         );
-
-        return implode(DIRECTORY_SEPARATOR, $atoms);
     }
 
     private $schema;

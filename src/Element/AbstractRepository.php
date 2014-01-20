@@ -21,8 +21,7 @@ abstract class AbstractRepository
      *
      * @param string                   $type    The repository type.
      * @param array<string,mixed>|null $options The repository options.
-     * @param mixed                    $rawData The raw data describing the
-     *     repository.
+     * @param mixed                    $rawData The raw data describing the repository.
      */
     public function __construct(
         $type,

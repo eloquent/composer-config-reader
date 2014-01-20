@@ -425,7 +425,7 @@ EOD;
     public function testReadReal()
     {
         $reader = new ConfigurationReader;
-        $path = __DIR__.'/../../../../../composer.json';
+        $path = __DIR__.'/../../composer.json';
         $rawData = json_decode(file_get_contents($path));
         $expected = new Element\Configuration(
             'eloquent/composer-config-reader',
@@ -448,20 +448,20 @@ EOD;
             null,
             array(
                 'php' => '>=5.3',
-                'eloquent/enumeration' => '~3',
+                'eloquent/enumeration' => '~5',
                 'eloquent/liberator' => '~1',
                 'icecave/isolator' => '~2',
                 'justinrainbow/json-schema' => '~1',
             ),
             array(
-                'icecave/archer' => '1.0.0-alpha.2',
+                'icecave/archer' => '~1',
             ),
             null,
             null,
             null,
             null,
             array(
-                'Eloquent\Composer\Configuration' => array('src'),
+                // 'Eloquent\Composer\Configuration' => array('src'),
             ),
             null,
             null,

@@ -227,7 +227,7 @@ class ConfigurationReader
     protected function createMinimumStability($stability)
     {
         if (null !== $stability) {
-            $stability = Element\Stability::instanceByValueIgnoreCase($stability);
+            $stability = Element\Stability::memberByValue($stability, false);
         }
 
         return $stability;

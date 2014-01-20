@@ -62,7 +62,7 @@ class ConfigurationValidatorTest extends PHPUnit_Framework_TestCase
         );
         $expectedSchema = json_decode($schemaJSON);
         $expectedSchemaPathAtoms = array(
-            dirname(dirname(dirname(dirname(dirname(__DIR__))))),
+            dirname(dirname(__DIR__)),
             'etc',
             'composer-schema.json',
         );

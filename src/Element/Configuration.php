@@ -434,8 +434,7 @@ class Configuration
     /**
      * Get the include path autoloading configuration for the package.
      *
-     * @return array<string> The include path autoloading configuration for the
-     *     package.
+     * @return array<string> The include path autoloading configuration for the package.
      */
     public function includePath()
     {
