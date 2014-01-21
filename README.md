@@ -132,22 +132,22 @@ See [Scripts].
 
 <!-- References -->
 
-[Author]: src/Element/Author.php
+[Author]: http://lqnt.co/composer-config-reader/artifacts/documentation/api/Eloquent/Composer/Configuration/Element/Author.php
 [authors]: http://getcomposer.org/doc/04-schema.md#authors
 [Composer schema]: http://getcomposer.org/doc/04-schema.md
 [config]: http://getcomposer.org/doc/04-schema.md#config
-[Configuration]: src/Element/Configuration.php
+[Configuration]: http://lqnt.co/composer-config-reader/artifacts/documentation/api/Eloquent/Composer/Configuration/Element/Configuration.php
 [enumeration]: https://github.com/eloquent/enumeration
 [minimum-stability]: http://getcomposer.org/doc/04-schema.md#minimum-stability
-[PackageRepository]: src/Element/PackageRepository.php
-[ProjectConfiguration]: src/Element/ProjectConfiguration.php
+[PackageRepository]: http://lqnt.co/composer-config-reader/artifacts/documentation/api/Eloquent/Composer/Configuration/Element/PackageRepository.php
+[ProjectConfiguration]: http://lqnt.co/composer-config-reader/artifacts/documentation/api/Eloquent/Composer/Configuration/Element/ProjectConfiguration.php
 [Repositories]: http://getcomposer.org/doc/05-repositories.md
-[Repository]: src/Element/Repository.php
-[ScriptConfiguration]: src/Element/ScriptConfiguration.php
+[Repository]: http://lqnt.co/composer-config-reader/artifacts/documentation/api/Eloquent/Composer/Configuration/Element/Repository.php
+[ScriptConfiguration]: http://lqnt.co/composer-config-reader/artifacts/documentation/api/Eloquent/Composer/Configuration/Element/ScriptConfiguration.php
 [Scripts]: http://getcomposer.org/doc/articles/scripts.md
-[Stability]: src/Element/Stability.php
+[Stability]: http://lqnt.co/composer-config-reader/artifacts/documentation/api/Eloquent/Composer/Configuration/Element/Stability.php
 [support]: http://getcomposer.org/doc/04-schema.md#support
-[SupportInformation]: src/Element/SupportInformation.php
+[SupportInformation]: http://lqnt.co/composer-config-reader/artifacts/documentation/api/Eloquent/Composer/Configuration/Element/SupportInformation.php
 
 [API documentation]: http://lqnt.co/composer-config-reader/artifacts/documentation/api/
 [Build status shield]: http://b.adge.me/travis/eloquent/composer-config-reader/develop.svg
