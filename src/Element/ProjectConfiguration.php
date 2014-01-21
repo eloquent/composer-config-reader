@@ -11,6 +11,8 @@
 
 namespace Eloquent\Composer\Configuration\Element;
 
+use Icecave\Isolator\Isolator;
+
 /**
  * Represents configuration specific to project-type packages.
  */
@@ -19,43 +21,177 @@ class ProjectConfiguration
     /**
      * Construct a new project configuration.
      *
-     * @param string|null        $vendorDir       The vendor directory.
-     * @param string|null        $binDir          The binary executable directory.
-     * @param integer|null       $processTimeout  The process timeout.
-     * @param boolean|null       $notifyOnInstall True if Composer should notify the repository on installation.
-     * @param array<string>|null $githubProtocols The protocols to use when cloning from GitHub.
-     * @param mixed              $rawData         The raw data describing the project configuration.
+     * @param integer|null               $processTimeout     The process timeout.
+     * @param boolean|null               $useIncludePath     True if the autoloader should look for classes in the PHP include path.
+     * @param InstallationMethod|null    $preferredInstall   The preffered installation method.
+     * @param array<integer,string>|null $githubProtocols    The protocols to use when cloning from GitHub.
+     * @param array<string,string>|null  $githubOauth        An associative array of domain name to GitHub OAuth token.
+     * @param string|null                $vendorDir          The vendor directory.
+     * @param string|null                $binDir             The binary executable directory.
+     * @param string|null                $cacheDir           The cache directory.
+     * @param string|null                $cacheFilesDir      The cache directory for package archives.
+     * @param string|null                $cacheRepoDir       The cache directory for package repositories.
+     * @param string|null                $cacheVcsDir        The cache directory for version control repositories.
+     * @param integer|null               $cacheFilesTtl      The cache time-to-live for package archives in seconds.
+     * @param integer|null               $cacheFilesMaxsize  The maximum size of the package archive cache in bytes.
+     * @param boolean|null               $prependAutoloader  True if the autoloader should be prepended to existing autoloaders.
+     * @param string|null                $autoloaderSuffix   The suffix used for the generated autoloader class name.
+     * @param boolean|null               $optimizeAutoloader True if the autoloader should always be optimized.
+     * @param array<integer,string>|null $githubDomains      The list of domains to use in GitHub mode.
+     * @param boolean|null               $notifyOnInstall    True if the repository should be notified on installation.
+     * @param VcsChangePolicy|null       $discardChanges     The policy for how to treat version control changes when installing or updating.
+     * @param mixed                      $rawData            The raw data describing the project configuration.
+     * @param Isolator|null              $isolator           The isolator to use.
      */
     public function __construct(
+        $processTimeout = null,
+        $useIncludePath = null,
+        InstallationMethod $preferredInstall = null,
+        array $githubProtocols = null,
+        array $githubOauth = null,
         $vendorDir = null,
         $binDir = null,
-        $processTimeout = null,
+        $cacheDir = null,
+        $cacheFilesDir = null,
+        $cacheRepoDir = null,
+        $cacheVcsDir = null,
+        $cacheFilesTtl = null,
+        $cacheFilesMaxsize = null,
+        $prependAutoloader = null,
+        $autoloaderSuffix = null,
+        $optimizeAutoloader = null,
+        array $githubDomains = null,
         $notifyOnInstall = null,
-        array $githubProtocols = null,
-        $rawData = null
+        VcsChangePolicy $discardChanges = null,
+        $rawData = null,
+        Isolator $isolator = null
     ) {
+        if (null === $processTimeout) {
+            $processTimeout = 300;
+        }
+        if (null === $useIncludePath) {
+            $useIncludePath = false;
+        }
+        if (null === $preferredInstall) {
+            $preferredInstall = InstallationMethod::AUTO();
+        }
+        if (null === $githubProtocols) {
+            $githubProtocols = array('git', 'https');
+        }
+        if (null === $githubOauth) {
+            $githubOauth = array();
+        }
         if (null === $vendorDir) {
             $vendorDir = 'vendor';
         }
         if (null === $binDir) {
             $binDir = 'vendor/bin';
         }
-        if (null === $processTimeout) {
-            $processTimeout = 300;
+        if (null === $cacheDir) {
+            $cacheDir = $this->defaultCacheDir(Isolator::get($isolator));
+        }
+        if (null === $cacheFilesDir && null !== $cacheDir) {
+            $cacheFilesDir = $cacheDir . '/files';
+        }
+        if (null === $cacheRepoDir && null !== $cacheDir) {
+            $cacheRepoDir = $cacheDir . '/repo';
+        }
+        if (null === $cacheVcsDir && null !== $cacheDir) {
+            $cacheVcsDir = $cacheDir . '/vcs';
+        }
+        if (null === $cacheFilesTtl) {
+            $cacheFilesTtl = 15552000;
+        }
+        if (null === $cacheFilesMaxsize) {
+            $cacheFilesMaxsize = 314572800;
+        }
+        if (null === $prependAutoloader) {
+            $prependAutoloader = true;
+        }
+        if (null === $optimizeAutoloader) {
+            $optimizeAutoloader = false;
+        }
+        if (null === $githubDomains) {
+            $githubDomains = array('github.com');
         }
         if (null === $notifyOnInstall) {
             $notifyOnInstall = true;
         }
-        if (null === $githubProtocols) {
-            $githubProtocols = array('git', 'https', 'http');
+        if (null === $discardChanges) {
+            $discardChanges = VcsChangePolicy::IGNORE();
         }
 
+        $this->processTimeout = $processTimeout;
+        $this->useIncludePath = $useIncludePath;
+        $this->preferredInstall = $preferredInstall;
+        $this->githubProtocols = $githubProtocols;
+        $this->githubOauth = $githubOauth;
         $this->vendorDir = $vendorDir;
         $this->binDir = $binDir;
-        $this->processTimeout = $processTimeout;
+        $this->cacheDir = $cacheDir;
+        $this->cacheFilesDir = $cacheFilesDir;
+        $this->cacheRepoDir = $cacheRepoDir;
+        $this->cacheVcsDir = $cacheVcsDir;
+        $this->cacheFilesTtl = $cacheFilesTtl;
+        $this->cacheFilesMaxsize = $cacheFilesMaxsize;
+        $this->prependAutoloader = $prependAutoloader;
+        $this->autoloaderSuffix = $autoloaderSuffix;
+        $this->optimizeAutoloader = $optimizeAutoloader;
+        $this->githubDomains = $githubDomains;
         $this->notifyOnInstall = $notifyOnInstall;
-        $this->githubProtocols = $githubProtocols;
+        $this->discardChanges = $discardChanges;
         $this->rawData = $rawData;
+    }
+
+    /**
+     * Get the process timeout.
+     *
+     * @return integer The process timeout.
+     */
+    public function processTimeout()
+    {
+        return $this->processTimeout;
+    }
+
+    /**
+     * Returns true if the autoloader should look for classes in the PHP include
+     * path.
+     *
+     * @return boolean True if the autoloader should look for classes in the PHP include path.
+     */
+    public function useIncludePath()
+    {
+        return $this->useIncludePath;
+    }
+
+    /**
+     * Get the preferred installation method.
+     *
+     * @return InstallationMethod The preferred installation method.
+     */
+    public function preferredInstall()
+    {
+        return $this->preferredInstall;
+    }
+
+    /**
+     * Get the protocols to use when cloning from GitHub.
+     *
+     * @return array<integer,string> The protocols to use when cloning from GitHub.
+     */
+    public function githubProtocols()
+    {
+        return $this->githubProtocols;
+    }
+
+    /**
+     * Get the GitHub OAuth tokens.
+     *
+     * @return array<string,string> The GitHub OAuth tokens.
+     */
+    public function githubOauth()
+    {
+        return $this->githubOauth;
     }
 
     /**
@@ -79,13 +215,104 @@ class ProjectConfiguration
     }
 
     /**
-     * Get the process timeout.
+     * Get the cache directory.
      *
-     * @return integer The process timeout.
+     * @return string|null The cache directory, or null if the directory could not be determined.
      */
-    public function processTimeout()
+    public function cacheDir()
     {
-        return $this->processTimeout;
+        return $this->cacheDir;
+    }
+
+    /**
+     * Get the cache directory for package archives.
+     *
+     * @return string|null The cache directory for package archives, or null if the directory could not be determined.
+     */
+    public function cacheFilesDir()
+    {
+        return $this->cacheFilesDir;
+    }
+
+    /**
+     * Get the cache directory for package repositories.
+     *
+     * @return string|null The cache directory for package repositories, or null if the directory could not be determined.
+     */
+    public function cacheRepoDir()
+    {
+        return $this->cacheRepoDir;
+    }
+
+    /**
+     * Get the cache directory for version control repositories.
+     *
+     * @return string|null The cache directory for version control repositories, or null if the directory could not be determined.
+     */
+    public function cacheVcsDir()
+    {
+        return $this->cacheVcsDir;
+    }
+
+    /**
+     * Get the cache time-to-live for package archives in seconds.
+     *
+     * @return integer The cache time-to-live for package archives in seconds.
+     */
+    public function cacheFilesTtl()
+    {
+        return $this->cacheFilesTtl;
+    }
+
+    /**
+     * Get the maximum size of the package archive cache in bytes.
+     *
+     * @return integer The maximum size of the package archive cache in bytes.
+     */
+    public function cacheFilesMaxsize()
+    {
+        return $this->cacheFilesMaxsize;
+    }
+
+    /**
+     * Returns true if the autoloader should be prepended to existing
+     * autoloaders.
+     *
+     * @return boolean True if the autoloader should be prepended to existing autoloaders.
+     */
+    public function prependAutoloader()
+    {
+        return $this->prependAutoloader;
+    }
+
+    /**
+     * Get the suffix used for the generated autoloader class name.
+     *
+     * @return string|null The suffix used for the generated autoloader class name, or null if the suffix is random.
+     */
+    public function autoloaderSuffix()
+    {
+        return $this->autoloaderSuffix;
+    }
+
+    /**
+     * Returns true if the autoloader should always be optimized.
+     *
+     * @return boolean True if the autoloader should always be optimized.
+     */
+    public function optimizeAutoloader()
+    {
+        return $this->optimizeAutoloader;
+    }
+
+    /**
+     * Get the list of domains to use in GitHub mode.
+     *
+     * @return array<integer,string> The list of domains to use in GitHub mode.
+     */
+    public function githubDomains()
+    {
+        return $this->githubDomains;
     }
 
     /**
@@ -99,13 +326,14 @@ class ProjectConfiguration
     }
 
     /**
-     * Get the protocols to use when cloning from GitHub.
+     * Get the policy for how to treat version control changes when installing
+     * or updating.
      *
-     * @return array<string> The protocols to use when cloning from GitHub.
+     * @return VcsChangePolicy The policy for how to treat version control changes when installing or updating.
      */
-    public function githubProtocols()
+    public function discardChanges()
     {
-        return $this->githubProtocols;
+        return $this->discardChanges;
     }
 
     /**
@@ -118,10 +346,72 @@ class ProjectConfiguration
         return $this->rawData;
     }
 
+    /**
+     * Get the default cache directory for the current environment.
+     *
+     * @param Isolator $isolator The isolator to use.
+     *
+     * @return string|null The default cache directory, or null if the cache directory could not be determined.
+     */
+    protected function defaultCacheDir(Isolator $isolator)
+    {
+        $cacheDir = $isolator->getenv('COMPOSER_CACHE_DIR');
+        if ($cacheDir) {
+            return $cacheDir;
+        }
+
+        $home = $isolator->getenv('COMPOSER_HOME');
+        $isWindows = $isolator->defined('PHP_WINDOWS_VERSION_MAJOR');
+
+        if (!$home) {
+            if ($isWindows) {
+                if ($envAppData = $isolator->getenv('APPDATA')) {
+                    $home = strtr($envAppData, '\\', '/') . '/Composer';
+                }
+            } elseif ($envHome = $isolator->getenv('HOME')) {
+                $home = rtrim($envHome, '/') . '/.composer';
+            }
+        }
+
+        if ($home && !$cacheDir) {
+            if ($isWindows) {
+                if ($cacheDir = $isolator->getenv('LOCALAPPDATA')) {
+                    $cacheDir .= '/Composer';
+                } else {
+                    $cacheDir = $home . '/cache';
+                }
+
+                $cacheDir = strtr($cacheDir, '\\', '/');
+            } else {
+                $cacheDir = $home.'/cache';
+            }
+        }
+
+        if (!$cacheDir) {
+            return null;
+        }
+
+        return $cacheDir;
+    }
+
+    private $processTimeout;
+    private $useIncludePath;
+    private $preferredInstall;
+    private $githubProtocols;
+    private $githubOauth;
     private $vendorDir;
     private $binDir;
-    private $processTimeout;
+    private $cacheDir;
+    private $cacheFilesDir;
+    private $cacheRepoDir;
+    private $cacheVcsDir;
+    private $cacheFilesTtl;
+    private $cacheFilesMaxsize;
+    private $prependAutoloader;
+    private $autoloaderSuffix;
+    private $optimizeAutoloader;
+    private $githubDomains;
     private $notifyOnInstall;
-    private $githubProtocols;
+    private $discardChanges;
     private $rawData;
 }

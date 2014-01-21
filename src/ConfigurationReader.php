@@ -305,11 +305,25 @@ class ConfigurationReader
         if (null !== $config) {
             $configData = new ObjectAccess($config);
             $config = new Element\ProjectConfiguration(
+                $configData->getDefault('process-timeout'),
+                $configData->getDefault('use-include-path'),
+                $configData->getDefault('preferred-install'),
+                $configData->getDefault('github-protocols'),
+                $configData->getDefault('github-oauth'),
                 $configData->getDefault('vendor-dir'),
                 $configData->getDefault('bin-dir'),
-                $configData->getDefault('process-timeout'),
+                $configData->getDefault('cache-dir'),
+                $configData->getDefault('cache-files-dir'),
+                $configData->getDefault('cache-repo-dir'),
+                $configData->getDefault('cache-vcs-dir'),
+                $configData->getDefault('cache-files-ttl'),
+                $configData->getDefault('cache-files-maxsize'),
+                $configData->getDefault('prepend-autoloader'),
+                $configData->getDefault('autoloader-suffix'),
+                $configData->getDefault('optimize-autoloader'),
+                $configData->getDefault('github-domains'),
                 $configData->getDefault('notify-on-install'),
-                $configData->getDefault('github-protocols'),
+                $configData->getDefault('discard-changes'),
                 $configData->data()
             );
         }
