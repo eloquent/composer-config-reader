@@ -132,22 +132,22 @@ See [Scripts].
 
 <!-- References -->
 
-[Author]: src/Configuration/Element/Author.php
+[Author]: src/Element/Author.php
 [authors]: http://getcomposer.org/doc/04-schema.md#authors
 [Composer schema]: http://getcomposer.org/doc/04-schema.md
 [config]: http://getcomposer.org/doc/04-schema.md#config
-[Configuration]: src/Configuration/Element/Configuration.php
+[Configuration]: src/Element/Configuration.php
 [enumeration]: https://github.com/eloquent/enumeration
 [minimum-stability]: http://getcomposer.org/doc/04-schema.md#minimum-stability
-[PackageRepository]: src/Configuration/Element/PackageRepository.php
-[ProjectConfiguration]: src/Configuration/Element/ProjectConfiguration.php
+[PackageRepository]: src/Element/PackageRepository.php
+[ProjectConfiguration]: src/Element/ProjectConfiguration.php
 [Repositories]: http://getcomposer.org/doc/05-repositories.md
-[Repository]: src/Configuration/Element/Repository.php
-[ScriptConfiguration]: src/Configuration/Element/ScriptConfiguration.php
+[Repository]: src/Element/Repository.php
+[ScriptConfiguration]: src/Element/ScriptConfiguration.php
 [Scripts]: http://getcomposer.org/doc/articles/scripts.md
-[Stability]: src/Configuration/Element/Stability.php
+[Stability]: src/Element/Stability.php
 [support]: http://getcomposer.org/doc/04-schema.md#support
-[SupportInformation]: src/Configuration/Element/SupportInformation.php
+[SupportInformation]: src/Element/SupportInformation.php
 
 [API documentation]: http://lqnt.co/composer-config-reader/artifacts/documentation/api/
 [Build status shield]: http://b.adge.me/travis/eloquent/composer-config-reader/develop.svg
