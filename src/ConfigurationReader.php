@@ -334,9 +334,11 @@ class ConfigurationReader
         return new Element\ProjectConfiguration(
             $configData->getDefault('process-timeout'),
             $configData->getDefault('use-include-path'),
-            $configData->getDefault('preferred-install'),
+            $this->createInstallationMethod(
+                $configData->getDefault('preferred-install')
+            ),
             $configData->getDefault('github-protocols'),
-            $configData->getDefault('github-oauth'),
+            $this->objectToArray($configData->getDefault('github-oauth')),
             $configData->getDefault('vendor-dir'),
             $configData->getDefault('bin-dir'),
             $cacheDir,
@@ -350,7 +352,9 @@ class ConfigurationReader
             $configData->getDefault('optimize-autoloader'),
             $configData->getDefault('github-domains'),
             $configData->getDefault('notify-on-install'),
-            $configData->getDefault('discard-changes'),
+            $this->createVcsChangePolicy(
+                $configData->getDefault('discard-changes')
+            ),
             $configData->data()
         );
     }
@@ -399,6 +403,38 @@ class ConfigurationReader
         }
 
         return $cacheDir;
+    }
+
+    /**
+     * Create a installation method enumeration from the supplied raw data.
+     *
+     * @param string|null $method The raw installation method data.
+     *
+     * @return Element\InstallationMethod|null The newly created installation method enumeration.
+     */
+    protected function createInstallationMethod($method)
+    {
+        if (null !== $method) {
+            $method = Element\InstallationMethod::memberByValue($method, false);
+        }
+
+        return $method;
+    }
+
+    /**
+     * Create a VCS change policy enumeration from the supplied raw data.
+     *
+     * @param string|null $policy The raw VCS change policy data.
+     *
+     * @return Element\VcsChangePolicy|null The newly created VCS change policy enumeration.
+     */
+    protected function createVcsChangePolicy($policy)
+    {
+        if (null !== $policy) {
+            $policy = Element\VcsChangePolicy::memberByValue($policy, false);
+        }
+
+        return $policy;
     }
 
     /**

@@ -103,6 +103,68 @@ EOD;
 
         $json = <<<'EOD'
 {
+    "config": {}
+}
+EOD;
+        $rawData = json_decode($json);
+        $expected = new Element\Configuration(
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            new Element\ProjectConfiguration(
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                '/path/to/composer/cache',
+                '/path/to/composer/cache/files',
+                '/path/to/composer/cache/repo',
+                '/path/to/composer/cache/vcs',
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                $rawData->config
+            ),
+            null,
+            null,
+            null,
+            null,
+            $rawData
+        );
+        $data['Project config with default cache path'] = array($expected, $json);
+
+        $json = <<<'EOD'
+{
     "name": "monolog/monolog",
     "description": "Logging for PHP 5.3",
     "version": "1.1.0",
@@ -216,11 +278,28 @@ EOD;
         }
     ],
     "config": {
+        "process-timeout": 111,
+        "use-include-path": true,
+        "preferred-install": "dist",
+        "github-protocols": ["ftp", "otp"],
+        "github-oauth": {
+            "hostA": "tokenA",
+            "hostB": "tokenB"
+        },
         "vendor-dir": "ext",
         "bin-dir": "bin",
-        "process-timeout": 111,
-        "github-protocols": ["ftp", "otp"],
-        "notify-on-install": false
+        "cache-dir": "cache",
+        "cache-files-dir": "cache-files",
+        "cache-repo-dir": "cache-repo",
+        "cache-vcs-dir": "cache-vcs",
+        "cache-files-ttl": 222,
+        "cache-files-maxsize": 333,
+        "prepend-autoloader": false,
+        "autoloader-suffix": "autoloaderSuffix",
+        "optimize-autoloader": true,
+        "github-domains": ["hostC", "hostD"],
+        "notify-on-install": false,
+        "discard-changes": true
     },
     "scripts": {
         "pre-install-cmd": "MyVendor\\MyClass::preInstall",
@@ -374,24 +453,24 @@ EOD;
             ),
             new Element\ProjectConfiguration(
                 111,
-                null,
-                null,
+                true,
+                Element\InstallationMethod::DIST(),
                 array('ftp', 'otp'),
-                null,
+                array('hostA' => 'tokenA', 'hostB' => 'tokenB'),
                 'ext',
                 'bin',
-                '/path/to/composer/cache',
-                '/path/to/composer/cache/files',
-                '/path/to/composer/cache/repo',
-                '/path/to/composer/cache/vcs',
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
+                'cache',
+                'cache-files',
+                'cache-repo',
+                'cache-vcs',
+                222,
+                333,
                 false,
-                null,
+                'autoloaderSuffix',
+                true,
+                array('hostC', 'hostD'),
+                false,
+                Element\VcsChangePolicy::DISCARD(),
                 $rawData->config
             ),
             new Element\ScriptConfiguration(
