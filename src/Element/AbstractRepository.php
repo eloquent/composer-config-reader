@@ -14,7 +14,7 @@ namespace Eloquent\Composer\Configuration\Element;
 /**
  * An abstract base class for repositories.
  */
-abstract class AbstractRepository
+abstract class AbstractRepository implements RepositoryInterface
 {
     /**
      * Construct a new repository.

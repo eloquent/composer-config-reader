@@ -61,7 +61,7 @@ class ConfigurationValidator
      *
      * @param mixed $data The configuration data.
      *
-     * @throws Exception\InvalidConfigurationExceptionInterface If the data is invalid.
+     * @throws Exception\ConfigurationExceptionInterface If the data is invalid.
      */
     public function validate($data)
     {
@@ -76,7 +76,9 @@ class ConfigurationValidator
     }
 
     /**
-     * @return stdClass
+     * Load the default Composer configuration schema.
+     *
+     * @return stdClass The parsed schema.
      */
     protected function loadDefaultSchema()
     {
@@ -86,7 +88,9 @@ class ConfigurationValidator
     }
 
     /**
-     * @return string
+     * Get the default Composer configuration schema path.
+     *
+     * @return string The schema path.
      */
     protected function defaultSchemaPath()
     {

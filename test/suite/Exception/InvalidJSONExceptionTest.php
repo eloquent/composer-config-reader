@@ -14,7 +14,7 @@ namespace Eloquent\Composer\Configuration\Exception;
 use Phake;
 use PHPUnit_Framework_TestCase;
 
-class InvalidJSONExceptionTest extends PHPUnit_Framework_TestCase
+class InvalidJsonExceptionTest extends PHPUnit_Framework_TestCase
 {
     public function exceptionData()
     {
@@ -53,7 +53,7 @@ class InvalidJSONExceptionTest extends PHPUnit_Framework_TestCase
     {
         $path = '/foo/bar';
         $previous = Phake::mock('Exception');
-        $exception = new InvalidJSONException($path, $jsonErrorCode, $previous);
+        $exception = new InvalidJsonException($path, $jsonErrorCode, $previous);
 
         $this->assertSame($path, $exception->path());
         $this->assertSame($jsonErrorCode, $exception->jsonErrorCode());

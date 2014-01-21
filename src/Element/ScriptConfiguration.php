@@ -19,23 +19,23 @@ class ScriptConfiguration
     /**
      * Construct a new script configuration.
      *
-     * @param array<string>|null $preInstallCmd          The pre-install commands.
-     * @param array<string>|null $postInstallCmd         The post-install commands.
-     * @param array<string>|null $preUpdateCmd           The pre-update commands.
-     * @param array<string>|null $postUpdateCmd          The post-update commands.
-     * @param array<string>|null $preStatusCmd           The pre-status commands.
-     * @param array<string>|null $postStatusCmd          The post-status commands.
-     * @param array<string>|null $prePackageInstall      The pre-package-install commands.
-     * @param array<string>|null $postPackageInstall     The post-package-install commands.
-     * @param array<string>|null $prePackageUpdate       The pre-package-update commands.
-     * @param array<string>|null $postPackageUpdate      The post-package-update commands.
-     * @param array<string>|null $prePackageUninstall    The pre-package-uninstall commands.
-     * @param array<string>|null $postPackageUninstall   The post-package-uninstall commands.
-     * @param array<string>|null $preAutoloadDump        The pre-autoload-dump commands.
-     * @param array<string>|null $postAutoloadDump       The post-autoload-dump commands.
-     * @param array<string>|null $postRootPackageInstall The post-root-package-install commands.
-     * @param array<string>|null $postCreateProjectCmd   The post-create-project commands.
-     * @param mixed              $rawData                The raw data describing the script configuration.
+     * @param array<integer,string>|null $preInstallCmd          The pre-install commands.
+     * @param array<integer,string>|null $postInstallCmd         The post-install commands.
+     * @param array<integer,string>|null $preUpdateCmd           The pre-update commands.
+     * @param array<integer,string>|null $postUpdateCmd          The post-update commands.
+     * @param array<integer,string>|null $preStatusCmd           The pre-status commands.
+     * @param array<integer,string>|null $postStatusCmd          The post-status commands.
+     * @param array<integer,string>|null $prePackageInstall      The pre-package-install commands.
+     * @param array<integer,string>|null $postPackageInstall     The post-package-install commands.
+     * @param array<integer,string>|null $prePackageUpdate       The pre-package-update commands.
+     * @param array<integer,string>|null $postPackageUpdate      The post-package-update commands.
+     * @param array<integer,string>|null $prePackageUninstall    The pre-package-uninstall commands.
+     * @param array<integer,string>|null $postPackageUninstall   The post-package-uninstall commands.
+     * @param array<integer,string>|null $preAutoloadDump        The pre-autoload-dump commands.
+     * @param array<integer,string>|null $postAutoloadDump       The post-autoload-dump commands.
+     * @param array<integer,string>|null $postRootPackageInstall The post-root-package-install commands.
+     * @param array<integer,string>|null $postCreateProjectCmd   The post-create-project commands.
+     * @param mixed                      $rawData                The raw data describing the script configuration.
      */
     public function __construct(
         array $preInstallCmd = null,
@@ -127,7 +127,7 @@ class ScriptConfiguration
     /**
      * Get the pre-install commands.
      *
-     * @return array<string> The pre-install commands.
+     * @return array<integer,string> The pre-install commands.
      */
     public function preInstallCmd()
     {
@@ -137,7 +137,7 @@ class ScriptConfiguration
     /**
      * Get the post-install commands.
      *
-     * @return array<string> The post-install commands.
+     * @return array<integer,string> The post-install commands.
      */
     public function postInstallCmd()
     {
@@ -147,7 +147,7 @@ class ScriptConfiguration
     /**
      * Get the pre-update commands.
      *
-     * @return array<string> The pre-update commands.
+     * @return array<integer,string> The pre-update commands.
      */
     public function preUpdateCmd()
     {
@@ -157,7 +157,7 @@ class ScriptConfiguration
     /**
      * Get the post-update commands.
      *
-     * @return array<string> The post-update commands.
+     * @return array<integer,string> The post-update commands.
      */
     public function postUpdateCmd()
     {
@@ -167,7 +167,7 @@ class ScriptConfiguration
     /**
      * Get the pre-status commands.
      *
-     * @return array<string> The pre-status commands.
+     * @return array<integer,string> The pre-status commands.
      */
     public function preStatusCmd()
     {
@@ -177,7 +177,7 @@ class ScriptConfiguration
     /**
      * Get the post-status commands.
      *
-     * @return array<string> The post-status commands.
+     * @return array<integer,string> The post-status commands.
      */
     public function postStatusCmd()
     {
@@ -187,7 +187,7 @@ class ScriptConfiguration
     /**
      * Get the pre-package-install commands.
      *
-     * @return array<string> The pre-package-install commands.
+     * @return array<integer,string> The pre-package-install commands.
      */
     public function prePackageInstall()
     {
@@ -197,7 +197,7 @@ class ScriptConfiguration
     /**
      * Get the post-package-install commands.
      *
-     * @return array<string> The post-package-install commands.
+     * @return array<integer,string> The post-package-install commands.
      */
     public function postPackageInstall()
     {
@@ -207,7 +207,7 @@ class ScriptConfiguration
     /**
      * Get the pre-package-update commands.
      *
-     * @return array<string> The pre-package-update commands.
+     * @return array<integer,string> The pre-package-update commands.
      */
     public function prePackageUpdate()
     {
@@ -217,7 +217,7 @@ class ScriptConfiguration
     /**
      * Get the post-package-update commands.
      *
-     * @return array<string> The post-package-update commands.
+     * @return array<integer,string> The post-package-update commands.
      */
     public function postPackageUpdate()
     {
@@ -227,7 +227,7 @@ class ScriptConfiguration
     /**
      * Get the pre-package-uninstall commands.
      *
-     * @return array<string> The pre-package-uninstall commands.
+     * @return array<integer,string> The pre-package-uninstall commands.
      */
     public function prePackageUninstall()
     {
@@ -237,7 +237,7 @@ class ScriptConfiguration
     /**
      * Get the post-package-uninstall commands.
      *
-     * @return array<string> The post-package-uninstall commands.
+     * @return array<integer,string> The post-package-uninstall commands.
      */
     public function postPackageUninstall()
     {
@@ -247,7 +247,7 @@ class ScriptConfiguration
     /**
      * Get the pre-autoload-dump commands.
      *
-     * @return array<string> The pre-autoload-dump commands.
+     * @return array<integer,string> The pre-autoload-dump commands.
      */
     public function preAutoloadDump()
     {
@@ -257,7 +257,7 @@ class ScriptConfiguration
     /**
      * Get the post-autoload-dump commands.
      *
-     * @return array<string> The post-autoload-dump commands.
+     * @return array<integer,string> The post-autoload-dump commands.
      */
     public function postAutoloadDump()
     {
@@ -267,7 +267,7 @@ class ScriptConfiguration
     /**
      * Get the post-root-package-install commands.
      *
-     * @return array<string> The post-root-package-install commands.
+     * @return array<integer,string> The post-root-package-install commands.
      */
     public function postRootPackageInstall()
     {
@@ -277,7 +277,7 @@ class ScriptConfiguration
     /**
      * Get the post-create-project commands.
      *
-     * @return array<string> The post-create-project commands.
+     * @return array<integer,string> The post-create-project commands.
      */
     public function postCreateProjectCmd()
     {

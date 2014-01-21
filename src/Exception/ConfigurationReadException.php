@@ -12,12 +12,11 @@
 namespace Eloquent\Composer\Configuration\Exception;
 
 use Exception;
-use RuntimeException;
 
 /**
  * The configuration could not be read.
  */
-final class ConfigurationReadException extends RuntimeException implements
+final class ConfigurationReadException extends Exception implements
     ConfigurationExceptionInterface
 {
     /**

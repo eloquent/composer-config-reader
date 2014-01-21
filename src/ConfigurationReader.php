@@ -54,7 +54,8 @@ class ConfigurationReader
      *
      * @param string $path The configuration file path.
      *
-     * @return Element\Configuration The parsed configuration.
+     * @return Element\Configuration                     The parsed configuration.
+     * @throws Exception\ConfigurationExceptionInterface If there is a problem reading the configuration.
      */
     public function read($path)
     {
@@ -65,9 +66,12 @@ class ConfigurationReader
     }
 
     /**
-     * @param string $path
+     * Read JSON data from the supplied path.
      *
-     * @return ObjectAccess
+     * @param string $path The path to read from.
+     *
+     * @return ObjectAccess                              The parsed data.
+     * @throws Exception\ConfigurationExceptionInterface If there is a problem reading the data.
      */
     protected function readJson($path)
     {
@@ -80,16 +84,18 @@ class ConfigurationReader
         $data = json_decode($jsonData);
         $jsonError = json_last_error();
         if (JSON_ERROR_NONE !== $jsonError) {
-            throw new Exception\InvalidJSONException($path, $jsonError);
+            throw new Exception\InvalidJsonException($path, $jsonError);
         }
 
         return new ObjectAccess($data);
     }
 
     /**
-     * @param ObjectAccess $data
+     * Create a configuration object from the supplied JSON data.
      *
-     * @return Element\Configuration
+     * @param ObjectAccess $data The parsed JSON data.
+     *
+     * @return Element\Configuration The newly created configuration object.
      */
     protected function createConfiguration(ObjectAccess $data)
     {
@@ -114,13 +120,13 @@ class ConfigurationReader
             $this->objectToArray($data->getDefault('replace')),
             $this->objectToArray($data->getDefault('provide')),
             $this->objectToArray($data->getDefault('suggest')),
-            $this->createAutoloadPsr4($autoloadData->getDefault('psr-4')),
-            $this->createAutoloadPsr0($autoloadData->getDefault('psr-0')),
+            $this->createAutoloadPsr($autoloadData->getDefault('psr-4')),
+            $this->createAutoloadPsr($autoloadData->getDefault('psr-0')),
             $autoloadData->getDefault('classmap'),
             $autoloadData->getDefault('files'),
             $data->getDefault('include-path'),
             $data->getDefault('target-dir'),
-            $this->createMinimumStability($data->getDefault('minimum-stability')),
+            $this->createStability($data->getDefault('minimum-stability')),
             $data->getDefault('prefer-stable'),
             $this->createRepositories($data->getDefault('repositories')),
             $this->createProjectConfiguration($data->getDefault('config')),
@@ -133,9 +139,11 @@ class ConfigurationReader
     }
 
     /**
-     * @param string|null $time
+     * Create a time from the suppled raw value.
      *
-     * @return DateTime|null
+     * @param string|null $time The raw time data.
+     *
+     * @return DateTime|null The newly created time object.
      */
     protected function createTime($time)
     {
@@ -147,9 +155,11 @@ class ConfigurationReader
     }
 
     /**
-     * @param array|null $authors
+     * Create an author list from the supplied raw value.
      *
-     * @return array<Element\Author>
+     * @param array|null $authors The raw author list data.
+     *
+     * @return array<integer,Element\Author>|null The newly created author list.
      */
     protected function createAuthors(array $authors = null)
     {
@@ -165,9 +175,11 @@ class ConfigurationReader
     }
 
     /**
-     * @param ObjectAccess $author
+     * Create an author from the supplied raw value.
      *
-     * @return Element\Author
+     * @param ObjectAccess $author The raw author data.
+     *
+     * @return Element\Author The newly created author.
      */
     protected function createAuthor(ObjectAccess $author)
     {
@@ -181,9 +193,11 @@ class ConfigurationReader
     }
 
     /**
-     * @param stdClass|null $support
+     * Create a support information object from the supplied raw value.
      *
-     * @return Element\SupportInformation
+     * @param stdClass|null $support The raw support information.
+     *
+     * @return Element\SupportInformation|null The newly created support information object.
      */
     protected function createSupport(stdClass $support = null)
     {
@@ -204,45 +218,34 @@ class ConfigurationReader
     }
 
     /**
-     * @param stdClass|null $autoloadPsr4
+     * Create PSR-style autoload information from the supplied raw value.
      *
-     * @return array
+     * This method currently works for both PSR-0 and PSR-4 data.
+     *
+     * @param stdClass|null $autoloadPsr The raw PSR autoload data.
+     *
+     * @return array<string,array<integer,string>>|null The newly created PSR autoload information.
      */
-    protected function createAutoloadPsr4(stdClass $autoloadPsr4 = null)
+    protected function createAutoloadPsr(stdClass $autoloadPsr = null)
     {
-        if (null !== $autoloadPsr4) {
-            $autoloadPsr4 = $this->objectToArray($autoloadPsr4);
-            foreach ($autoloadPsr4 as $namespace => $paths) {
-                $autoloadPsr4[$namespace] = $this->arrayize($paths);
+        if (null !== $autoloadPsr) {
+            $autoloadPsr = $this->objectToArray($autoloadPsr);
+            foreach ($autoloadPsr as $namespace => $paths) {
+                $autoloadPsr[$namespace] = $this->arrayize($paths);
             }
         }
 
-        return $autoloadPsr4;
+        return $autoloadPsr;
     }
 
     /**
-     * @param stdClass|null $autoloadPsr0
+     * Create a stability enumeration from the supplied raw data.
      *
-     * @return array
-     */
-    protected function createAutoloadPsr0(stdClass $autoloadPsr0 = null)
-    {
-        if (null !== $autoloadPsr0) {
-            $autoloadPsr0 = $this->objectToArray($autoloadPsr0);
-            foreach ($autoloadPsr0 as $namespace => $paths) {
-                $autoloadPsr0[$namespace] = $this->arrayize($paths);
-            }
-        }
-
-        return $autoloadPsr0;
-    }
-
-    /**
-     * @param string|null $stability
+     * @param string|null $stability The raw stability data.
      *
-     * @return Element\Stability
+     * @return Element\Stability|null The newly created stability enumeration.
      */
-    protected function createMinimumStability($stability)
+    protected function createStability($stability)
     {
         if (null !== $stability) {
             $stability = Element\Stability::memberByValue($stability, false);
@@ -252,9 +255,11 @@ class ConfigurationReader
     }
 
     /**
-     * @param array|null $repositories
+     * Create a repository list from the supplied raw value.
      *
-     * @return array<Element\Author>
+     * @param array|null $repositories The raw repository list data.
+     *
+     * @return array<integer,Element\RepositoryInterface>|null The newly created repository list.
      */
     protected function createRepositories(array $repositories = null)
     {
@@ -270,9 +275,11 @@ class ConfigurationReader
     }
 
     /**
-     * @param ObjectAccess $repository
+     * Create a repository from the supplied raw value.
      *
-     * @return Element\Repository
+     * @param ObjectAccess $repository The raw repository data.
+     *
+     * @return Element\RepositoryInterface The newly created repository.
      */
     protected function createRepository(ObjectAccess $repository)
     {
@@ -296,14 +303,16 @@ class ConfigurationReader
     }
 
     /**
-     * @param stdClass|null $config
+     * Create a project configuration object from the supplied raw value.
      *
-     * @return Element\ProjectConfiguration
+     * @param stdClass|null $config The raw project configuration data.
+     *
+     * @return Element\ProjectConfiguration The newly created project configuration object.
      */
     protected function createProjectConfiguration(stdClass $config = null)
     {
         if (null === $config) {
-            $config = new Element\ProjectConfiguration(
+            return new Element\ProjectConfiguration(
                 null,
                 null,
                 null,
@@ -313,39 +322,37 @@ class ConfigurationReader
                 null,
                 $this->defaultCacheDir()
             );
-        } else {
-            $configData = new ObjectAccess($config);
-
-            $cacheDir = $configData->getDefault('cache-dir');
-            if (null === $cacheDir) {
-                $cacheDir = $this->defaultCacheDir();
-            }
-
-            $config = new Element\ProjectConfiguration(
-                $configData->getDefault('process-timeout'),
-                $configData->getDefault('use-include-path'),
-                $configData->getDefault('preferred-install'),
-                $configData->getDefault('github-protocols'),
-                $configData->getDefault('github-oauth'),
-                $configData->getDefault('vendor-dir'),
-                $configData->getDefault('bin-dir'),
-                $cacheDir,
-                $configData->getDefault('cache-files-dir'),
-                $configData->getDefault('cache-repo-dir'),
-                $configData->getDefault('cache-vcs-dir'),
-                $configData->getDefault('cache-files-ttl'),
-                $configData->getDefault('cache-files-maxsize'),
-                $configData->getDefault('prepend-autoloader'),
-                $configData->getDefault('autoloader-suffix'),
-                $configData->getDefault('optimize-autoloader'),
-                $configData->getDefault('github-domains'),
-                $configData->getDefault('notify-on-install'),
-                $configData->getDefault('discard-changes'),
-                $configData->data()
-            );
         }
 
-        return $config;
+        $configData = new ObjectAccess($config);
+
+        $cacheDir = $configData->getDefault('cache-dir');
+        if (null === $cacheDir) {
+            $cacheDir = $this->defaultCacheDir();
+        }
+
+        return new Element\ProjectConfiguration(
+            $configData->getDefault('process-timeout'),
+            $configData->getDefault('use-include-path'),
+            $configData->getDefault('preferred-install'),
+            $configData->getDefault('github-protocols'),
+            $configData->getDefault('github-oauth'),
+            $configData->getDefault('vendor-dir'),
+            $configData->getDefault('bin-dir'),
+            $cacheDir,
+            $configData->getDefault('cache-files-dir'),
+            $configData->getDefault('cache-repo-dir'),
+            $configData->getDefault('cache-vcs-dir'),
+            $configData->getDefault('cache-files-ttl'),
+            $configData->getDefault('cache-files-maxsize'),
+            $configData->getDefault('prepend-autoloader'),
+            $configData->getDefault('autoloader-suffix'),
+            $configData->getDefault('optimize-autoloader'),
+            $configData->getDefault('github-domains'),
+            $configData->getDefault('notify-on-install'),
+            $configData->getDefault('discard-changes'),
+            $configData->data()
+        );
     }
 
     /**
@@ -395,9 +402,11 @@ class ConfigurationReader
     }
 
     /**
-     * @param stdClass|null $scripts
+     * Create a script configuration object from the supplied raw value.
      *
-     * @return Element\ScriptConfiguration
+     * @param stdClass|null $scripts The raw script configuration data.
+     *
+     * @return Element\ScriptConfiguration|null The newly created script configuration object.
      */
     protected function createScripts(stdClass $scripts = null)
     {
@@ -428,9 +437,11 @@ class ConfigurationReader
     }
 
     /**
-     * @param stdClass|null $archive
+     * Create an archive configuration object from the supplied raw value.
      *
-     * @return Element\ArchiveConfiguration
+     * @param stdClass|null $archive The raw archive configuration data.
+     *
+     * @return Element\ArchiveConfiguration|null The newly created archive configuration object.
      */
     protected function createArchiveConfiguration(stdClass $archive = null)
     {
@@ -446,9 +457,11 @@ class ConfigurationReader
     }
 
     /**
-     * @param stdClass|null $data
+     * Recursively convert the supplied object to an associative array.
      *
-     * @return array<string,string>
+     * @param stdClass|null $data The object to convert.
+     *
+     * @return array<string,mixed> The converted associative array.
      */
     protected function objectToArray(stdClass $data = null)
     {
@@ -465,16 +478,16 @@ class ConfigurationReader
     }
 
     /**
-     * @param mixed $data
+     * Normalize singular values into an array containing the initial value as
+     * a single element.
      *
-     * @return array
+     * @param mixed $data The data to normalize.
+     *
+     * @return array The normalized value.
      */
     protected function arrayize($data)
     {
-        if (
-            null !== $data &&
-            !is_array($data)
-        ) {
+        if (null !== $data && !is_array($data)) {
             $data = array($data);
         }
 

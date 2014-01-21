@@ -12,12 +12,11 @@
 namespace Eloquent\Composer\Configuration\Exception;
 
 use Exception;
-use RuntimeException;
 
 /**
  * An undefined propery was requested.
  */
-final class UndefinedPropertyException extends RuntimeException implements
+final class UndefinedPropertyException extends Exception implements
     ConfigurationExceptionInterface
 {
     /**

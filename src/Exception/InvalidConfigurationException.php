@@ -12,35 +12,30 @@
 namespace Eloquent\Composer\Configuration\Exception;
 
 use Exception;
-use RuntimeException;
 
 /**
  * The configuration is invalid.
  */
-final class InvalidConfigurationException extends RuntimeException implements
+final class InvalidConfigurationException extends Exception implements
     ConfigurationExceptionInterface
 {
     /**
      * Construct a new invalid configuration exception.
      *
-     * @param array<array<string>> $errors   The errors in the configuration.
-     * @param Exception|null       $previous The cause, if available.
+     * @param array<integer,array<integer,string>> $errors   The errors in the configuration.
+     * @param Exception|null                       $previous The cause, if available.
      */
     public function __construct(array $errors, Exception $previous = null)
     {
         $this->errors = $errors;
 
-        parent::__construct(
-            $this->buildMessage($errors),
-            0,
-            $previous
-        );
+        parent::__construct($this->buildMessage($errors), 0, $previous);
     }
 
     /**
      * Get the errors in the configuration.
      *
-     * @return array<array<string>> The configuration errors.
+     * @return array<integer,array<integer,string>> The configuration errors.
      */
     public function errors()
     {
@@ -48,9 +43,11 @@ final class InvalidConfigurationException extends RuntimeException implements
     }
 
     /**
-     * @param array<array<string>> $errors
+     * Build the exception message.
      *
-     * @return string
+     * @param array<integer,array<integer,string>> $errors The errors in the configuration.
+     *
+     * @return string The exception message.
      */
     protected function buildMessage(array $errors)
     {

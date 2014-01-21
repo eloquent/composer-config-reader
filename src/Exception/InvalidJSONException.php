@@ -12,12 +12,11 @@
 namespace Eloquent\Composer\Configuration\Exception;
 
 use Exception;
-use RuntimeException;
 
 /**
  * The configuration contains invalid JSON data.
  */
-final class InvalidJSONException extends RuntimeException implements
+final class InvalidJsonException extends Exception implements
     ConfigurationExceptionInterface
 {
     /**
@@ -27,25 +26,31 @@ final class InvalidJSONException extends RuntimeException implements
      * @param integer        $jsonErrorCode The error code supplied by PHP.
      * @param Exception|null $previous      The cause, if available.
      */
-    public function __construct($path, $jsonErrorCode, Exception $previous = null)
-    {
+    public function __construct(
+        $path,
+        $jsonErrorCode,
+        Exception $previous = null
+    ) {
         $this->path = $path;
         $this->jsonErrorCode = $jsonErrorCode;
         switch ($jsonErrorCode) {
             case JSON_ERROR_DEPTH:
-                $this->jsonErrorMessage = 'The maximum stack depth has been exceeded.';
+                $this->jsonErrorMessage =
+                    'The maximum stack depth has been exceeded.';
                 break;
             case JSON_ERROR_STATE_MISMATCH:
                 $this->jsonErrorMessage = 'Invalid or malformed JSON.';
                 break;
             case JSON_ERROR_CTRL_CHAR:
-                $this->jsonErrorMessage = 'Control character error, possibly incorrectly encoded.';
+                $this->jsonErrorMessage =
+                    'Control character error, possibly incorrectly encoded.';
                 break;
             case JSON_ERROR_SYNTAX:
                 $this->jsonErrorMessage = 'Syntax error.';
                 break;
             case JSON_ERROR_UTF8:
-                $this->jsonErrorMessage = 'Malformed UTF-8 characters, possibly incorrectly encoded.';
+                $this->jsonErrorMessage =
+                    'Malformed UTF-8 characters, possibly incorrectly encoded.';
                 break;
             default:
                 $this->jsonErrorMessage = 'Unknown error.';

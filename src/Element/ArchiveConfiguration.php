@@ -19,7 +19,7 @@ class ArchiveConfiguration
     /**
      * Construct a new archive configuration.
      *
-     * @param array<string>|null $exclude A list of patterns to exclude from the archive.
+     * @param array<integer,string>|null $exclude A list of patterns to exclude from the archive.
      */
     public function __construct(array $exclude = null, $rawData = null)
     {
@@ -34,7 +34,7 @@ class ArchiveConfiguration
     /**
      * Get the patterns of excluded files.
      *
-     * @return array<string> The exclude patterns.
+     * @return array<integer,string> The exclude patterns.
      */
     public function exclude()
     {
