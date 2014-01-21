@@ -163,11 +163,11 @@ See [archive].
 [SupportInformation]: http://lqnt.co/composer-config-reader/artifacts/documentation/api/Eloquent/Composer/Configuration/Element/SupportInformation.html
 
 [API documentation]: http://lqnt.co/composer-config-reader/artifacts/documentation/api/
-[Build status shield]: http://b.adge.me/travis/eloquent/composer-config-reader/develop.svg
+[Build status shield]: http://b.adge.me/travis/eloquent/composer-config-reader/develop.svg "Current build status for the develop branch"
 [Composer]: http://getcomposer.org/
 [eloquent/composer-config-reader]: https://packagist.org/packages/eloquent/composer-config-reader
 [Latest build status]: https://travis-ci.org/eloquent/composer-config-reader
 [Semantic versioning]: http://semver.org/
 [Test coverage report]: https://coveralls.io/r/eloquent/composer-config-reader
-[Test coverage shield]: http://b.adge.me/coveralls/eloquent/composer-config-reader/develop.svg
-[Semantic versioning shield]: http://b.adge.me/:semver-2.0.0-green.svg
+[Test coverage shield]: http://b.adge.me/coveralls/eloquent/composer-config-reader/develop.svg "Current test coverage for the develop branch"
+[Semantic versioning shield]: http://b.adge.me/:semver-2.0.0-green.svg "This project uses semantic versioning"
