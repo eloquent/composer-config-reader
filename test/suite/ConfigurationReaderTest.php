@@ -12,8 +12,10 @@
 namespace Eloquent\Composer\Configuration;
 
 use DateTime;
-use Phake;
+use Eloquent\Liberator\Liberator;
+use Icecave\Isolator\Isolator;
 use PHPUnit_Framework_TestCase;
+use Phake;
 
 class ConfigurationReaderTest extends PHPUnit_Framework_TestCase
 {
@@ -22,7 +24,7 @@ class ConfigurationReaderTest extends PHPUnit_Framework_TestCase
         parent::setUp();
 
         $this->validator = new ConfigurationValidator;
-        $this->isolator = Phake::mock('Icecave\Isolator\Isolator');
+        $this->isolator = Phake::mock(Isolator::className());
         $this->reader = new ConfigurationReader(
             $this->validator,
             $this->isolator
@@ -78,7 +80,19 @@ EOD;
             null,
             null,
             null,
-            null,
+            new Element\ProjectConfiguration(
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                '/path/to/composer/cache',
+                '/path/to/composer/cache/files',
+                '/path/to/composer/cache/repo',
+                '/path/to/composer/cache/vcs'
+            ),
             null,
             null,
             null,
@@ -366,10 +380,10 @@ EOD;
                 null,
                 'ext',
                 'bin',
-                null,
-                null,
-                null,
-                null,
+                '/path/to/composer/cache',
+                '/path/to/composer/cache/files',
+                '/path/to/composer/cache/repo',
+                '/path/to/composer/cache/vcs',
                 null,
                 null,
                 null,
@@ -421,10 +435,8 @@ EOD;
      */
     public function testRead($expected, $json)
     {
-        Phake::when($this->isolator)
-            ->file_get_contents(Phake::anyParameters())
-            ->thenReturn($json)
-        ;
+        Phake::when($this->isolator)->file_get_contents(Phake::anyParameters())->thenReturn($json);
+        Phake::when($this->isolator)->getenv('COMPOSER_CACHE_DIR')->thenReturn('/path/to/composer/cache');
 
         $this->assertEquals($expected, $this->reader->read('/path/to/configuration'));
         Phake::verify($this->isolator)->file_get_contents('/path/to/configuration');
@@ -459,7 +471,12 @@ EOD;
 
     public function testReadReal()
     {
-        $reader = new ConfigurationReader;
+        $this->isolator = Phake::partialMock(Isolator::className());
+        Phake::when($this->isolator)->getenv('COMPOSER_CACHE_DIR')->thenReturn('/path/to/composer/cache');
+        $this->reader = new ConfigurationReader(
+            null,
+            $this->isolator
+        );
         $path = __DIR__.'/../../composer.json';
         $rawData = json_decode(file_get_contents($path));
         $expected = new Element\Configuration(
@@ -506,7 +523,19 @@ EOD;
             null,
             null,
             null,
-            null,
+            new Element\ProjectConfiguration(
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                '/path/to/composer/cache',
+                '/path/to/composer/cache/files',
+                '/path/to/composer/cache/repo',
+                '/path/to/composer/cache/vcs'
+            ),
             null,
             null,
             null,
@@ -514,6 +543,87 @@ EOD;
             $rawData
         );
 
-        $this->assertEquals($expected, $reader->read($path));
+        $this->assertEquals($expected, $this->reader->read($path));
+    }
+
+    public function defaultCacheDirData()
+    {
+        return array(
+            'COMPOSER_CACHE_DIR set' => array(
+                array(
+                    'COMPOSER_CACHE_DIR' => '/path/to/composer/cache',
+                ),
+                array(),
+                '/path/to/composer/cache',
+            ),
+
+            'COMPOSER_HOME set, non-Windows' => array(
+                array(
+                    'COMPOSER_HOME' => '/path/to/composer/home',
+                ),
+                array(),
+                '/path/to/composer/home/cache',
+            ),
+
+            'COMPOSER_HOME set, Windows, LOCALAPPDATA set' => array(
+                array(
+                    'COMPOSER_HOME' => 'C:\path\to\composer\home',
+                    'LOCALAPPDATA' => 'C:\path\to\localappdata',
+                ),
+                array(
+                    'PHP_WINDOWS_VERSION_MAJOR' => 5,
+                ),
+                'C:/path/to/localappdata/Composer',
+            ),
+
+            'COMPOSER_HOME set, Windows, LOCALAPPDATA not set' => array(
+                array(
+                    'COMPOSER_HOME' => 'C:\path\to\composer\home',
+                ),
+                array(
+                    'PHP_WINDOWS_VERSION_MAJOR' => 5,
+                ),
+                'C:/path/to/composer/home/cache',
+            ),
+
+            'HOME set, non-Windows' => array(
+                array(
+                    'HOME' => '/path/to/home/',
+                ),
+                array(),
+                '/path/to/home/.composer/cache',
+            ),
+
+            'APPDATA set, Windows' => array(
+                array(
+                    'APPDATA' => 'C:\path\to\appdata',
+                ),
+                array(
+                    'PHP_WINDOWS_VERSION_MAJOR' => 5,
+                ),
+                'C:/path/to/appdata/Composer/cache',
+            ),
+
+            'No environment variables set' => array(
+                array(),
+                array(),
+                null,
+            ),
+        );
+    }
+
+    /**
+     * @dataProvider defaultCacheDirData
+     */
+    public function testDefaultCacheDir(array $environment, array $constants, $expected)
+    {
+        foreach ($environment as $name => $value) {
+            Phake::when($this->isolator)->getenv($name)->thenReturn($value);
+        }
+        foreach ($constants as $name => $value) {
+            Phake::when($this->isolator)->defined($name)->thenReturn(true);
+        }
+
+        $this->assertSame($expected, Liberator::liberate($this->reader)->defaultCacheDir());
     }
 }

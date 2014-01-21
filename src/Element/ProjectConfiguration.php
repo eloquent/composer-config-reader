@@ -11,8 +11,6 @@
 
 namespace Eloquent\Composer\Configuration\Element;
 
-use Icecave\Isolator\Isolator;
-
 /**
  * Represents configuration specific to project-type packages.
  */
@@ -28,10 +26,10 @@ class ProjectConfiguration
      * @param array<string,string>|null  $githubOauth        An associative array of domain name to GitHub OAuth token.
      * @param string|null                $vendorDir          The vendor directory.
      * @param string|null                $binDir             The binary executable directory.
-     * @param string|null                $cacheDir           The cache directory.
-     * @param string|null                $cacheFilesDir      The cache directory for package archives.
-     * @param string|null                $cacheRepoDir       The cache directory for package repositories.
-     * @param string|null                $cacheVcsDir        The cache directory for version control repositories.
+     * @param string|null                $cacheDir           The cache directory, or null if unknown.
+     * @param string|null                $cacheFilesDir      The cache directory for package archives, or null if unknown.
+     * @param string|null                $cacheRepoDir       The cache directory for package repositories, or null if unknown.
+     * @param string|null                $cacheVcsDir        The cache directory for version control repositories, or null if unknown.
      * @param integer|null               $cacheFilesTtl      The cache time-to-live for package archives in seconds.
      * @param integer|null               $cacheFilesMaxsize  The maximum size of the package archive cache in bytes.
      * @param boolean|null               $prependAutoloader  True if the autoloader should be prepended to existing autoloaders.
@@ -41,7 +39,6 @@ class ProjectConfiguration
      * @param boolean|null               $notifyOnInstall    True if the repository should be notified on installation.
      * @param VcsChangePolicy|null       $discardChanges     The policy for how to treat version control changes when installing or updating.
      * @param mixed                      $rawData            The raw data describing the project configuration.
-     * @param Isolator|null              $isolator           The isolator to use.
      */
     public function __construct(
         $processTimeout = null,
@@ -63,8 +60,7 @@ class ProjectConfiguration
         array $githubDomains = null,
         $notifyOnInstall = null,
         VcsChangePolicy $discardChanges = null,
-        $rawData = null,
-        Isolator $isolator = null
+        $rawData = null
     ) {
         if (null === $processTimeout) {
             $processTimeout = 300;
@@ -86,9 +82,6 @@ class ProjectConfiguration
         }
         if (null === $binDir) {
             $binDir = 'vendor/bin';
-        }
-        if (null === $cacheDir) {
-            $cacheDir = $this->defaultCacheDir(Isolator::get($isolator));
         }
         if (null === $cacheFilesDir && null !== $cacheDir) {
             $cacheFilesDir = $cacheDir . '/files';
@@ -217,7 +210,7 @@ class ProjectConfiguration
     /**
      * Get the cache directory.
      *
-     * @return string|null The cache directory, or null if the directory could not be determined.
+     * @return string|null The cache directory, or null if the directory is unknown.
      */
     public function cacheDir()
     {
@@ -227,7 +220,7 @@ class ProjectConfiguration
     /**
      * Get the cache directory for package archives.
      *
-     * @return string|null The cache directory for package archives, or null if the directory could not be determined.
+     * @return string|null The cache directory for package archives, or null if the directory is unknown.
      */
     public function cacheFilesDir()
     {
@@ -237,7 +230,7 @@ class ProjectConfiguration
     /**
      * Get the cache directory for package repositories.
      *
-     * @return string|null The cache directory for package repositories, or null if the directory could not be determined.
+     * @return string|null The cache directory for package repositories, or null if the directory is unknown.
      */
     public function cacheRepoDir()
     {
@@ -247,7 +240,7 @@ class ProjectConfiguration
     /**
      * Get the cache directory for version control repositories.
      *
-     * @return string|null The cache directory for version control repositories, or null if the directory could not be determined.
+     * @return string|null The cache directory for version control repositories, or null if the directory is unknown.
      */
     public function cacheVcsDir()
     {
@@ -344,54 +337,6 @@ class ProjectConfiguration
     public function rawData()
     {
         return $this->rawData;
-    }
-
-    /**
-     * Get the default cache directory for the current environment.
-     *
-     * @param Isolator $isolator The isolator to use.
-     *
-     * @return string|null The default cache directory, or null if the cache directory could not be determined.
-     */
-    protected function defaultCacheDir(Isolator $isolator)
-    {
-        $cacheDir = $isolator->getenv('COMPOSER_CACHE_DIR');
-        if ($cacheDir) {
-            return $cacheDir;
-        }
-
-        $home = $isolator->getenv('COMPOSER_HOME');
-        $isWindows = $isolator->defined('PHP_WINDOWS_VERSION_MAJOR');
-
-        if (!$home) {
-            if ($isWindows) {
-                if ($envAppData = $isolator->getenv('APPDATA')) {
-                    $home = strtr($envAppData, '\\', '/') . '/Composer';
-                }
-            } elseif ($envHome = $isolator->getenv('HOME')) {
-                $home = rtrim($envHome, '/') . '/.composer';
-            }
-        }
-
-        if ($home && !$cacheDir) {
-            if ($isWindows) {
-                if ($cacheDir = $isolator->getenv('LOCALAPPDATA')) {
-                    $cacheDir .= '/Composer';
-                } else {
-                    $cacheDir = $home . '/cache';
-                }
-
-                $cacheDir = strtr($cacheDir, '\\', '/');
-            } else {
-                $cacheDir = $home.'/cache';
-            }
-        }
-
-        if (!$cacheDir) {
-            return null;
-        }
-
-        return $cacheDir;
     }
 
     private $processTimeout;

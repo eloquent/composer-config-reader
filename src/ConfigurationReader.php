@@ -72,7 +72,7 @@ class ConfigurationReader
     protected function readJson($path)
     {
         try {
-            $jsonData = $this->isolator->file_get_contents($path);
+            $jsonData = $this->isolator()->file_get_contents($path);
         } catch (ErrorException $e) {
             throw new Exception\ConfigurationReadException($path, $e);
         }
@@ -302,8 +302,25 @@ class ConfigurationReader
      */
     protected function createProjectConfiguration(stdClass $config = null)
     {
-        if (null !== $config) {
+        if (null === $config) {
+            $config = new Element\ProjectConfiguration(
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                $this->defaultCacheDir()
+            );
+        } else {
             $configData = new ObjectAccess($config);
+
+            $cacheDir = $configData->getDefault('cache-dir');
+            if (null === $cacheDir) {
+                $cacheDir = $this->defaultCacheDir();
+            }
+
             $config = new Element\ProjectConfiguration(
                 $configData->getDefault('process-timeout'),
                 $configData->getDefault('use-include-path'),
@@ -312,7 +329,7 @@ class ConfigurationReader
                 $configData->getDefault('github-oauth'),
                 $configData->getDefault('vendor-dir'),
                 $configData->getDefault('bin-dir'),
-                $configData->getDefault('cache-dir'),
+                $cacheDir,
                 $configData->getDefault('cache-files-dir'),
                 $configData->getDefault('cache-repo-dir'),
                 $configData->getDefault('cache-vcs-dir'),
@@ -329,6 +346,52 @@ class ConfigurationReader
         }
 
         return $config;
+    }
+
+    /**
+     * Get the default cache directory for the current environment.
+     *
+     * @return string|null The default cache directory, or null if the cache directory could not be determined.
+     */
+    protected function defaultCacheDir()
+    {
+        $cacheDir = $this->isolator()->getenv('COMPOSER_CACHE_DIR');
+        if ($cacheDir) {
+            return $cacheDir;
+        }
+
+        $home = $this->isolator()->getenv('COMPOSER_HOME');
+        $isWindows = $this->isolator()->defined('PHP_WINDOWS_VERSION_MAJOR');
+
+        if (!$home) {
+            if ($isWindows) {
+                if ($envAppData = $this->isolator()->getenv('APPDATA')) {
+                    $home = strtr($envAppData, '\\', '/') . '/Composer';
+                }
+            } elseif ($envHome = $this->isolator()->getenv('HOME')) {
+                $home = rtrim($envHome, '/') . '/.composer';
+            }
+        }
+
+        if ($home && !$cacheDir) {
+            if ($isWindows) {
+                if ($cacheDir = $this->isolator()->getenv('LOCALAPPDATA')) {
+                    $cacheDir .= '/Composer';
+                } else {
+                    $cacheDir = $home . '/cache';
+                }
+
+                $cacheDir = strtr($cacheDir, '\\', '/');
+            } else {
+                $cacheDir = $home.'/cache';
+            }
+        }
+
+        if (!$cacheDir) {
+            return null;
+        }
+
+        return $cacheDir;
     }
 
     /**
@@ -416,6 +479,16 @@ class ConfigurationReader
         }
 
         return $data;
+    }
+
+    /**
+     * Get the isolator.
+     *
+     * @return Isolator The isolator.
+     */
+    protected function isolator()
+    {
+        return $this->isolator;
     }
 
     private $validator;
