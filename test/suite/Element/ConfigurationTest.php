@@ -53,6 +53,10 @@ class ConfigurationTest extends PHPUnit_Framework_TestCase
             array('bat' => 'bet'),
             array('bit' => 'bot'),
             array(
+                'flim' => array('flam', 'jim'),
+                'jam' => array('jem'),
+            ),
+            array(
                 'but' => array('tat', 'tart'),
                 'wert' => array('wurt'),
             ),
@@ -199,6 +203,9 @@ class ConfigurationTest extends PHPUnit_Framework_TestCase
     public function testAllSourcePaths()
     {
         $this->assertSame(array(
+            'flam',
+            'jim',
+            'jem',
             'tat',
             'tart',
             'wurt',

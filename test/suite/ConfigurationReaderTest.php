@@ -82,6 +82,7 @@ EOD;
             null,
             null,
             null,
+            null,
             $rawData
         );
         $data['Empty configuration'] = array($expected, $json);
@@ -146,6 +147,10 @@ EOD;
         "symfony/filesystem": "*"
     },
     "autoload": {
+        "psr-4": {
+            "Nermsperce": ["serse", "lerb"],
+            "Vernder\\Nermsperce": "serse"
+        },
         "psr-0": {
             "Monolog": ["src", "lib"],
             "Vendor\\Namespace": "src"
@@ -285,6 +290,10 @@ EOD;
             array(
                 'symfony/console' => '*',
                 'symfony/filesystem' => '*',
+            ),
+            array(
+                'Nermsperce' => array('serse', 'lerb'),
+                'Vernder\Nermsperce' => array('serse'),
             ),
             array(
                 'Monolog' => array('src', 'lib'),
@@ -461,8 +470,9 @@ EOD;
             null,
             null,
             array(
-                // 'Eloquent\Composer\Configuration' => array('src'),
+                'Eloquent\Composer\Configuration\\' => array('src'),
             ),
+            null,
             null,
             null,
             null,

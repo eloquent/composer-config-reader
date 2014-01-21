@@ -114,6 +114,7 @@ class ConfigurationReader
             $this->objectToArray($data->getDefault('replace')),
             $this->objectToArray($data->getDefault('provide')),
             $this->objectToArray($data->getDefault('suggest')),
+            $this->createAutoloadPsr4($autoloadData->getDefault('psr-4')),
             $this->createAutoloadPsr0($autoloadData->getDefault('psr-0')),
             $autoloadData->getDefault('classmap'),
             $autoloadData->getDefault('files'),
@@ -200,6 +201,23 @@ class ConfigurationReader
         }
 
         return $support;
+    }
+
+    /**
+     * @param stdClass|null $autoloadPsr4
+     *
+     * @return array
+     */
+    protected function createAutoloadPsr4(stdClass $autoloadPsr4 = null)
+    {
+        if (null !== $autoloadPsr4) {
+            $autoloadPsr4 = $this->objectToArray($autoloadPsr4);
+            foreach ($autoloadPsr4 as $namespace => $paths) {
+                $autoloadPsr4[$namespace] = $this->arrayize($paths);
+            }
+        }
+
+        return $autoloadPsr4;
     }
 
     /**

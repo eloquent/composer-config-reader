@@ -43,6 +43,7 @@ class Configuration
      * @param array<string,string>|null        $replace          Packages that are replaced by this package.
      * @param array<string,string>|null        $provide          Packages that are provided by this package.
      * @param array<string,string>|null        $suggest          Suggested packages for use with this package.
+     * @param array<string,array<string>>|null $autoloadPsr4     PSR-4 autoloading configuration for the package.
      * @param array<string,array<string>>|null $autoloadPsr0     PSR-0 autoloading configuration for the package.
      * @param array<string>|null               $autoloadClassmap Class map autoloading configuration for the package.
      * @param array<string>|null               $autoloadFiles    File autoloading configuration for the package.
@@ -75,6 +76,7 @@ class Configuration
         array $replace = null,
         array $provide = null,
         array $suggest = null,
+        array $autoloadPsr4 = null,
         array $autoloadPsr0 = null,
         array $autoloadClassmap = null,
         array $autoloadFiles = null,
@@ -122,6 +124,9 @@ class Configuration
         }
         if (null === $suggest) {
             $suggest = array();
+        }
+        if (null === $autoloadPsr4) {
+            $autoloadPsr4 = array();
         }
         if (null === $autoloadPsr0) {
             $autoloadPsr0 = array();
@@ -173,6 +178,7 @@ class Configuration
         $this->replace = $replace;
         $this->provide = $provide;
         $this->suggest = $suggest;
+        $this->autoloadPsr4 = $autoloadPsr4;
         $this->autoloadPsr0 = $autoloadPsr0;
         $this->autoloadClassmap = $autoloadClassmap;
         $this->autoloadFiles = $autoloadFiles;
@@ -402,6 +408,16 @@ class Configuration
     }
 
     /**
+     * Get the PSR-4 autoloading configuration for the package.
+     *
+     * @return array<string,array<string>> The PSR-4 autoloading configuration.
+     */
+    public function autoloadPsr4()
+    {
+        return $this->autoloadPsr4;
+    }
+
+    /**
      * Get the PSR-0 autoloading configuration for the package.
      *
      * @return array<string,array<string>> The PSR-0 autoloading configuration.
@@ -442,6 +458,21 @@ class Configuration
     }
 
     /**
+     * Get an array of all source paths containing PSR-4 conformant code.
+     *
+     * @return array<string> The PSR-4 source paths.
+     */
+    public function allPsr4SourcePaths()
+    {
+        $autoloadPsr4Paths = array();
+        foreach ($this->autoloadPsr4() as $namespace => $paths) {
+            $autoloadPsr4Paths = array_merge($autoloadPsr4Paths, $paths);
+        }
+
+        return $autoloadPsr4Paths;
+    }
+
+    /**
      * Get an array of all source paths containing PSR-0 conformant code.
      *
      * @return array<string> The PSR-0 source paths.
@@ -464,6 +495,7 @@ class Configuration
     public function allSourcePaths()
     {
         return array_merge(
+            $this->allPsr4SourcePaths(),
             $this->allPsr0SourcePaths(),
             $this->autoloadClassmap(),
             $this->autoloadFiles(),
@@ -588,6 +620,7 @@ class Configuration
     private $replace;
     private $provide;
     private $suggest;
+    private $autoloadPsr4;
     private $autoloadPsr0;
     private $autoloadClassmap;
     private $autoloadFiles;
