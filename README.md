@@ -2,8 +2,9 @@
 
 *A light-weight component for reading Composer configuration files.*
 
-[![Build Status]][Latest build]
-[![Test Coverage]][Test coverage report]
+[![Semantic versioning shield]][Semantic versioning]
+[![Build status shield]][Latest build status]
+[![Test coverage shield]][Test coverage report]
 
 ## Installation and documentation
 
@@ -12,7 +13,7 @@
 
 ## Usage
 
-Composer configuration reader is very simple to use and a quick example should
+Composer configuration reader is very simple to use, and a quick example should
 be self-explanatory:
 
 ````php
@@ -131,27 +132,29 @@ See [Scripts].
 
 <!-- References -->
 
-[API documentation]: http://lqnt.co/composer-config-reader/artifacts/documentation/api/
-[Author]: src/Eloquent/Composer/Configuration/Element/Author.php
+[Author]: src/Configuration/Element/Author.php
 [authors]: http://getcomposer.org/doc/04-schema.md#authors
 [Composer schema]: http://getcomposer.org/doc/04-schema.md
 [config]: http://getcomposer.org/doc/04-schema.md#config
-[Configuration]: src/Eloquent/Composer/Configuration/Element/Configuration.php
-[Composer]: http://getcomposer.org/
-[eloquent/composer-config-reader]: https://packagist.org/packages/eloquent/composer-config-reader
+[Configuration]: src/Configuration/Element/Configuration.php
 [enumeration]: https://github.com/eloquent/enumeration
 [minimum-stability]: http://getcomposer.org/doc/04-schema.md#minimum-stability
-[PackageRepository]: src/Eloquent/Composer/Configuration/Element/PackageRepository.php
-[ProjectConfiguration]: src/Eloquent/Composer/Configuration/Element/ProjectConfiguration.php
+[PackageRepository]: src/Configuration/Element/PackageRepository.php
+[ProjectConfiguration]: src/Configuration/Element/ProjectConfiguration.php
 [Repositories]: http://getcomposer.org/doc/05-repositories.md
-[Repository]: src/Eloquent/Composer/Configuration/Element/Repository.php
-[ScriptConfiguration]: src/Eloquent/Composer/Configuration/Element/ScriptConfiguration.php
+[Repository]: src/Configuration/Element/Repository.php
+[ScriptConfiguration]: src/Configuration/Element/ScriptConfiguration.php
 [Scripts]: http://getcomposer.org/doc/articles/scripts.md
-[Stability]: src/Eloquent/Composer/Configuration/Element/Stability.php
+[Stability]: src/Configuration/Element/Stability.php
 [support]: http://getcomposer.org/doc/04-schema.md#support
-[SupportInformation]: src/Eloquent/Composer/Configuration/Element/SupportInformation.php
+[SupportInformation]: src/Configuration/Element/SupportInformation.php
 
-[Build Status]: https://api.travis-ci.org/eloquent/composer-config-reader.png?branch=master
-[Latest build]: https://travis-ci.org/eloquent/composer-config-reader
+[API documentation]: http://lqnt.co/composer-config-reader/artifacts/documentation/api/
+[Build status shield]: http://b.adge.me/travis/eloquent/composer-config-reader/develop.svg
+[Composer]: http://getcomposer.org/
+[eloquent/composer-config-reader]: https://packagist.org/packages/eloquent/composer-config-reader
+[Latest build status]: https://travis-ci.org/eloquent/composer-config-reader
+[Semantic versioning]: http://semver.org/
 [Test coverage report]: https://coveralls.io/r/eloquent/composer-config-reader
-[Test Coverage]: https://coveralls.io/repos/eloquent/composer-config-reader/badge.png?branch=master
+[Test coverage shield]: http://b.adge.me/coveralls/eloquent/composer-config-reader/develop.svg
+[Semantic versioning shield]: http://b.adge.me/:semver-2.0.0-green.svg
