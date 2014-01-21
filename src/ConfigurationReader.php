@@ -331,12 +331,18 @@ class ConfigurationReader
                 $this->arrayize($scriptsData->getDefault('post-install-cmd')),
                 $this->arrayize($scriptsData->getDefault('pre-update-cmd')),
                 $this->arrayize($scriptsData->getDefault('post-update-cmd')),
+                $this->arrayize($scriptsData->getDefault('pre-status-cmd')),
+                $this->arrayize($scriptsData->getDefault('post-status-cmd')),
                 $this->arrayize($scriptsData->getDefault('pre-package-install')),
                 $this->arrayize($scriptsData->getDefault('post-package-install')),
                 $this->arrayize($scriptsData->getDefault('pre-package-update')),
                 $this->arrayize($scriptsData->getDefault('post-package-update')),
                 $this->arrayize($scriptsData->getDefault('pre-package-uninstall')),
                 $this->arrayize($scriptsData->getDefault('post-package-uninstall')),
+                $this->arrayize($scriptsData->getDefault('pre-autoload-dump')),
+                $this->arrayize($scriptsData->getDefault('post-autoload-dump')),
+                $this->arrayize($scriptsData->getDefault('post-root-package-install')),
+                $this->arrayize($scriptsData->getDefault('post-create-project-cmd')),
                 $scriptsData->data()
             );
         }

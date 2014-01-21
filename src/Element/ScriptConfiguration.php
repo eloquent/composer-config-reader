@@ -19,29 +19,41 @@ class ScriptConfiguration
     /**
      * Construct a new script configuration.
      *
-     * @param array<string>|null $preInstallCmd        The pre-install commands.
-     * @param array<string>|null $postInstallCmd       The post-install commands.
-     * @param array<string>|null $preUpdateCmd         The pre-update commands.
-     * @param array<string>|null $postUpdateCmd        The post-update commands.
-     * @param array<string>|null $prePackageInstall    The pre-package-install commands.
-     * @param array<string>|null $postPackageInstall   The post-package-install commands.
-     * @param array<string>|null $prePackageUpdate     The pre-package-update commands.
-     * @param array<string>|null $postPackageUpdate    The post-package-update commands.
-     * @param array<string>|null $prePackageUninstall  The pre-package-uninstall commands.
-     * @param array<string>|null $postPackageUninstall The post-package-uninstall commands.
-     * @param mixed              $rawData              The raw data describing the script configuration.
+     * @param array<string>|null $preInstallCmd          The pre-install commands.
+     * @param array<string>|null $postInstallCmd         The post-install commands.
+     * @param array<string>|null $preUpdateCmd           The pre-update commands.
+     * @param array<string>|null $postUpdateCmd          The post-update commands.
+     * @param array<string>|null $preStatusCmd           The pre-status commands.
+     * @param array<string>|null $postStatusCmd          The post-status commands.
+     * @param array<string>|null $prePackageInstall      The pre-package-install commands.
+     * @param array<string>|null $postPackageInstall     The post-package-install commands.
+     * @param array<string>|null $prePackageUpdate       The pre-package-update commands.
+     * @param array<string>|null $postPackageUpdate      The post-package-update commands.
+     * @param array<string>|null $prePackageUninstall    The pre-package-uninstall commands.
+     * @param array<string>|null $postPackageUninstall   The post-package-uninstall commands.
+     * @param array<string>|null $preAutoloadDump        The pre-autoload-dump commands.
+     * @param array<string>|null $postAutoloadDump       The post-autoload-dump commands.
+     * @param array<string>|null $postRootPackageInstall The post-root-package-install commands.
+     * @param array<string>|null $postCreateProjectCmd   The post-create-project commands.
+     * @param mixed              $rawData                The raw data describing the script configuration.
      */
     public function __construct(
         array $preInstallCmd = null,
         array $postInstallCmd = null,
         array $preUpdateCmd = null,
         array $postUpdateCmd = null,
+        array $preStatusCmd = null,
+        array $postStatusCmd = null,
         array $prePackageInstall = null,
         array $postPackageInstall = null,
         array $prePackageUpdate = null,
         array $postPackageUpdate = null,
         array $prePackageUninstall = null,
         array $postPackageUninstall = null,
+        array $preAutoloadDump = null,
+        array $postAutoloadDump = null,
+        array $postRootPackageInstall = null,
+        array $postCreateProjectCmd = null,
         $rawData = null
     ) {
         if (null === $preInstallCmd) {
@@ -55,6 +67,12 @@ class ScriptConfiguration
         }
         if (null === $postUpdateCmd) {
             $postUpdateCmd = array();
+        }
+        if (null === $preStatusCmd) {
+            $preStatusCmd = array();
+        }
+        if (null === $postStatusCmd) {
+            $postStatusCmd = array();
         }
         if (null === $prePackageInstall) {
             $prePackageInstall = array();
@@ -74,17 +92,35 @@ class ScriptConfiguration
         if (null === $postPackageUninstall) {
             $postPackageUninstall = array();
         }
+        if (null === $preAutoloadDump) {
+            $preAutoloadDump = array();
+        }
+        if (null === $postAutoloadDump) {
+            $postAutoloadDump = array();
+        }
+        if (null === $postRootPackageInstall) {
+            $postRootPackageInstall = array();
+        }
+        if (null === $postCreateProjectCmd) {
+            $postCreateProjectCmd = array();
+        }
 
         $this->preInstallCmd = $preInstallCmd;
         $this->postInstallCmd = $postInstallCmd;
         $this->preUpdateCmd = $preUpdateCmd;
         $this->postUpdateCmd = $postUpdateCmd;
+        $this->preStatusCmd = $preStatusCmd;
+        $this->postStatusCmd = $postStatusCmd;
         $this->prePackageInstall = $prePackageInstall;
         $this->postPackageInstall = $postPackageInstall;
         $this->prePackageUpdate = $prePackageUpdate;
         $this->postPackageUpdate = $postPackageUpdate;
         $this->prePackageUninstall = $prePackageUninstall;
         $this->postPackageUninstall = $postPackageUninstall;
+        $this->preAutoloadDump = $preAutoloadDump;
+        $this->postAutoloadDump = $postAutoloadDump;
+        $this->postRootPackageInstall = $postRootPackageInstall;
+        $this->postCreateProjectCmd = $postCreateProjectCmd;
         $this->rawData = $rawData;
     }
 
@@ -126,6 +162,26 @@ class ScriptConfiguration
     public function postUpdateCmd()
     {
         return $this->postUpdateCmd;
+    }
+
+    /**
+     * Get the pre-status commands.
+     *
+     * @return array<string> The pre-status commands.
+     */
+    public function preStatusCmd()
+    {
+        return $this->preStatusCmd;
+    }
+
+    /**
+     * Get the post-status commands.
+     *
+     * @return array<string> The post-status commands.
+     */
+    public function postStatusCmd()
+    {
+        return $this->postStatusCmd;
     }
 
     /**
@@ -189,6 +245,46 @@ class ScriptConfiguration
     }
 
     /**
+     * Get the pre-autoload-dump commands.
+     *
+     * @return array<string> The pre-autoload-dump commands.
+     */
+    public function preAutoloadDump()
+    {
+        return $this->preAutoloadDump;
+    }
+
+    /**
+     * Get the post-autoload-dump commands.
+     *
+     * @return array<string> The post-autoload-dump commands.
+     */
+    public function postAutoloadDump()
+    {
+        return $this->postAutoloadDump;
+    }
+
+    /**
+     * Get the post-root-package-install commands.
+     *
+     * @return array<string> The post-root-package-install commands.
+     */
+    public function postRootPackageInstall()
+    {
+        return $this->postRootPackageInstall;
+    }
+
+    /**
+     * Get the post-create-project commands.
+     *
+     * @return array<string> The post-create-project commands.
+     */
+    public function postCreateProjectCmd()
+    {
+        return $this->postCreateProjectCmd;
+    }
+
+    /**
      * Get the raw configuration data.
      *
      * @return mixed The raw configuration data.
@@ -202,11 +298,17 @@ class ScriptConfiguration
     private $postInstallCmd;
     private $preUpdateCmd;
     private $postUpdateCmd;
+    private $preStatusCmd;
+    private $postStatusCmd;
     private $prePackageInstall;
     private $postPackageInstall;
     private $prePackageUpdate;
     private $postPackageUpdate;
     private $prePackageUninstall;
     private $postPackageUninstall;
+    private $preAutoloadDump;
+    private $postAutoloadDump;
+    private $postRootPackageInstall;
+    private $postCreateProjectCmd;
     private $rawData;
 }

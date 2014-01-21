@@ -213,6 +213,8 @@ EOD;
         "post-install-cmd": "MyVendor\\MyClass::postInstall",
         "pre-update-cmd": "MyVendor\\MyClass::preUpdate",
         "post-update-cmd": "MyVendor\\MyClass::postUpdate",
+        "pre-status-cmd": "MyVendor\\MyClass::preStatus",
+        "post-status-cmd": "MyVendor\\MyClass::postStatus",
         "pre-package-install": "MyVendor\\MyClass::prePackageInstall",
         "post-package-install": [
             "MyVendor\\MyClass::postPackageInstall"
@@ -223,7 +225,11 @@ EOD;
         "post-package-uninstall": [
             "MyVendor\\MyClass::postPackageUninstallA",
             "MyVendor\\MyClass::postPackageUninstallB"
-        ]
+        ],
+        "pre-autoload-dump": "MyVendor\\MyClass::preAutoloadDump",
+        "post-autoload-dump": "MyVendor\\MyClass::postAutoloadDump",
+        "post-root-package-install": "MyVendor\\MyClass::postRootPackageInstall",
+        "post-create-project-cmd": "MyVendor\\MyClass::postCreateProjectCmd"
     },
     "extra": {"foo": "bar"},
     "bin": ["bin/my-script", "bin/my-other-script"],
@@ -365,6 +371,8 @@ EOD;
                 array('MyVendor\MyClass::postInstall'),
                 array('MyVendor\MyClass::preUpdate'),
                 array('MyVendor\MyClass::postUpdate'),
+                array('MyVendor\MyClass::preStatus'),
+                array('MyVendor\MyClass::postStatus'),
                 array('MyVendor\MyClass::prePackageInstall'),
                 array('MyVendor\MyClass::postPackageInstall'),
                 array('MyVendor\MyClass::prePackageUpdate'),
@@ -374,6 +382,10 @@ EOD;
                     'MyVendor\MyClass::postPackageUninstallA',
                     'MyVendor\MyClass::postPackageUninstallB',
                 ),
+                array('MyVendor\MyClass::preAutoloadDump'),
+                array('MyVendor\MyClass::postAutoloadDump'),
+                array('MyVendor\MyClass::postRootPackageInstall'),
+                array('MyVendor\MyClass::postCreateProjectCmd'),
                 $rawData->scripts
             ),
             $rawData->extra,
