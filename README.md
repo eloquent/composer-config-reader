@@ -73,7 +73,8 @@ See [Repositories].
 
 ### [Stability]
 
-This object is a simple [enumeration] with the following members:
+This object is an [enumeration] of package stabilities, with the following
+members:
 
 * DEV
 * ALPHA
@@ -130,8 +131,20 @@ See [Scripts].
 * `preInstallCmd()`: The pre-install scripts.
 * `postInstallCmd()`: The post-install scripts.
 
+### [ArchiveConfiguration]
+
+This object describes the settings for creating package archives.
+
+See [archive].
+
+#### Example methods
+
+* `exclude()`: A list of file exclusion patterns.
+
 <!-- References -->
 
+[ArchiveConfiguration]: http://lqnt.co/composer-config-reader/artifacts/documentation/api/Eloquent/Composer/Configuration/Element/ArchiveConfiguration.html
+[archive]: http://getcomposer.org/doc/04-schema.md#archive
 [Author]: http://lqnt.co/composer-config-reader/artifacts/documentation/api/Eloquent/Composer/Configuration/Element/Author.html
 [authors]: http://getcomposer.org/doc/04-schema.md#authors
 [Composer schema]: http://getcomposer.org/doc/04-schema.md
