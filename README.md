@@ -2,9 +2,9 @@
 
 *A light-weight component for reading Composer configuration files.*
 
-[![Semantic versioning shield]][Semantic versioning]
-[![Build status shield]][Latest build status]
-[![Test coverage shield]][Test coverage report]
+[![The most recent stable version is 2.0.0]][Semantic versioning]
+[![Current build status image]][Latest build status]
+[![Current coverage status image]][Test coverage report]
 
 ## Installation and documentation
 
@@ -143,8 +143,8 @@ See [archive].
 
 <!-- References -->
 
-[ArchiveConfiguration]: http://lqnt.co/composer-config-reader/artifacts/documentation/api/Eloquent/Composer/Configuration/Element/ArchiveConfiguration.html
 [archive]: http://getcomposer.org/doc/04-schema.md#archive
+[ArchiveConfiguration]: http://lqnt.co/composer-config-reader/artifacts/documentation/api/Eloquent/Composer/Configuration/Element/ArchiveConfiguration.html
 [Author]: http://lqnt.co/composer-config-reader/artifacts/documentation/api/Eloquent/Composer/Configuration/Element/Author.html
 [authors]: http://getcomposer.org/doc/04-schema.md#authors
 [Composer schema]: http://getcomposer.org/doc/04-schema.md
@@ -163,11 +163,11 @@ See [archive].
 [SupportInformation]: http://lqnt.co/composer-config-reader/artifacts/documentation/api/Eloquent/Composer/Configuration/Element/SupportInformation.html
 
 [API documentation]: http://lqnt.co/composer-config-reader/artifacts/documentation/api/
-[Build status shield]: http://b.adge.me/travis/eloquent/composer-config-reader/develop.svg "Current build status for the develop branch"
 [Composer]: http://getcomposer.org/
+[Current build status image]: http://b.adge.me/travis/eloquent/composer-config-reader/develop.svg "Current build status for the develop branch"
+[Current coverage status image]: http://b.adge.me/coveralls/eloquent/composer-config-reader/develop.svg "Current test coverage for the develop branch"
 [eloquent/composer-config-reader]: https://packagist.org/packages/eloquent/composer-config-reader
 [Latest build status]: https://travis-ci.org/eloquent/composer-config-reader
 [Semantic versioning]: http://semver.org/
 [Test coverage report]: https://coveralls.io/r/eloquent/composer-config-reader
-[Test coverage shield]: http://b.adge.me/coveralls/eloquent/composer-config-reader/develop.svg "Current test coverage for the develop branch"
-[Semantic versioning shield]: http://b.adge.me/:semver-2.0.0-green.svg "This project uses semantic versioning"
+[The most recent stable version is 2.0.0]: http://b.adge.me/:semver-2.0.0-green.svg "This project uses semantic versioning"
