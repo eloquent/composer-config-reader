@@ -2,8 +2,9 @@
 
 *A light-weight component for reading Composer configuration files.*
 
-[![Build Status]][Latest build]
-[![Test Coverage]][Test coverage report]
+[![The most recent stable version is 2.0.0]][Semantic versioning]
+[![Current build status image]][Current build status]
+[![Current coverage status image]][Current coverage status]
 
 ## Installation and documentation
 
@@ -12,7 +13,7 @@
 
 ## Usage
 
-Composer configuration reader is very simple to use and a quick example should
+Composer configuration reader is very simple to use, and a quick example should
 be self-explanatory:
 
 ````php
@@ -72,7 +73,8 @@ See [Repositories].
 
 ### [Stability]
 
-This object is a simple [enumeration] with the following members:
+This object is an [enumeration] of package stabilities, with the following
+members:
 
 * DEV
 * ALPHA
@@ -129,29 +131,43 @@ See [Scripts].
 * `preInstallCmd()`: The pre-install scripts.
 * `postInstallCmd()`: The post-install scripts.
 
+### [ArchiveConfiguration]
+
+This object describes the settings for creating package archives.
+
+See [archive].
+
+#### Example methods
+
+* `exclude()`: A list of file exclusion patterns.
+
 <!-- References -->
 
-[API documentation]: http://lqnt.co/composer-config-reader/artifacts/documentation/api/
-[Author]: src/Eloquent/Composer/Configuration/Element/Author.php
+[archive]: http://getcomposer.org/doc/04-schema.md#archive
+[ArchiveConfiguration]: http://lqnt.co/composer-config-reader/artifacts/documentation/api/Eloquent/Composer/Configuration/Element/ArchiveConfiguration.html
+[Author]: http://lqnt.co/composer-config-reader/artifacts/documentation/api/Eloquent/Composer/Configuration/Element/Author.html
 [authors]: http://getcomposer.org/doc/04-schema.md#authors
 [Composer schema]: http://getcomposer.org/doc/04-schema.md
 [config]: http://getcomposer.org/doc/04-schema.md#config
-[Configuration]: src/Eloquent/Composer/Configuration/Element/Configuration.php
-[Composer]: http://getcomposer.org/
-[eloquent/composer-config-reader]: https://packagist.org/packages/eloquent/composer-config-reader
+[Configuration]: http://lqnt.co/composer-config-reader/artifacts/documentation/api/Eloquent/Composer/Configuration/Element/Configuration.html
 [enumeration]: https://github.com/eloquent/enumeration
 [minimum-stability]: http://getcomposer.org/doc/04-schema.md#minimum-stability
-[PackageRepository]: src/Eloquent/Composer/Configuration/Element/PackageRepository.php
-[ProjectConfiguration]: src/Eloquent/Composer/Configuration/Element/ProjectConfiguration.php
+[PackageRepository]: http://lqnt.co/composer-config-reader/artifacts/documentation/api/Eloquent/Composer/Configuration/Element/PackageRepository.html
+[ProjectConfiguration]: http://lqnt.co/composer-config-reader/artifacts/documentation/api/Eloquent/Composer/Configuration/Element/ProjectConfiguration.html
 [Repositories]: http://getcomposer.org/doc/05-repositories.md
-[Repository]: src/Eloquent/Composer/Configuration/Element/Repository.php
-[ScriptConfiguration]: src/Eloquent/Composer/Configuration/Element/ScriptConfiguration.php
+[Repository]: http://lqnt.co/composer-config-reader/artifacts/documentation/api/Eloquent/Composer/Configuration/Element/Repository.html
+[ScriptConfiguration]: http://lqnt.co/composer-config-reader/artifacts/documentation/api/Eloquent/Composer/Configuration/Element/ScriptConfiguration.html
 [Scripts]: http://getcomposer.org/doc/articles/scripts.md
-[Stability]: src/Eloquent/Composer/Configuration/Element/Stability.php
+[Stability]: http://lqnt.co/composer-config-reader/artifacts/documentation/api/Eloquent/Composer/Configuration/Element/Stability.html
 [support]: http://getcomposer.org/doc/04-schema.md#support
-[SupportInformation]: src/Eloquent/Composer/Configuration/Element/SupportInformation.php
+[SupportInformation]: http://lqnt.co/composer-config-reader/artifacts/documentation/api/Eloquent/Composer/Configuration/Element/SupportInformation.html
 
-[Build Status]: https://api.travis-ci.org/eloquent/composer-config-reader.png?branch=master
-[Latest build]: https://travis-ci.org/eloquent/composer-config-reader
-[Test coverage report]: https://coveralls.io/r/eloquent/composer-config-reader
-[Test Coverage]: https://coveralls.io/repos/eloquent/composer-config-reader/badge.png?branch=master
+[API documentation]: http://lqnt.co/composer-config-reader/artifacts/documentation/api/
+[Composer]: http://getcomposer.org/
+[Current build status image]: http://b.adge.me/travis/eloquent/composer-config-reader/develop.svg "Current build status for the develop branch"
+[Current build status]: https://travis-ci.org/eloquent/composer-config-reader
+[Current coverage status image]: http://b.adge.me/coveralls/eloquent/composer-config-reader/develop.svg "Current test coverage for the develop branch"
+[Current coverage status]: https://coveralls.io/r/eloquent/composer-config-reader
+[eloquent/composer-config-reader]: https://packagist.org/packages/eloquent/composer-config-reader
+[Semantic versioning]: http://semver.org/
+[The most recent stable version is 2.0.0]: http://b.adge.me/:semver-2.0.0-green.svg "This project uses semantic versioning"
