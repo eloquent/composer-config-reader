@@ -3,8 +3,8 @@
 *A light-weight component for reading Composer configuration files.*
 
 [![The most recent stable version is 2.0.0]][Semantic versioning]
-[![Current build status image]][Latest build status]
-[![Current coverage status image]][Test coverage report]
+[![Current build status image]][Current build status]
+[![Current coverage status image]][Current coverage status]
 
 ## Installation and documentation
 
@@ -165,9 +165,9 @@ See [archive].
 [API documentation]: http://lqnt.co/composer-config-reader/artifacts/documentation/api/
 [Composer]: http://getcomposer.org/
 [Current build status image]: http://b.adge.me/travis/eloquent/composer-config-reader/develop.svg "Current build status for the develop branch"
+[Current build status]: https://travis-ci.org/eloquent/composer-config-reader
 [Current coverage status image]: http://b.adge.me/coveralls/eloquent/composer-config-reader/develop.svg "Current test coverage for the develop branch"
+[Current coverage status]: https://coveralls.io/r/eloquent/composer-config-reader
 [eloquent/composer-config-reader]: https://packagist.org/packages/eloquent/composer-config-reader
-[Latest build status]: https://travis-ci.org/eloquent/composer-config-reader
 [Semantic versioning]: http://semver.org/
-[Test coverage report]: https://coveralls.io/r/eloquent/composer-config-reader
 [The most recent stable version is 2.0.0]: http://b.adge.me/:semver-2.0.0-green.svg "This project uses semantic versioning"
