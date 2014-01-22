@@ -1,6 +1,6 @@
 # Composer configuration reader changelog
 
-## 2.0.0 (unreleased)
+## 2.0.0 (2014-01-22)
 
 - **[BC BREAK]** Element class constructors expanded to accomodate new Composer
   configuration settings
