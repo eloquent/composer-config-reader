@@ -12,18 +12,18 @@
         }
     ],
     "require": {
-        "php": ">=5.3.0",
-        "eloquent/enumeration": "~3",
+        "php": ">=5.3",
+        "eloquent/enumeration": "~5",
         "eloquent/liberator": "~1",
         "icecave/isolator": "~2",
         "justinrainbow/json-schema": "~1"
     },
     "require-dev": {
-        "icecave/archer": "~0.2"
+        "icecave/archer": "~1"
     },
     "autoload": {
-        "psr-0": {
-            "Eloquent\\Composer\\Configuration": "src"
+        "psr-4": {
+            "Eloquent\\Composer\\Configuration\\": "src"
         }
     }
 }
