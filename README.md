@@ -170,4 +170,4 @@ See [archive].
 [Current coverage status]: https://coveralls.io/r/eloquent/composer-config-reader
 [eloquent/composer-config-reader]: https://packagist.org/packages/eloquent/composer-config-reader
 [Semantic versioning]: http://semver.org/
-[The most recent stable version is 2.0.0]: http://b.adge.me/:semver-2.0.0-green.svg "This project uses semantic versioning"
+[The most recent stable version is 2.0.0]: http://b.adge.me/:semver-2.0.0-brightgreen.svg "This project uses semantic versioning"
