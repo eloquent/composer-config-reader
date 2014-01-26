@@ -164,10 +164,10 @@ See [archive].
 
 [API documentation]: http://lqnt.co/composer-config-reader/artifacts/documentation/api/
 [Composer]: http://getcomposer.org/
-[Current build status image]: http://b.adge.me/travis/eloquent/composer-config-reader/develop.svg "Current build status for the develop branch"
+[Current build status image]: https://b.adge.me/travis/eloquent/composer-config-reader/develop.svg "Current build status for the develop branch"
 [Current build status]: https://travis-ci.org/eloquent/composer-config-reader
-[Current coverage status image]: http://b.adge.me/coveralls/eloquent/composer-config-reader/develop.svg "Current test coverage for the develop branch"
+[Current coverage status image]: https://b.adge.me/coveralls/eloquent/composer-config-reader/develop.svg "Current test coverage for the develop branch"
 [Current coverage status]: https://coveralls.io/r/eloquent/composer-config-reader
 [eloquent/composer-config-reader]: https://packagist.org/packages/eloquent/composer-config-reader
 [Semantic versioning]: http://semver.org/
-[The most recent stable version is 2.0.0]: http://b.adge.me/:semver-2.0.0-brightgreen.svg "This project uses semantic versioning"
+[The most recent stable version is 2.0.0]: https://b.adge.me/:semver-2.0.0-brightgreen.svg "This project uses semantic versioning"
