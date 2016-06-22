@@ -582,7 +582,7 @@ EOD;
                 'eloquent/enumeration' => '~5',
                 'eloquent/liberator' => '~1',
                 'icecave/isolator' => '~2',
-                'justinrainbow/json-schema' => '~1',
+                'justinrainbow/json-schema' => '~2.0',
             ),
             array(
                 'icecave/archer' => '~1',
