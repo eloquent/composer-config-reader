@@ -19,6 +19,7 @@ before_install:
     - composer config --global github-oauth.github.com $GITHUB_TOKEN
 install: composer install --prefer-dist --no-progress --no-interaction --optimize-autoloader --ignore-platform-reqs
 script: scripts/travis
+after_script: scripts/travis-after
 
 env:
     global:
