@@ -3,7 +3,7 @@
 /*
  * This file is part of the Composer configuration reader package.
  *
- * Copyright © 2014 Erin Millard
+ * Copyright © 2016 Erin Millard
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -19,8 +19,8 @@ class ProjectConfiguration
     /**
      * Construct a new project configuration.
      *
-     * @param integer|null               $processTimeout     The process timeout.
-     * @param boolean|null               $useIncludePath     True if the autoloader should look for classes in the PHP include path.
+     * @param int|null                   $processTimeout     The process timeout.
+     * @param bool|null                  $useIncludePath     True if the autoloader should look for classes in the PHP include path.
      * @param InstallationMethod|null    $preferredInstall   The preffered installation method.
      * @param array<integer,string>|null $githubProtocols    The protocols to use when cloning from GitHub.
      * @param array<string,string>|null  $githubOauth        An associative array of domain name to GitHub OAuth token.
@@ -30,13 +30,13 @@ class ProjectConfiguration
      * @param string|null                $cacheFilesDir      The cache directory for package archives, or null if unknown.
      * @param string|null                $cacheRepoDir       The cache directory for package repositories, or null if unknown.
      * @param string|null                $cacheVcsDir        The cache directory for version control repositories, or null if unknown.
-     * @param integer|null               $cacheFilesTtl      The cache time-to-live for package archives in seconds.
-     * @param integer|null               $cacheFilesMaxsize  The maximum size of the package archive cache in bytes.
-     * @param boolean|null               $prependAutoloader  True if the autoloader should be prepended to existing autoloaders.
+     * @param int|null                   $cacheFilesTtl      The cache time-to-live for package archives in seconds.
+     * @param int|null                   $cacheFilesMaxsize  The maximum size of the package archive cache in bytes.
+     * @param bool|null                  $prependAutoloader  True if the autoloader should be prepended to existing autoloaders.
      * @param string|null                $autoloaderSuffix   The suffix used for the generated autoloader class name.
-     * @param boolean|null               $optimizeAutoloader True if the autoloader should always be optimized.
+     * @param bool|null                  $optimizeAutoloader True if the autoloader should always be optimized.
      * @param array<integer,string>|null $githubDomains      The list of domains to use in GitHub mode.
-     * @param boolean|null               $notifyOnInstall    True if the repository should be notified on installation.
+     * @param bool|null                  $notifyOnInstall    True if the repository should be notified on installation.
      * @param VcsChangePolicy|null       $discardChanges     The policy for how to treat version control changes when installing or updating.
      * @param mixed                      $rawData            The raw data describing the project configuration.
      */
@@ -139,7 +139,7 @@ class ProjectConfiguration
     /**
      * Get the process timeout.
      *
-     * @return integer The process timeout.
+     * @return int The process timeout.
      */
     public function processTimeout()
     {
@@ -150,7 +150,7 @@ class ProjectConfiguration
      * Returns true if the autoloader should look for classes in the PHP include
      * path.
      *
-     * @return boolean True if the autoloader should look for classes in the PHP include path.
+     * @return bool True if the autoloader should look for classes in the PHP include path.
      */
     public function useIncludePath()
     {
@@ -250,7 +250,7 @@ class ProjectConfiguration
     /**
      * Get the cache time-to-live for package archives in seconds.
      *
-     * @return integer The cache time-to-live for package archives in seconds.
+     * @return int The cache time-to-live for package archives in seconds.
      */
     public function cacheFilesTtl()
     {
@@ -260,7 +260,7 @@ class ProjectConfiguration
     /**
      * Get the maximum size of the package archive cache in bytes.
      *
-     * @return integer The maximum size of the package archive cache in bytes.
+     * @return int The maximum size of the package archive cache in bytes.
      */
     public function cacheFilesMaxsize()
     {
@@ -271,7 +271,7 @@ class ProjectConfiguration
      * Returns true if the autoloader should be prepended to existing
      * autoloaders.
      *
-     * @return boolean True if the autoloader should be prepended to existing autoloaders.
+     * @return bool True if the autoloader should be prepended to existing autoloaders.
      */
     public function prependAutoloader()
     {
@@ -291,7 +291,7 @@ class ProjectConfiguration
     /**
      * Returns true if the autoloader should always be optimized.
      *
-     * @return boolean True if the autoloader should always be optimized.
+     * @return bool True if the autoloader should always be optimized.
      */
     public function optimizeAutoloader()
     {
@@ -311,7 +311,7 @@ class ProjectConfiguration
     /**
      * Returns true if notify-on-install is enabled.
      *
-     * @return boolean True if notify-on-install is enabled.
+     * @return bool True if notify-on-install is enabled.
      */
     public function notifyOnInstall()
     {

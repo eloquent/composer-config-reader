@@ -13,17 +13,24 @@
     ],
     "require": {
         "php": ">=5.3",
-        "eloquent/enumeration": "~5",
-        "eloquent/liberator": "~1",
-        "icecave/isolator": "~2",
-        "justinrainbow/json-schema": "~1"
+        "eloquent/enumeration": "^5",
+        "icecave/isolator": "^3",
+        "justinrainbow/json-schema": "^2"
     },
     "require-dev": {
-        "icecave/archer": "~1"
+        "eloquent/liberator": "^2",
+        "friendsofphp/php-cs-fixer": "^1",
+        "phake/phake": "^2",
+        "phpunit/phpunit": "^4"
     },
     "autoload": {
         "psr-4": {
             "Eloquent\\Composer\\Configuration\\": "src"
+        }
+    },
+    "config": {
+        "platform": {
+            "php": "5.3.99"
         }
     }
 }

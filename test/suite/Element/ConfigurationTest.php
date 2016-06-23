@@ -3,7 +3,7 @@
 /*
  * This file is part of the Composer configuration reader package.
  *
- * Copyright © 2014 Erin Millard
+ * Copyright © 2016 Erin Millard
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -23,18 +23,18 @@ class ConfigurationTest extends PHPUnit_Framework_TestCase
 
         $this->time = Phake::mock('DateTime');
         $this->authors = array(
-            Phake::mock(__NAMESPACE__.'\Author'),
-            Phake::mock(__NAMESPACE__.'\Author'),
+            Phake::mock(__NAMESPACE__ . '\Author'),
+            Phake::mock(__NAMESPACE__ . '\Author'),
         );
-        $this->support = Phake::mock(__NAMESPACE__.'\SupportInformation');
+        $this->support = Phake::mock(__NAMESPACE__ . '\SupportInformation');
         $this->minimumStability = Stability::DEV();
         $this->repositories = array(
-            Phake::mock(__NAMESPACE__.'\Repository'),
-            Phake::mock(__NAMESPACE__.'\Repository'),
+            Phake::mock(__NAMESPACE__ . '\Repository'),
+            Phake::mock(__NAMESPACE__ . '\Repository'),
         );
-        $this->config = Phake::mock(__NAMESPACE__.'\ProjectConfiguration');
-        $this->scripts = Phake::mock(__NAMESPACE__.'\ScriptConfiguration');
-        $this->archive = Phake::mock(__NAMESPACE__.'\ArchiveConfiguration');
+        $this->config = Phake::mock(__NAMESPACE__ . '\ProjectConfiguration');
+        $this->scripts = Phake::mock(__NAMESPACE__ . '\ScriptConfiguration');
+        $this->archive = Phake::mock(__NAMESPACE__ . '\ArchiveConfiguration');
         $this->configuration = new Configuration(
             'foo',
             'bar',
@@ -123,7 +123,7 @@ class ConfigurationTest extends PHPUnit_Framework_TestCase
 
     public function testConstructorDefaults()
     {
-        $this->configuration = new Configuration;
+        $this->configuration = new Configuration();
 
         $this->assertNull($this->configuration->name());
         $this->assertNull($this->configuration->description());
@@ -134,7 +134,7 @@ class ConfigurationTest extends PHPUnit_Framework_TestCase
         $this->assertNull($this->configuration->time());
         $this->assertSame(array(), $this->configuration->license());
         $this->assertSame(array(), $this->configuration->authors());
-        $this->assertInstanceOf(__NAMESPACE__.'\SupportInformation', $this->configuration->support());
+        $this->assertInstanceOf(__NAMESPACE__ . '\SupportInformation', $this->configuration->support());
         $this->assertSame(array(), $this->configuration->dependencies());
         $this->assertSame(array(), $this->configuration->devDependencies());
         $this->assertSame(array(), $this->configuration->conflict());
@@ -149,11 +149,11 @@ class ConfigurationTest extends PHPUnit_Framework_TestCase
         $this->assertSame(Stability::STABLE(), $this->configuration->minimumStability());
         $this->assertFalse($this->configuration->preferStable());
         $this->assertSame(array(), $this->configuration->repositories());
-        $this->assertInstanceOf(__NAMESPACE__.'\ProjectConfiguration', $this->configuration->config());
-        $this->assertInstanceOf(__NAMESPACE__.'\ScriptConfiguration', $this->configuration->scripts());
+        $this->assertInstanceOf(__NAMESPACE__ . '\ProjectConfiguration', $this->configuration->config());
+        $this->assertInstanceOf(__NAMESPACE__ . '\ScriptConfiguration', $this->configuration->scripts());
         $this->assertNull($this->configuration->extra());
         $this->assertSame(array(), $this->configuration->bin());
-        $this->assertInstanceOf(__NAMESPACE__.'\ArchiveConfiguration', $this->configuration->archive());
+        $this->assertInstanceOf(__NAMESPACE__ . '\ArchiveConfiguration', $this->configuration->archive());
         $this->assertNull($this->configuration->rawData());
     }
 
@@ -163,7 +163,7 @@ class ConfigurationTest extends PHPUnit_Framework_TestCase
 
         $this->assertSame('baz', $configuration->projectName());
 
-        $configuration = new Configuration;
+        $configuration = new Configuration();
 
         $this->assertNull($configuration->projectName());
     }
@@ -174,7 +174,7 @@ class ConfigurationTest extends PHPUnit_Framework_TestCase
 
         $this->assertSame('foo/bar', $configuration->vendorName());
 
-        $configuration = new Configuration;
+        $configuration = new Configuration();
 
         $this->assertNull($configuration->vendorName());
 

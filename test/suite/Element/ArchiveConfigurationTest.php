@@ -3,7 +3,7 @@
 /*
  * This file is part of the Composer configuration reader package.
  *
- * Copyright © 2014 Erin Millard
+ * Copyright © 2016 Erin Millard
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -29,7 +29,7 @@ class ArchiveConfigurationTest extends PHPUnit_Framework_TestCase
 
     public function testConstructorDefaults()
     {
-        $archive = new ArchiveConfiguration;
+        $archive = new ArchiveConfiguration();
 
         $this->assertSame(array(), $archive->exclude());
         $this->assertNull($archive->rawData());
@@ -37,7 +37,7 @@ class ArchiveConfigurationTest extends PHPUnit_Framework_TestCase
 
     public function testNoPublicMembers()
     {
-        $reflector = new ReflectionObject(new ArchiveConfiguration);
+        $reflector = new ReflectionObject(new ArchiveConfiguration());
         foreach ($reflector->getProperties() as $property) {
             $this->assertFalse($property->isPublic());
         }

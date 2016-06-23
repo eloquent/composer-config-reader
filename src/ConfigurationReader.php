@@ -3,7 +3,7 @@
 /*
  * This file is part of the Composer configuration reader package.
  *
- * Copyright © 2014 Erin Millard
+ * Copyright © 2016 Erin Millard
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -32,7 +32,7 @@ class ConfigurationReader
         Isolator $isolator = null
     ) {
         if (null === $validator) {
-            $validator = new ConfigurationValidator;
+            $validator = new ConfigurationValidator();
         }
 
         $this->validator = $validator;
@@ -100,7 +100,7 @@ class ConfigurationReader
     protected function createConfiguration(ObjectAccess $data)
     {
         $autoloadData = new ObjectAccess(
-            $data->getDefault('autoload', new stdClass)
+            $data->getDefault('autoload', new stdClass())
         );
 
         return new Element\Configuration(
@@ -394,7 +394,7 @@ class ConfigurationReader
 
                 $cacheDir = strtr($cacheDir, '\\', '/');
             } else {
-                $cacheDir = $home.'/cache';
+                $cacheDir = $home . '/cache';
             }
         }
 

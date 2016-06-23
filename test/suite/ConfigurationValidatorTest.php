@@ -3,7 +3,7 @@
 /*
  * This file is part of the Composer configuration reader package.
  *
- * Copyright © 2014 Erin Millard
+ * Copyright © 2016 Erin Millard
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -53,8 +53,7 @@ class ConfigurationValidatorTest extends PHPUnit_Framework_TestCase
         $schemaJSON = '{"foo": "bar"}';
         Phake::when($this->isolator)
             ->file_get_contents(Phake::anyParameters())
-            ->thenReturn($schemaJSON)
-        ;
+            ->thenReturn($schemaJSON);
         $validator = new ConfigurationValidator(
             null,
             null,
@@ -83,8 +82,7 @@ class ConfigurationValidatorTest extends PHPUnit_Framework_TestCase
     {
         Phake::when($this->innerValidator)
             ->isValid(Phake::anyParameters())
-            ->thenReturn(true)
-        ;
+            ->thenReturn(true);
         $data = Phake::mock('stdClass');
         $this->validator->validate($data);
 
@@ -101,12 +99,10 @@ class ConfigurationValidatorTest extends PHPUnit_Framework_TestCase
     {
         Phake::when($this->innerValidator)
             ->isValid(Phake::anyParameters())
-            ->thenReturn(false)
-        ;
+            ->thenReturn(false);
         Phake::when($this->innerValidator)
             ->getErrors(Phake::anyParameters())
-            ->thenReturn($this->errors)
-        ;
+            ->thenReturn($this->errors);
         $data = Phake::mock('stdClass');
 
         $error = null;
@@ -117,7 +113,7 @@ class ConfigurationValidatorTest extends PHPUnit_Framework_TestCase
         }
 
         $this->assertInstanceOf(
-            __NAMESPACE__.'\Exception\InvalidConfigurationException',
+            __NAMESPACE__ . '\Exception\InvalidConfigurationException',
             $error
         );
         $this->assertSame($this->errors, $error->errors());

@@ -1,4 +1,2 @@
-# archer start
-/artifacts/
+/coverage/
 /vendor/
-# archer end

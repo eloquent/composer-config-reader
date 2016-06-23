@@ -3,7 +3,7 @@
 /*
  * This file is part of the Composer configuration reader package.
  *
- * Copyright © 2014 Erin Millard
+ * Copyright © 2016 Erin Millard
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -21,27 +21,27 @@ class InvalidJsonExceptionTest extends PHPUnit_Framework_TestCase
         return array(
             array(
                 "Invalid JSON in Composer configuration at '/foo/bar': The maximum stack depth has been exceeded.",
-                JSON_ERROR_DEPTH
+                JSON_ERROR_DEPTH,
             ),
             array(
                 "Invalid JSON in Composer configuration at '/foo/bar': Invalid or malformed JSON.",
-                JSON_ERROR_STATE_MISMATCH
+                JSON_ERROR_STATE_MISMATCH,
             ),
             array(
                 "Invalid JSON in Composer configuration at '/foo/bar': Control character error, possibly incorrectly encoded.",
-                JSON_ERROR_CTRL_CHAR
+                JSON_ERROR_CTRL_CHAR,
             ),
             array(
                 "Invalid JSON in Composer configuration at '/foo/bar': Syntax error.",
-                JSON_ERROR_SYNTAX
+                JSON_ERROR_SYNTAX,
             ),
             array(
                 "Invalid JSON in Composer configuration at '/foo/bar': Malformed UTF-8 characters, possibly incorrectly encoded.",
-                JSON_ERROR_UTF8
+                JSON_ERROR_UTF8,
             ),
             array(
                 "Invalid JSON in Composer configuration at '/foo/bar': Unknown error.",
-                'baz'
+                'baz',
             ),
         );
     }

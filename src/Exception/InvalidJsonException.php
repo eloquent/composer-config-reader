@@ -3,7 +3,7 @@
 /*
  * This file is part of the Composer configuration reader package.
  *
- * Copyright © 2014 Erin Millard
+ * Copyright © 2016 Erin Millard
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -23,7 +23,7 @@ final class InvalidJsonException extends Exception implements
      * Construct a new invalid JSON exception.
      *
      * @param string         $path          The path to the configuration.
-     * @param integer        $jsonErrorCode The error code supplied by PHP.
+     * @param int            $jsonErrorCode The error code supplied by PHP.
      * @param Exception|null $previous      The cause, if available.
      */
     public function __construct(
@@ -80,7 +80,7 @@ final class InvalidJsonException extends Exception implements
     /**
      * Get the error code supplied by PHP.
      *
-     * @return integer The error code.
+     * @return int The error code.
      */
     public function jsonErrorCode()
     {

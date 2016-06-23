@@ -2,21 +2,30 @@
 
 *A light-weight component for reading Composer configuration files.*
 
-[![The most recent stable version is 2.0.0][version-image]][Semantic versioning]
-[![Current build status image][build-image]][Current build status]
-[![Current coverage status image][coverage-image]][Current coverage status]
+[![Current version image][version-image]][current version]
+[![Current build status image][build-image]][current build status]
+[![Current coverage status image][coverage-image]][current coverage status]
+
+[build-image]: http://img.shields.io/travis/eloquent/composer-config-reader/master.svg?style=flat-square "Current build status for the master branch"
+[coverage-image]: https://img.shields.io/codecov/c/github/eloquent/composer-config-reader/master.svg?style=flat-square "Current test coverage for the master branch"
+[current build status]: https://travis-ci.org/eloquent/composer-config-reader
+[current coverage status]: https://codecov.io/github/eloquent/composer-config-reader
+[current version]: https://packagist.org/packages/eloquent/composer-config-reader
+[version-image]: https://img.shields.io/packagist/v/eloquent/composer-config-reader.svg?style=flat-square "This project uses semantic versioning"
 
 ## Installation and documentation
 
-* Available as [Composer] package [eloquent/composer-config-reader].
-* [API documentation] available.
+- Available as [Composer] package [eloquent/composer-config-reader].
+
+[composer]: http://getcomposer.org/
+[eloquent/composer-config-reader]: https://packagist.org/packages/eloquent/composer-config-reader
 
 ## Usage
 
 Composer configuration reader is very simple to use, and a quick example should
 be self-explanatory:
 
-````php
+```php
 $reader = new Eloquent\Composer\Configuration\ConfigurationReader;
 $configuration = $reader->read('/path/to/composer.json');
 
@@ -36,6 +45,9 @@ namespace.
 
 This is the main configuration object and has methods to access all the
 information available in the [Composer schema].
+
+[composer schema]: http://getcomposer.org/doc/04-schema.md
+[configuration]: src/Element/Configuration.php
 
 #### Example methods
 
@@ -66,6 +78,10 @@ package-type repositories which use the `PackageRepository` class.
 
 See [Repositories].
 
+[packagerepository]: src/Element/PackageRepository.php
+[repositories]: http://getcomposer.org/doc/05-repositories.md
+[repository]: src/Element/Repository.php
+
 #### Example methods
 
 * `type()`: The repository type.
@@ -85,11 +101,18 @@ members:
 It is currently only used to represent the value of the [minimum-stability]
 option.
 
+[enumeration]: https://github.com/eloquent/enumeration
+[minimum-stability]: http://getcomposer.org/doc/04-schema.md#minimum-stability
+[stability]: src/Element/Stability.php
+
 ### [Author]
 
 This object contains all information provided for a specific author.
 
 See [authors].
+
+[author]: src/Element/Author.php
+[authors]: http://getcomposer.org/doc/04-schema.md#authors
 
 #### Example methods
 
@@ -101,6 +124,9 @@ See [authors].
 This object describes the package's support contact information.
 
 See [support].
+
+[support]: http://getcomposer.org/doc/04-schema.md#support
+[supportinformation]: src/Element/SupportInformation.php
 
 #### Example methods
 
@@ -115,6 +141,9 @@ the target directories for various resources provided by Composer.
 
 See [config].
 
+[config]: http://getcomposer.org/doc/04-schema.md#config
+[projectconfiguration]: src/Element/ProjectConfiguration.php
+
 #### Example methods
 
 * `vendorDir()`: The project's vendor directory path.
@@ -125,6 +154,9 @@ See [config].
 This object describes the Composer scripts defined by the package.
 
 See [Scripts].
+
+[scriptconfiguration]: src/Element/ScriptConfiguration.php
+[scripts]: http://getcomposer.org/doc/articles/scripts.md
 
 #### Example methods
 
@@ -137,37 +169,9 @@ This object describes the settings for creating package archives.
 
 See [archive].
 
+[archive]: http://getcomposer.org/doc/04-schema.md#archive
+[archiveconfiguration]: src/Element/ArchiveConfiguration.php
+
 #### Example methods
 
 * `exclude()`: A list of file exclusion patterns.
-
-<!-- References -->
-
-[archive]: http://getcomposer.org/doc/04-schema.md#archive
-[ArchiveConfiguration]: http://lqnt.co/composer-config-reader/artifacts/documentation/api/Eloquent/Composer/Configuration/Element/ArchiveConfiguration.html
-[Author]: http://lqnt.co/composer-config-reader/artifacts/documentation/api/Eloquent/Composer/Configuration/Element/Author.html
-[authors]: http://getcomposer.org/doc/04-schema.md#authors
-[Composer schema]: http://getcomposer.org/doc/04-schema.md
-[config]: http://getcomposer.org/doc/04-schema.md#config
-[Configuration]: http://lqnt.co/composer-config-reader/artifacts/documentation/api/Eloquent/Composer/Configuration/Element/Configuration.html
-[enumeration]: https://github.com/eloquent/enumeration
-[minimum-stability]: http://getcomposer.org/doc/04-schema.md#minimum-stability
-[PackageRepository]: http://lqnt.co/composer-config-reader/artifacts/documentation/api/Eloquent/Composer/Configuration/Element/PackageRepository.html
-[ProjectConfiguration]: http://lqnt.co/composer-config-reader/artifacts/documentation/api/Eloquent/Composer/Configuration/Element/ProjectConfiguration.html
-[Repositories]: http://getcomposer.org/doc/05-repositories.md
-[Repository]: http://lqnt.co/composer-config-reader/artifacts/documentation/api/Eloquent/Composer/Configuration/Element/Repository.html
-[ScriptConfiguration]: http://lqnt.co/composer-config-reader/artifacts/documentation/api/Eloquent/Composer/Configuration/Element/ScriptConfiguration.html
-[Scripts]: http://getcomposer.org/doc/articles/scripts.md
-[Stability]: http://lqnt.co/composer-config-reader/artifacts/documentation/api/Eloquent/Composer/Configuration/Element/Stability.html
-[support]: http://getcomposer.org/doc/04-schema.md#support
-[SupportInformation]: http://lqnt.co/composer-config-reader/artifacts/documentation/api/Eloquent/Composer/Configuration/Element/SupportInformation.html
-
-[API documentation]: http://lqnt.co/composer-config-reader/artifacts/documentation/api/
-[Composer]: http://getcomposer.org/
-[build-image]: http://img.shields.io/travis/eloquent/composer-config-reader/develop.svg "Current build status for the develop branch"
-[Current build status]: https://travis-ci.org/eloquent/composer-config-reader
-[coverage-image]: http://img.shields.io/coveralls/eloquent/composer-config-reader/develop.svg "Current test coverage for the develop branch"
-[Current coverage status]: https://coveralls.io/r/eloquent/composer-config-reader
-[eloquent/composer-config-reader]: https://packagist.org/packages/eloquent/composer-config-reader
-[Semantic versioning]: http://semver.org/
-[version-image]: http://img.shields.io/:semver-2.0.0-brightgreen.svg "This project uses semantic versioning"

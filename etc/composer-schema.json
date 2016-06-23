@@ -1,12 +1,12 @@
 {
+    "$schema": "http://json-schema.org/draft-04/schema#",
     "name": "Package",
     "type": "object",
     "additionalProperties": true,
     "properties": {
         "name": {
             "type": "string",
-            "description": "Package name, including 'vendor-name/' prefix.",
-            "required": false
+            "description": "Package name, including 'vendor-name/' prefix."
         },
         "type": {
             "description": "Package type, either 'library' for common packages, 'composer-plugin' for plugins, 'metapackage' for empty packages, or a custom type ([a-z0-9-]+) defined by whatever project this package applies to.",
@@ -18,8 +18,7 @@
         },
         "description": {
             "type": "string",
-            "description": "Short package description.",
-            "required": false
+            "description": "Short package description."
         },
         "keywords": {
             "type": "array",
@@ -35,11 +34,11 @@
         },
         "version": {
             "type": "string",
-            "description": "Package version, see http://getcomposer.org/doc/04-schema.md#version for more info on valid schemes."
+            "description": "Package version, see https://getcomposer.org/doc/04-schema.md#version for more info on valid schemes."
         },
         "time": {
             "type": "string",
-            "description": "Package release date, in 'YYYY-MM-DD' or 'YYYY-MM-DD HH:MM:SS' format."
+            "description": "Package release date, in 'YYYY-MM-DD', 'YYYY-MM-DD HH:MM:SS' or 'YYYY-MM-DDTHH:MM:SSZ' format."
         },
         "license": {
             "type": ["string", "array"],
@@ -51,11 +50,11 @@
             "items": {
                 "type": "object",
                 "additionalProperties": false,
+                "required": [ "name"],
                 "properties": {
                     "name": {
                         "type": "string",
-                        "description": "Full name of the author.",
-                        "required": true
+                        "description": "Full name of the author."
                     },
                     "email": {
                         "type": "string",
@@ -117,8 +116,8 @@
                     "description": "If true, the Composer autoloader will also look for classes in the PHP include path."
                 },
                 "preferred-install": {
-                    "type": "string",
-                    "description": "The install method Composer will prefer to use, defaults to auto and can be any of source, dist or auto."
+                    "type": ["string", "object"],
+                    "description": "The install method Composer will prefer to use, defaults to auto and can be any of source, dist, auto, or a hash of {\"pattern\": \"preference\"}."
                 },
                 "notify-on-install": {
                     "type": "boolean",
@@ -136,6 +135,41 @@
                     "description": "A hash of domain name => github API oauth tokens, typically {\"github.com\":\"<token>\"}.",
                     "additionalProperties": true
                 },
+                "gitlab-oauth": {
+                    "type": "object",
+                    "description": "A hash of domain name => gitlab API oauth tokens, typically {\"gitlab.com\":\"<token>\"}.",
+                    "additionalProperties": true
+                },
+                "disable-tls": {
+                    "type": "boolean",
+                    "description": "Defaults to `false`. If set to true all HTTPS URLs will be tried with HTTP instead and no network level encryption is performed. Enabling this is a security risk and is NOT recommended. The better way is to enable the php_openssl extension in php.ini."
+                },
+                "secure-http": {
+                    "type": "boolean",
+                    "description": "Defaults to `true`. If set to true only HTTPS URLs are allowed to be downloaded via Composer. If you really absolutely need HTTP access to something then you can disable it, but using \"Let's Encrypt\" to get a free SSL certificate is generally a better alternative."
+                },
+                "cafile": {
+                    "type": "string",
+                    "description": "A way to set the path to the openssl CA file. In PHP 5.6+ you should rather set this via openssl.cafile in php.ini, although PHP 5.6+ should be able to detect your system CA file automatically."
+                },
+                "capath": {
+                    "type": "string",
+                    "description": "If cafile is not specified or if the certificate is not found there, the directory pointed to by capath is searched for a suitable certificate. capath must be a correctly hashed certificate directory."
+                },
+                "http-basic": {
+                    "type": "object",
+                    "description": "A hash of domain name => {\"username\": \"...\", \"password\": \"...\"}.",
+                    "additionalProperties": true
+                },
+                "store-auths": {
+                    "type": ["string", "boolean"],
+                    "description": "What to do after prompting for authentication, one of: true (store), false (do not store) or \"prompt\" (ask every time), defaults to prompt."
+                },
+                "platform": {
+                    "type": "object",
+                    "description": "This is a hash of package name (keys) and version (values) that will be used to mock the platform packages on this machine.",
+                    "additionalProperties": true
+                },
                 "vendor-dir": {
                     "type": "string",
                     "description": "The location where all packages are installed, defaults to \"vendor\"."
@@ -143,6 +177,10 @@
                 "bin-dir": {
                     "type": "string",
                     "description": "The location where all binaries are linked, defaults to \"vendor/bin\"."
+                },
+                "data-dir": {
+                    "type": "string",
+                    "description": "The location where old phar files are stored, defaults to \"$home\" except on XDG Base Directory compliant unixes."
                 },
                 "cache-dir": {
                     "type": "string",
@@ -172,6 +210,10 @@
                     "type": ["string", "integer"],
                     "description": "The cache max size for the files cache, defaults to \"300MiB\"."
                 },
+                "bin-compat": {
+                    "enum": ["auto", "full"],
+                    "description": "The compatibility of the binaries, defaults to \"auto\" (automatically guessed) and can be \"full\" (compatible with both Windows and Unix-based systems)."
+                },
                 "discard-changes": {
                     "type": ["string", "boolean"],
                     "description": "The default style of handling dirty updates, defaults to false and can be any of true, false or \"stash\"."
@@ -182,11 +224,15 @@
                 },
                 "optimize-autoloader": {
                     "type": "boolean",
-                    "description": "Always optimize when dumping the autoloader"
+                    "description": "Always optimize when dumping the autoloader."
                 },
                 "prepend-autoloader": {
                     "type": "boolean",
                     "description": "If false, the composer autoloader will not be prepended to existing autoloaders, defaults to true."
+                },
+                "classmap-authoritative": {
+                    "type": "boolean",
+                    "description": "If true, the composer autoloader will not scan the filesystem for classes that are not found in the class map, defaults to false."
                 },
                 "github-domains": {
                     "type": "array",
@@ -194,6 +240,25 @@
                     "items": {
                         "type": "string"
                     }
+                },
+                "github-expose-hostname": {
+                    "type": "boolean",
+                    "description": "Defaults to true. If set to false, the OAuth tokens created to access the github API will have a date instead of the machine hostname."
+                },
+                "gitlab-domains": {
+                    "type": "array",
+                    "description": "A list of domains to use in gitlab mode. This is used for custom GitLab setups, defaults to [\"gitlab.com\"].",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "archive-format": {
+                    "type": "string",
+                    "description": "The default archiving format when not provided on cli, defaults to \"tar\"."
+                },
+                "archive-dir": {
+                    "type": "string",
+                    "description": "The default archive path when not provided on cli, defaults to \".\"."
                 }
             }
         },
@@ -205,6 +270,34 @@
         "autoload": {
             "type": "object",
             "description": "Description of how the package can be autoloaded.",
+            "properties": {
+                "psr-0": {
+                    "type": "object",
+                    "description": "This is a hash of namespaces (keys) and the directories they can be found in (values, can be arrays of paths) by the autoloader.",
+                    "additionalProperties": true
+                },
+                "psr-4": {
+                    "type": "object",
+                    "description": "This is a hash of namespaces (keys) and the PSR-4 directories they can map to (values, can be arrays of paths) by the autoloader.",
+                    "additionalProperties": true
+                },
+                "classmap": {
+                    "type": "array",
+                    "description": "This is an array of directories that contain classes to be included in the class-map generation process."
+                },
+                "files": {
+                    "type": "array",
+                    "description": "This is an array of files that are always required on every request."
+                },
+                "exclude-from-classmap": {
+                    "type": "array",
+                    "description": "This is an array of patterns to exclude from autoload classmap generation. (e.g. \"exclude-from-classmap\": [\"/test/\", \"/tests/\", \"/Tests/\"]"
+                }
+            }
+        },
+        "autoload-dev": {
+            "type": "object",
+            "description": "Description of additional autoload rules for development purpose (eg. a test suite).",
             "properties": {
                 "psr-0": {
                     "type": "object",
@@ -243,11 +336,12 @@
         },
         "minimum-stability": {
             "type": ["string"],
-            "description": "The minimum stability the packages must have to be install-able. Possible values are: dev, alpha, beta, RC, stable."
+            "description": "The minimum stability the packages must have to be install-able. Possible values are: dev, alpha, beta, RC, stable.",
+            "pattern": "^dev|alpha|beta|rc|RC|stable$"
         },
         "prefer-stable": {
             "type": ["boolean"],
-            "description": "If set to true, stable packages will be prefered to dev packages when possible, even if the minimum-stability allows unstable packages."
+            "description": "If set to true, stable packages will be preferred to dev packages when possible, even if the minimum-stability allows unstable packages."
         },
         "bin": {
             "type": ["array"],
@@ -343,17 +437,17 @@
                 },
                 "issues": {
                     "type": "string",
-                    "description": "URL to the Issue Tracker.",
+                    "description": "URL to the issue tracker.",
                     "format": "uri"
                 },
                 "forum": {
                     "type": "string",
-                    "description": "URL to the Forum.",
+                    "description": "URL to the forum.",
                     "format": "uri"
                 },
                 "wiki": {
                     "type": "string",
-                    "description": "URL to the Wiki.",
+                    "description": "URL to the wiki.",
                     "format": "uri"
                 },
                 "irc": {
@@ -365,8 +459,33 @@
                     "type": "string",
                     "description": "URL to browse or download the sources.",
                     "format": "uri"
+                },
+                "docs": {
+                    "type": "string",
+                    "description": "URL to the documentation.",
+                    "format": "uri"
+                },
+                "rss": {
+                    "type": "string",
+                    "description": "URL to the RSS feed.",
+                    "format": "uri"
                 }
             }
+        },
+        "non-feature-branches": {
+            "type": ["array"],
+            "description": "A set of string or regex patterns for non-numeric branch names that will not be handled as feature branches.",
+            "items": {
+                "type": "string"
+            }
+        },
+        "abandoned": {
+            "type": ["boolean", "string"],
+            "description": "Indicates whether this package has been abandoned, it can be boolean or a package name/URL pointing to a recommended alternative. Defaults to false."
+        },
+        "_comment": {
+            "type": ["array", "string"],
+            "description": "A key to store comments in"
         }
     }
 }

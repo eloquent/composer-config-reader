@@ -3,7 +3,7 @@
 /*
  * This file is part of the Composer configuration reader package.
  *
- * Copyright © 2014 Erin Millard
+ * Copyright © 2016 Erin Millard
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -13,9 +13,8 @@ namespace Eloquent\Composer\Configuration;
 
 use DateTime;
 use Eloquent\Liberator\Liberator;
-use Icecave\Isolator\Isolator;
-use PHPUnit_Framework_TestCase;
 use Phake;
+use PHPUnit_Framework_TestCase;
 
 class ConfigurationReaderTest extends PHPUnit_Framework_TestCase
 {
@@ -23,8 +22,8 @@ class ConfigurationReaderTest extends PHPUnit_Framework_TestCase
     {
         parent::setUp();
 
-        $this->validator = new ConfigurationValidator;
-        $this->isolator = Phake::mock(Isolator::className());
+        $this->validator = new ConfigurationValidator();
+        $this->isolator = Phake::mock('Icecave\Isolator\Isolator');
         $this->reader = new ConfigurationReader(
             $this->validator,
             $this->isolator
@@ -38,10 +37,10 @@ class ConfigurationReaderTest extends PHPUnit_Framework_TestCase
 
     public function testConstructorDefaults()
     {
-        $reader = new ConfigurationReader;
+        $reader = new ConfigurationReader();
 
         $this->assertInstanceOf(
-            __NAMESPACE__.'\ConfigurationValidator',
+            __NAMESPACE__ . '\ConfigurationValidator',
             $reader->validator()
         );
     }
@@ -416,7 +415,7 @@ EOD;
                     'https://packages.example.com',
                     array(
                         'ssl' => array(
-                            'verify_peer' => true
+                            'verify_peer' => true,
                         ),
                     ),
                     $rawData->repositories[1]
@@ -526,11 +525,10 @@ EOD;
         $error = Phake::mock('ErrorException');
         Phake::when($this->isolator)
             ->file_get_contents(Phake::anyParameters())
-            ->thenThrow($error)
-        ;
+            ->thenThrow($error);
 
         $this->setExpectedException(
-            __NAMESPACE__.'\Exception\ConfigurationReadException'
+            __NAMESPACE__ . '\Exception\ConfigurationReadException'
         );
         $this->reader->read('/path/to/configuration');
     }
@@ -539,24 +537,23 @@ EOD;
     {
         Phake::when($this->isolator)
             ->file_get_contents(Phake::anyParameters())
-            ->thenReturn('{')
-        ;
+            ->thenReturn('{');
 
         $this->setExpectedException(
-            __NAMESPACE__.'\Exception\InvalidJSONException'
+            __NAMESPACE__ . '\Exception\InvalidJSONException'
         );
         $this->reader->read('/path/to/configuration');
     }
 
     public function testReadReal()
     {
-        $this->isolator = Phake::partialMock(Isolator::className());
+        $this->isolator = Phake::partialMock('Icecave\Isolator\Isolator');
         Phake::when($this->isolator)->getenv('COMPOSER_CACHE_DIR')->thenReturn('/path/to/composer/cache');
         $this->reader = new ConfigurationReader(
             null,
             $this->isolator
         );
-        $path = __DIR__.'/../../composer.json';
+        $path = __DIR__ . '/../../composer.json';
         $rawData = json_decode(file_get_contents($path));
         $expected = new Element\Configuration(
             'eloquent/composer-config-reader',
@@ -579,13 +576,15 @@ EOD;
             null,
             array(
                 'php' => '>=5.3',
-                'eloquent/enumeration' => '~5',
-                'eloquent/liberator' => '~1',
-                'icecave/isolator' => '~2',
-                'justinrainbow/json-schema' => '~1',
+                'eloquent/enumeration' => '^5',
+                'icecave/isolator' => '^3',
+                'justinrainbow/json-schema' => '^2',
             ),
             array(
-                'icecave/archer' => '~1',
+                'eloquent/liberator' => '^2',
+                'friendsofphp/php-cs-fixer' => '^1',
+                'phake/phake' => '^2',
+                'phpunit/phpunit' => '^4',
             ),
             null,
             null,
@@ -613,7 +612,16 @@ EOD;
                 '/path/to/composer/cache',
                 '/path/to/composer/cache/files',
                 '/path/to/composer/cache/repo',
-                '/path/to/composer/cache/vcs'
+                '/path/to/composer/cache/vcs',
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                $rawData->config
             ),
             null,
             null,

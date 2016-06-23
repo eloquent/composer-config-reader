@@ -3,7 +3,7 @@
 /*
  * This file is part of the Composer configuration reader package.
  *
- * Copyright © 2014 Erin Millard
+ * Copyright © 2016 Erin Millard
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -50,7 +50,7 @@ class Configuration
      * @param array<integer,string>|null               $includePath      Include path autoloading configuration for the package.
      * @param string|null                              $targetDir        The target directory for installation.
      * @param Stability|null                           $minimumStability The minimum stability for packages.
-     * @param boolean|null                             $preferStable     True if stable packages should take precedence.
+     * @param bool|null                                $preferStable     True if stable packages should take precedence.
      * @param array<integer,RepositoryInterface>       $repositories     The custom repositories used by this package.
      * @param ProjectConfiguration|null                $config           The configuration options for the package that are specific to project-type repositories.
      * @param ScriptConfiguration|null                 $scripts          The hook scripts for the package.
@@ -105,7 +105,7 @@ class Configuration
             $authors = array();
         }
         if (null === $support) {
-            $support = new SupportInformation;
+            $support = new SupportInformation();
         }
         if (null === $dependencies) {
             $dependencies = array();
@@ -150,13 +150,13 @@ class Configuration
             $repositories = array();
         }
         if (null === $config) {
-            $config = new ProjectConfiguration;
+            $config = new ProjectConfiguration();
         }
         if (null === $scripts) {
-            $scripts = new ScriptConfiguration;
+            $scripts = new ScriptConfiguration();
         }
         if (null === $archive) {
-            $archive = new ArchiveConfiguration;
+            $archive = new ArchiveConfiguration();
         }
         if (null === $bin) {
             $bin = array();
@@ -526,7 +526,7 @@ class Configuration
     /**
      * Returns true if stable packages should take precedence.
      *
-     * @return boolean True if stable packages should take precedence.
+     * @return bool True if stable packages should take precedence.
      */
     public function preferStable()
     {

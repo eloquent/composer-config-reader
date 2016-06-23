@@ -3,7 +3,7 @@
 /*
  * This file is part of the Composer configuration reader package.
  *
- * Copyright © 2014 Erin Millard
+ * Copyright © 2016 Erin Millard
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -19,7 +19,7 @@ class AbstractRepositoryTest extends PHPUnit_Framework_TestCase
     public function testConstructor()
     {
         $repository = Phake::partialMock(
-            __NAMESPACE__.'\AbstractRepository',
+            __NAMESPACE__ . '\AbstractRepository',
             'foo',
             array('bar' => 'baz'),
             'qux'
@@ -33,7 +33,7 @@ class AbstractRepositoryTest extends PHPUnit_Framework_TestCase
     public function testConstructorDefaults()
     {
         $repository = Phake::partialMock(
-            __NAMESPACE__.'\AbstractRepository',
+            __NAMESPACE__ . '\AbstractRepository',
             'foo'
         );
 
