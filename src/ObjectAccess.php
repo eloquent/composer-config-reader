@@ -11,6 +11,7 @@
 
 namespace Eloquent\Composer\Configuration;
 
+use Eloquent\Composer\Configuration\Exception\UndefinedPropertyException;
 use stdClass;
 
 /**
@@ -55,13 +56,13 @@ class ObjectAccess
      *
      * @param string $property The property name.
      *
-     * @return mixed                                The value of the property.
-     * @throws Exception\UndefinedPropertyException If the property does not exist.
+     * @return mixed                      The value of the property.
+     * @throws UndefinedPropertyException If the property does not exist.
      */
     public function get($property)
     {
         if (!$this->exists($property)) {
-            throw new Exception\UndefinedPropertyException($property);
+            throw new UndefinedPropertyException($property);
         }
 
         return $this->data()->$property;

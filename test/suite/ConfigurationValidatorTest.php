@@ -14,7 +14,6 @@ namespace Eloquent\Composer\Configuration;
 use Eloquent\Liberator\Liberator;
 use Phake;
 use PHPUnit_Framework_TestCase;
-use stdClass;
 
 class ConfigurationValidatorTest extends PHPUnit_Framework_TestCase
 {

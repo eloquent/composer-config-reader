@@ -11,6 +11,8 @@
 
 namespace Eloquent\Composer\Configuration;
 
+use Eloquent\Composer\Configuration\Exception\ConfigurationExceptionInterface;
+use Eloquent\Composer\Configuration\Exception\InvalidConfigurationException;
 use Icecave\Isolator\Isolator;
 use JsonSchema\Validator;
 use stdClass;
@@ -60,7 +62,7 @@ class ConfigurationValidator
      *
      * @param mixed $data The configuration data.
      *
-     * @throws Exception\ConfigurationExceptionInterface If the data is invalid.
+     * @throws ConfigurationExceptionInterface If the data is invalid.
      */
     public function validate($data)
     {
@@ -68,7 +70,7 @@ class ConfigurationValidator
         $this->validator->check($data, $this->schema());
 
         if (!$this->validator->isValid()) {
-            throw new Exception\InvalidConfigurationException(
+            throw new InvalidConfigurationException(
                 $this->validator->getErrors()
             );
         }

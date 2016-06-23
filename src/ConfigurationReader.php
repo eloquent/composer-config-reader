@@ -12,6 +12,20 @@
 namespace Eloquent\Composer\Configuration;
 
 use DateTime;
+use Eloquent\Composer\Configuration\Element\ArchiveConfiguration;
+use Eloquent\Composer\Configuration\Element\Author;
+use Eloquent\Composer\Configuration\Element\Configuration;
+use Eloquent\Composer\Configuration\Element\InstallationMethod;
+use Eloquent\Composer\Configuration\Element\PackageRepository;
+use Eloquent\Composer\Configuration\Element\ProjectConfiguration;
+use Eloquent\Composer\Configuration\Element\Repository;
+use Eloquent\Composer\Configuration\Element\ScriptConfiguration;
+use Eloquent\Composer\Configuration\Element\Stability;
+use Eloquent\Composer\Configuration\Element\SupportInformation;
+use Eloquent\Composer\Configuration\Element\VcsChangePolicy;
+use Eloquent\Composer\Configuration\Exception\ConfigurationExceptionInterface;
+use Eloquent\Composer\Configuration\Exception\ConfigurationReadException;
+use Eloquent\Composer\Configuration\Exception\InvalidJsonException;
 use ErrorException;
 use Icecave\Isolator\Isolator;
 use stdClass;
@@ -54,8 +68,8 @@ class ConfigurationReader
      *
      * @param string $path The configuration file path.
      *
-     * @return Element\Configuration                     The parsed configuration.
-     * @throws Exception\ConfigurationExceptionInterface If there is a problem reading the configuration.
+     * @return Configuration                   The parsed configuration.
+     * @throws ConfigurationExceptionInterface If there is a problem reading the configuration.
      */
     public function read($path)
     {
@@ -70,21 +84,21 @@ class ConfigurationReader
      *
      * @param string $path The path to read from.
      *
-     * @return ObjectAccess                              The parsed data.
-     * @throws Exception\ConfigurationExceptionInterface If there is a problem reading the data.
+     * @return ObjectAccess                    The parsed data.
+     * @throws ConfigurationExceptionInterface If there is a problem reading the data.
      */
     protected function readJson($path)
     {
         try {
             $jsonData = $this->isolator()->file_get_contents($path);
         } catch (ErrorException $e) {
-            throw new Exception\ConfigurationReadException($path, $e);
+            throw new ConfigurationReadException($path, $e);
         }
 
         $data = json_decode($jsonData);
         $jsonError = json_last_error();
         if (JSON_ERROR_NONE !== $jsonError) {
-            throw new Exception\InvalidJsonException($path, $jsonError);
+            throw new InvalidJsonException($path, $jsonError);
         }
 
         return new ObjectAccess($data);
@@ -95,15 +109,15 @@ class ConfigurationReader
      *
      * @param ObjectAccess $data The parsed JSON data.
      *
-     * @return Element\Configuration The newly created configuration object.
+     * @return Configuration The newly created configuration object.
      */
     protected function createConfiguration(ObjectAccess $data)
     {
         $autoloadData = new ObjectAccess(
-            $data->getDefault('autoload', new stdClass())
+            $data->getDefault('autoload', (object) array())
         );
 
-        return new Element\Configuration(
+        return new Configuration(
             $data->getDefault('name'),
             $data->getDefault('description'),
             $data->getDefault('version'),
@@ -159,7 +173,7 @@ class ConfigurationReader
      *
      * @param array|null $authors The raw author list data.
      *
-     * @return array<integer,Element\Author>|null The newly created author list.
+     * @return array<integer,Author>|null The newly created author list.
      */
     protected function createAuthors(array $authors = null)
     {
@@ -179,11 +193,11 @@ class ConfigurationReader
      *
      * @param ObjectAccess $author The raw author data.
      *
-     * @return Element\Author The newly created author.
+     * @return Author The newly created author.
      */
     protected function createAuthor(ObjectAccess $author)
     {
-        return new Element\Author(
+        return new Author(
             $author->get('name'),
             $author->getDefault('email'),
             $author->getDefault('homepage'),
@@ -197,13 +211,13 @@ class ConfigurationReader
      *
      * @param stdClass|null $support The raw support information.
      *
-     * @return Element\SupportInformation|null The newly created support information object.
+     * @return SupportInformation|null The newly created support information object.
      */
     protected function createSupport(stdClass $support = null)
     {
         if (null !== $support) {
             $supportData = new ObjectAccess($support);
-            $support = new Element\SupportInformation(
+            $support = new SupportInformation(
                 $supportData->getDefault('email'),
                 $supportData->getDefault('issues'),
                 $supportData->getDefault('forum'),
@@ -243,12 +257,12 @@ class ConfigurationReader
      *
      * @param string|null $stability The raw stability data.
      *
-     * @return Element\Stability|null The newly created stability enumeration.
+     * @return Stability|null The newly created stability enumeration.
      */
     protected function createStability($stability)
     {
         if (null !== $stability) {
-            $stability = Element\Stability::memberByValue($stability, false);
+            $stability = Stability::memberByValue($stability, false);
         }
 
         return $stability;
@@ -259,7 +273,7 @@ class ConfigurationReader
      *
      * @param array|null $repositories The raw repository list data.
      *
-     * @return array<integer,Element\RepositoryInterface>|null The newly created repository list.
+     * @return array<integer,RepositoryInterface>|null The newly created repository list.
      */
     protected function createRepositories(array $repositories = null)
     {
@@ -279,19 +293,19 @@ class ConfigurationReader
      *
      * @param ObjectAccess $repository The raw repository data.
      *
-     * @return Element\RepositoryInterface The newly created repository.
+     * @return RepositoryInterface The newly created repository.
      */
     protected function createRepository(ObjectAccess $repository)
     {
         $type = $repository->get('type');
         if ('package' === $type) {
-            $repository = new Element\PackageRepository(
+            $repository = new PackageRepository(
                 $this->objectToArray($repository->get('package')),
                 $this->objectToArray($repository->getDefault('options')),
                 $repository->data()
             );
         } else {
-            $repository = new Element\Repository(
+            $repository = new Repository(
                 $type,
                 $repository->getDefault('url'),
                 $this->objectToArray($repository->getDefault('options')),
@@ -307,12 +321,12 @@ class ConfigurationReader
      *
      * @param stdClass|null $config The raw project configuration data.
      *
-     * @return Element\ProjectConfiguration The newly created project configuration object.
+     * @return ProjectConfiguration The newly created project configuration object.
      */
     protected function createProjectConfiguration(stdClass $config = null)
     {
         if (null === $config) {
-            return new Element\ProjectConfiguration(
+            return new ProjectConfiguration(
                 null,
                 null,
                 null,
@@ -331,7 +345,7 @@ class ConfigurationReader
             $cacheDir = $this->defaultCacheDir();
         }
 
-        return new Element\ProjectConfiguration(
+        return new ProjectConfiguration(
             $configData->getDefault('process-timeout'),
             $configData->getDefault('use-include-path'),
             $this->createInstallationMethod(
@@ -410,12 +424,12 @@ class ConfigurationReader
      *
      * @param string|null $method The raw installation method data.
      *
-     * @return Element\InstallationMethod|null The newly created installation method enumeration.
+     * @return InstallationMethod|null The newly created installation method enumeration.
      */
     protected function createInstallationMethod($method)
     {
         if (null !== $method) {
-            $method = Element\InstallationMethod::memberByValue($method, false);
+            $method = InstallationMethod::memberByValue($method, false);
         }
 
         return $method;
@@ -426,12 +440,12 @@ class ConfigurationReader
      *
      * @param string|null $policy The raw VCS change policy data.
      *
-     * @return Element\VcsChangePolicy|null The newly created VCS change policy enumeration.
+     * @return VcsChangePolicy|null The newly created VCS change policy enumeration.
      */
     protected function createVcsChangePolicy($policy)
     {
         if (null !== $policy) {
-            $policy = Element\VcsChangePolicy::memberByValue($policy, false);
+            $policy = VcsChangePolicy::memberByValue($policy, false);
         }
 
         return $policy;
@@ -442,13 +456,13 @@ class ConfigurationReader
      *
      * @param stdClass|null $scripts The raw script configuration data.
      *
-     * @return Element\ScriptConfiguration|null The newly created script configuration object.
+     * @return ScriptConfiguration|null The newly created script configuration object.
      */
     protected function createScripts(stdClass $scripts = null)
     {
         if (null !== $scripts) {
             $scriptsData = new ObjectAccess($scripts);
-            $scripts = new Element\ScriptConfiguration(
+            $scripts = new ScriptConfiguration(
                 $this->arrayize($scriptsData->getDefault('pre-install-cmd')),
                 $this->arrayize($scriptsData->getDefault('post-install-cmd')),
                 $this->arrayize($scriptsData->getDefault('pre-update-cmd')),
@@ -477,13 +491,13 @@ class ConfigurationReader
      *
      * @param stdClass|null $archive The raw archive configuration data.
      *
-     * @return Element\ArchiveConfiguration|null The newly created archive configuration object.
+     * @return ArchiveConfiguration|null The newly created archive configuration object.
      */
     protected function createArchiveConfiguration(stdClass $archive = null)
     {
         if (null !== $archive) {
             $archiveData = new ObjectAccess($archive);
-            $archive = new Element\ArchiveConfiguration(
+            $archive = new ArchiveConfiguration(
                 $archiveData->getDefault('exclude'),
                 $archiveData->data()
             );

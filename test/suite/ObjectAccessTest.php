@@ -12,7 +12,6 @@
 namespace Eloquent\Composer\Configuration;
 
 use PHPUnit_Framework_TestCase;
-use stdClass;
 
 class ObjectAccessTest extends PHPUnit_Framework_TestCase
 {
@@ -20,7 +19,7 @@ class ObjectAccessTest extends PHPUnit_Framework_TestCase
     {
         parent::setUp();
 
-        $this->data = new stdClass();
+        $this->data = (object) array();
         $this->data->foo = 'bar';
         $this->objectAccess = new ObjectAccess($this->data);
     }
