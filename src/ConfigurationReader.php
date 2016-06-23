@@ -17,6 +17,7 @@ use Eloquent\Composer\Configuration\Element\Author;
 use Eloquent\Composer\Configuration\Element\Configuration;
 use Eloquent\Composer\Configuration\Element\InstallationMethod;
 use Eloquent\Composer\Configuration\Element\PackageRepository;
+use Eloquent\Composer\Configuration\Element\PackagistRepository;
 use Eloquent\Composer\Configuration\Element\ProjectConfiguration;
 use Eloquent\Composer\Configuration\Element\Repository;
 use Eloquent\Composer\Configuration\Element\ScriptConfiguration;
@@ -297,7 +298,15 @@ class ConfigurationReader
      */
     protected function createRepository(ObjectAccess $repository)
     {
+        if ($repository->exists('packagist')) {
+            return new PackagistRepository(
+                $repository->get('packagist'),
+                $repository->data()
+            );
+        }
+
         $type = $repository->get('type');
+
         if ('package' === $type) {
             $repository = new PackageRepository(
                 $this->objectToArray($repository->get('package')),
