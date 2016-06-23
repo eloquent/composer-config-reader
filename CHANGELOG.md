@@ -1,5 +1,12 @@
 # Composer configuration reader changelog
 
+## Next release
+
+- **[FIXED]** Configurations that disable the Packagist repo can now be parsed
+  ([#7]).
+
+[#7]: https://github.com/eloquent/composer-config-reader/issues/7
+
 ## 2.0.0 (2014-01-22)
 
 - **[BC BREAK]** Element class constructors expanded to accomodate new Composer
@@ -13,5 +20,7 @@
 
 ## 1.1.2 (2013-03-04)
 
-- **[NEW]** [Archer](https://github.com/IcecaveStudios/archer) integration
+- **[NEW]** [Archer] integration
 - **[NEW]** Implemented changelog
+
+[archer]: https://github.com/IcecaveStudios/archer
