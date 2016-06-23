@@ -5,7 +5,7 @@ php:
     - '5.4'
     - '5.5'
     - '5.6'
-    - '7.0'
+    - '7.0.6'
     - hhvm
     - nightly
 
@@ -23,7 +23,7 @@ after_script: scripts/travis-after
 
 env:
     global:
-        - ELOQUENT_PUBLISH_VERSION=7.0
+        - ELOQUENT_PUBLISH_VERSION=7.0.6
         - secure: "IdOEyZWIhJ/6Cgv9kFbRj2InMG5XFVPWbvF1bDFU5UnWPVmcaCpwz6Ez0NyGUXDAIf48s6St3li+nQoZV+vbaVJ5vshEglpvWepM/4HNzEjGOYLLhjSuMKLHhvqfUP0I121FfIrgyD8otbf4LbCbksgEheA3QMgrRSyYi5gzu8Y="
 
 cache:
