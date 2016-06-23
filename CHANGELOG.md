@@ -1,6 +1,6 @@
 # Composer configuration reader changelog
 
-## Next release
+## 2.0.1 (2016-06-23)
 
 - **[FIXED]** Configurations that disable the Packagist repo can now be parsed
   ([#7]).

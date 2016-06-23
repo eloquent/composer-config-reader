@@ -9,8 +9,8 @@ As a guideline, please follow this process when contributing:
    pull request.
 5. Use the various quality checks provided:
     - Run the tests with `make test`.
-    - Generate a coverage report with `make coverage`, then open
-      `coverage/index.html`.
+    - Generate a coverage report with `make coverage`, then open it with
+      `make open-coverage`.
     - Fix code style issues with `make lint`, but be sure to stage changes
       first.
 6. [Squash] commits if necessary (`git rebase -i master`).
