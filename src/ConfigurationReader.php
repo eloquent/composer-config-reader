@@ -143,7 +143,7 @@ class ConfigurationReader
             $data->getDefault('target-dir'),
             $this->createStability($data->getDefault('minimum-stability')),
             $data->getDefault('prefer-stable'),
-            $this->createRepositories($data->getDefault('repositories')),
+            $this->createRepositories((array) $data->getDefault('repositories')),
             $this->createProjectConfiguration($data->getDefault('config')),
             $this->createScripts($data->getDefault('scripts')),
             $data->getDefault('extra'),
