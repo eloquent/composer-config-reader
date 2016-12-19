@@ -1,5 +1,10 @@
 # Composer configuration reader changelog
 
+## 2.0.2 (2016-12-19)
+
+- **[FIXED]** Configurations that use repository name can now be parsed
+  ([#10]).
+
 ## 2.0.1 (2016-06-23)
 
 - **[FIXED]** Configurations that disable the Packagist repo can now be parsed
