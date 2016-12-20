@@ -11,7 +11,7 @@
 
 namespace Eloquent\Composer\Configuration\Exception;
 
-use Phake;
+use Exception;
 use PHPUnit_Framework_TestCase;
 
 class InvalidJsonExceptionTest extends PHPUnit_Framework_TestCase
@@ -52,7 +52,7 @@ class InvalidJsonExceptionTest extends PHPUnit_Framework_TestCase
     public function testConstructor($expectedMessage, $jsonErrorCode)
     {
         $path = '/foo/bar';
-        $previous = Phake::mock('Exception');
+        $previous = new Exception();
         $exception = new InvalidJsonException($path, $jsonErrorCode, $previous);
 
         $this->assertSame($path, $exception->path());

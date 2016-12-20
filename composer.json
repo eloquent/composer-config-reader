@@ -19,7 +19,7 @@
     },
     "require-dev": {
         "eloquent/liberator": "^2",
-        "phake/phake": "^2",
+        "eloquent/phony": "0.14.4",
         "phpunit/phpunit": "^4"
     },
     "autoload": {

@@ -11,14 +11,14 @@
 
 namespace Eloquent\Composer\Configuration\Exception;
 
-use Phake;
+use Exception;
 use PHPUnit_Framework_TestCase;
 
 class UndefinedPropertyExceptionTest extends PHPUnit_Framework_TestCase
 {
     public function testConstructor()
     {
-        $previous = Phake::mock('Exception');
+        $previous = new Exception();
         $exception = new UndefinedPropertyException('foo', $previous);
         $expectedMessage = "Undefined property 'foo' in Composer configuration.";
 

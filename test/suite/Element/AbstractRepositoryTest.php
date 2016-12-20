@@ -11,19 +11,17 @@
 
 namespace Eloquent\Composer\Configuration\Element;
 
-use Phake;
+use Eloquent\Phony\Phpunit\Phony;
 use PHPUnit_Framework_TestCase;
 
 class AbstractRepositoryTest extends PHPUnit_Framework_TestCase
 {
     public function testConstructor()
     {
-        $repository = Phake::partialMock(
+        $repository = Phony::partialMock(
             __NAMESPACE__ . '\AbstractRepository',
-            'foo',
-            array('bar' => 'baz'),
-            'qux'
-        );
+            array('foo', array('bar' => 'baz'), 'qux')
+        )->get();
 
         $this->assertSame('foo', $repository->type());
         $this->assertSame(array('bar' => 'baz'), $repository->options());
@@ -32,10 +30,10 @@ class AbstractRepositoryTest extends PHPUnit_Framework_TestCase
 
     public function testConstructorDefaults()
     {
-        $repository = Phake::partialMock(
+        $repository = Phony::partialMock(
             __NAMESPACE__ . '\AbstractRepository',
-            'foo'
-        );
+            array('foo')
+        )->get();
 
         $this->assertSame(array(), $repository->options());
         $this->assertNull($repository->rawData());

@@ -38,7 +38,7 @@
     },
     "require-dev": {
         "eloquent/liberator": "1.*",
-        "phake/phake": "1.*"
+        "eloquent/phony": "1.*"
     },
     "conflict": {
         "eloquent/asplode": "*",

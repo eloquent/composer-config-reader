@@ -11,7 +11,7 @@
 
 namespace Eloquent\Composer\Configuration\Exception;
 
-use Phake;
+use Exception;
 use PHPUnit_Framework_TestCase;
 
 class InvalidConfigurationExceptionTest extends PHPUnit_Framework_TestCase
@@ -28,7 +28,7 @@ class InvalidConfigurationExceptionTest extends PHPUnit_Framework_TestCase
                 'message' => 'qux',
             ),
         );
-        $previous = Phake::mock('Exception');
+        $previous = new Exception();
         $exception = new InvalidConfigurationException($errors, $previous);
         $expectedMessage = <<<'EOD'
 The supplied Composer configuration is invalid:

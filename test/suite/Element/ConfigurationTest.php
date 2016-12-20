@@ -11,7 +11,7 @@
 
 namespace Eloquent\Composer\Configuration\Element;
 
-use Phake;
+use Eloquent\Phony\Phpunit\Phony;
 use PHPUnit_Framework_TestCase;
 use ReflectionObject;
 
@@ -21,20 +21,20 @@ class ConfigurationTest extends PHPUnit_Framework_TestCase
     {
         parent::setUp();
 
-        $this->time = Phake::mock('DateTime');
+        $this->time = Phony::mock('DateTime')->get();
         $this->authors = array(
-            Phake::mock(__NAMESPACE__ . '\Author'),
-            Phake::mock(__NAMESPACE__ . '\Author'),
+            Phony::mock(__NAMESPACE__ . '\Author')->get(),
+            Phony::mock(__NAMESPACE__ . '\Author')->get(),
         );
-        $this->support = Phake::mock(__NAMESPACE__ . '\SupportInformation');
+        $this->support = Phony::mock(__NAMESPACE__ . '\SupportInformation')->get();
         $this->minimumStability = Stability::DEV();
         $this->repositories = array(
-            Phake::mock(__NAMESPACE__ . '\Repository'),
-            Phake::mock(__NAMESPACE__ . '\Repository'),
+            Phony::mock(__NAMESPACE__ . '\Repository')->get(),
+            Phony::mock(__NAMESPACE__ . '\Repository')->get(),
         );
-        $this->config = Phake::mock(__NAMESPACE__ . '\ProjectConfiguration');
-        $this->scripts = Phake::mock(__NAMESPACE__ . '\ScriptConfiguration');
-        $this->archive = Phake::mock(__NAMESPACE__ . '\ArchiveConfiguration');
+        $this->config = Phony::mock(__NAMESPACE__ . '\ProjectConfiguration')->get();
+        $this->scripts = Phony::mock(__NAMESPACE__ . '\ScriptConfiguration')->get();
+        $this->archive = Phony::mock(__NAMESPACE__ . '\ArchiveConfiguration')->get();
         $this->configuration = new Configuration(
             'foo',
             'bar',

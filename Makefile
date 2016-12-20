@@ -23,6 +23,5 @@ composer.lock: composer.json
 	composer update
 
 test/bin/php-cs-fixer:
-	mkdir -p test/bin
 	curl -sSL https://github.com/FriendsOfPHP/PHP-CS-Fixer/releases/download/v2.0.0/php-cs-fixer.phar -o test/bin/php-cs-fixer
 	chmod +x test/bin/php-cs-fixer

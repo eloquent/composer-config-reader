@@ -12,7 +12,7 @@
 namespace Eloquent\Composer\Configuration;
 
 use Eloquent\Liberator\Liberator;
-use Phake;
+use Eloquent\Phony\Phpunit\Phony;
 use PHPUnit_Framework_TestCase;
 
 class ConfigurationReaderTest extends PHPUnit_Framework_TestCase
@@ -22,11 +22,8 @@ class ConfigurationReaderTest extends PHPUnit_Framework_TestCase
         parent::setUp();
 
         $this->validator = new ConfigurationValidator();
-        $this->isolator = Phake::mock('Icecave\Isolator\Isolator');
-        $this->reader = new ConfigurationReader(
-            $this->validator,
-            $this->isolator
-        );
+        $this->isolator = Phony::mock('Icecave\Isolator\Isolator');
+        $this->reader = new ConfigurationReader($this->validator, $this->isolator->get());
     }
 
     public function testConstructor()
@@ -38,10 +35,7 @@ class ConfigurationReaderTest extends PHPUnit_Framework_TestCase
     {
         $reader = new ConfigurationReader();
 
-        $this->assertInstanceOf(
-            __NAMESPACE__ . '\ConfigurationValidator',
-            $reader->validator()
-        );
+        $this->assertInstanceOf(__NAMESPACE__ . '\ConfigurationValidator', $reader->validator());
     }
 
     public function readData()
@@ -67,30 +61,23 @@ class ConfigurationReaderTest extends PHPUnit_Framework_TestCase
         $jsonData = file_get_contents(__DIR__ . "/../fixture/$name/composer.json");
         $rawData = json_decode($jsonData);
         $expected = require __DIR__ . "/../fixture/$name/expected.php";
-        Phake::when($this->isolator)->file_get_contents('/path/to/configuration')->thenReturn($jsonData);
-        Phake::when($this->isolator)->getenv('COMPOSER_CACHE_DIR')->thenReturn('/path/to/composer/cache');
+        $this->isolator->file_get_contents->with('/path/to/configuration')->returns($jsonData);
+        $this->isolator->getenv->with('COMPOSER_CACHE_DIR')->returns('/path/to/composer/cache');
 
         $this->assertEquals($expected, $this->reader->read('/path/to/configuration'));
     }
 
     public function testReadFailureFilesystem()
     {
-        $error = Phake::mock('ErrorException');
-        Phake::when($this->isolator)
-            ->file_get_contents(Phake::anyParameters())
-            ->thenThrow($error);
+        $this->isolator->file_get_contents->returns(false);
 
-        $this->setExpectedException(
-            __NAMESPACE__ . '\Exception\ConfigurationReadException'
-        );
+        $this->setExpectedException(__NAMESPACE__ . '\Exception\ConfigurationReadException');
         $this->reader->read('/path/to/configuration');
     }
 
     public function testReadFailureInvalidJSON()
     {
-        Phake::when($this->isolator)
-            ->file_get_contents(Phake::anyParameters())
-            ->thenReturn('{');
+        $this->isolator->file_get_contents->returns('{');
 
         $this->setExpectedException(
             __NAMESPACE__ . '\Exception\InvalidJSONException'
@@ -100,12 +87,9 @@ class ConfigurationReaderTest extends PHPUnit_Framework_TestCase
 
     public function testReadReal()
     {
-        $this->isolator = Phake::partialMock('Icecave\Isolator\Isolator');
-        Phake::when($this->isolator)->getenv('COMPOSER_CACHE_DIR')->thenReturn('/path/to/composer/cache');
-        $this->reader = new ConfigurationReader(
-            null,
-            $this->isolator
-        );
+        $this->isolator = Phony::partialMock('Icecave\Isolator\Isolator');
+        $this->isolator->getenv->with('COMPOSER_CACHE_DIR')->returns('/path/to/composer/cache');
+        $this->reader = new ConfigurationReader(null, $this->isolator->get());
         $path = __DIR__ . '/../../composer.json';
         $rawData = json_decode(file_get_contents($path));
         $expected = new Element\Configuration(
@@ -135,7 +119,7 @@ class ConfigurationReaderTest extends PHPUnit_Framework_TestCase
             ),
             array(
                 'eloquent/liberator' => '^2',
-                'phake/phake' => '^2',
+                'eloquent/phony' => '0.14.4',
                 'phpunit/phpunit' => '^4',
             ),
             null,
@@ -257,10 +241,10 @@ class ConfigurationReaderTest extends PHPUnit_Framework_TestCase
     public function testDefaultCacheDir(array $environment, array $constants, $expected)
     {
         foreach ($environment as $name => $value) {
-            Phake::when($this->isolator)->getenv($name)->thenReturn($value);
+            $this->isolator->getenv->with($name)->returns($value);
         }
         foreach ($constants as $name => $value) {
-            Phake::when($this->isolator)->defined($name)->thenReturn(true);
+            $this->isolator->defined->with($name)->returns(true);
         }
 
         $this->assertSame($expected, Liberator::liberate($this->reader)->defaultCacheDir());

@@ -11,7 +11,7 @@
 
 namespace Eloquent\Composer\Configuration\Exception;
 
-use Phake;
+use Exception;
 use PHPUnit_Framework_TestCase;
 
 class ConfigurationReadExceptionTest extends PHPUnit_Framework_TestCase
@@ -19,7 +19,7 @@ class ConfigurationReadExceptionTest extends PHPUnit_Framework_TestCase
     public function testConstructor()
     {
         $path = '/foo/bar';
-        $previous = Phake::mock('Exception');
+        $previous = new Exception();
         $exception = new ConfigurationReadException($path, $previous);
         $expectedMessage = "Unable to read Composer configuration from '/foo/bar'.";
 

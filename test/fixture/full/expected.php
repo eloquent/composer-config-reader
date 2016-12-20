@@ -44,7 +44,7 @@ return new Configuration(
     ),
     array(
         'eloquent/liberator' => '1.*',
-        'phake/phake' => '1.*',
+        'eloquent/phony' => '1.*',
     ),
     array(
         'eloquent/asplode' => '*',

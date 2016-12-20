@@ -27,7 +27,6 @@ use Eloquent\Composer\Configuration\Element\VcsChangePolicy;
 use Eloquent\Composer\Configuration\Exception\ConfigurationExceptionInterface;
 use Eloquent\Composer\Configuration\Exception\ConfigurationReadException;
 use Eloquent\Composer\Configuration\Exception\InvalidJsonException;
-use ErrorException;
 use Icecave\Isolator\Isolator;
 use stdClass;
 
@@ -90,10 +89,10 @@ class ConfigurationReader
      */
     protected function readJson($path)
     {
-        try {
-            $jsonData = $this->isolator()->file_get_contents($path);
-        } catch (ErrorException $e) {
-            throw new ConfigurationReadException($path, $e);
+        $jsonData = @$this->isolator()->file_get_contents($path);
+
+        if (false === $jsonData) {
+            throw new ConfigurationReadException($path);
         }
 
         $data = json_decode($jsonData);

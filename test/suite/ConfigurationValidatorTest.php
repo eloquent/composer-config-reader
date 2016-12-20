@@ -11,8 +11,9 @@
 
 namespace Eloquent\Composer\Configuration;
 
+use Eloquent\Composer\Configuration\Exception\InvalidConfigurationException;
 use Eloquent\Liberator\Liberator;
-use Phake;
+use Eloquent\Phony\Phpunit\Phony;
 use PHPUnit_Framework_TestCase;
 
 class ConfigurationValidatorTest extends PHPUnit_Framework_TestCase
@@ -21,14 +22,11 @@ class ConfigurationValidatorTest extends PHPUnit_Framework_TestCase
     {
         parent::setUp();
 
-        $this->schema = Phake::mock('stdClass');
-        $this->innerValidator = Phake::mock('JsonSchema\Validator');
-        $this->isolator = Phake::mock('Icecave\Isolator\Isolator');
-        $this->validator = new ConfigurationValidator(
-            $this->schema,
-            $this->innerValidator,
-            $this->isolator
-        );
+        $this->schema = (object) array();
+        $this->innerValidator = Phony::mock('JsonSchema\Validator');
+        $this->isolator = Phony::mock('Icecave\Isolator\Isolator');
+        $this->validator =
+            new ConfigurationValidator($this->schema, $this->innerValidator->get(), $this->isolator->get());
 
         $this->errors = array(
             array(
@@ -50,14 +48,8 @@ class ConfigurationValidatorTest extends PHPUnit_Framework_TestCase
     public function testConstructorDefaults()
     {
         $schemaJSON = '{"foo": "bar"}';
-        Phake::when($this->isolator)
-            ->file_get_contents(Phake::anyParameters())
-            ->thenReturn($schemaJSON);
-        $validator = new ConfigurationValidator(
-            null,
-            null,
-            $this->isolator
-        );
+        $this->isolator->file_get_contents->returns($schemaJSON);
+        $validator = new ConfigurationValidator(null, null, $this->isolator->get());
         $expectedSchema = json_decode($schemaJSON);
         $expectedSchemaPathAtoms = array(
             dirname(dirname(__DIR__)),
@@ -66,62 +58,47 @@ class ConfigurationValidatorTest extends PHPUnit_Framework_TestCase
         );
         $expectedSchemaPath = implode(DIRECTORY_SEPARATOR, $expectedSchemaPathAtoms);
 
-        $this->assertEquals(
-            $expectedSchema,
-            $validator->schema()
-        );
-        $this->assertInstanceOf(
-            'JsonSchema\Validator',
-            Liberator::liberate($validator)->validator
-        );
-        Phake::verify($this->isolator)->file_get_contents($expectedSchemaPath);
+        $this->assertEquals($expectedSchema, $validator->schema());
+        $this->assertInstanceOf('JsonSchema\Validator', Liberator::liberate($validator)->validator);
+        $this->isolator->file_get_contents->calledWith($expectedSchemaPath);
     }
 
     public function testValidate()
     {
-        Phake::when($this->innerValidator)
-            ->isValid(Phake::anyParameters())
-            ->thenReturn(true);
-        $data = Phake::mock('stdClass');
+        $this->innerValidator->isValid->returns(true);
+        $data = (object) array();
         $this->validator->validate($data);
 
-        Phake::inOrder(
-            Phake::verify($this->innerValidator)->check(
+        Phony::inOrder(
+            $this->innerValidator->check->calledWith(
                 $this->identicalTo($data),
                 $this->identicalTo($this->schema)
             ),
-            Phake::verify($this->innerValidator)->isValid()
+            $this->innerValidator->isValid->called()
         );
     }
 
     public function testValidateFailure()
     {
-        Phake::when($this->innerValidator)
-            ->isValid(Phake::anyParameters())
-            ->thenReturn(false);
-        Phake::when($this->innerValidator)
-            ->getErrors(Phake::anyParameters())
-            ->thenReturn($this->errors);
-        $data = Phake::mock('stdClass');
+        $this->innerValidator->isValid->returns(false);
+        $this->innerValidator->getErrors->returns($this->errors);
+        $data = (object) array();
 
         $error = null;
         try {
             $this->validator->validate($data);
-        } catch (Exception\InvalidConfigurationException $error) {
+        } catch (InvalidConfigurationException $error) {
             // verified below
         }
 
-        $this->assertInstanceOf(
-            __NAMESPACE__ . '\Exception\InvalidConfigurationException',
-            $error
-        );
+        $this->assertInstanceOf(__NAMESPACE__ . '\Exception\InvalidConfigurationException', $error);
         $this->assertSame($this->errors, $error->errors());
-        Phake::inOrder(
-            Phake::verify($this->innerValidator)->check(
+        Phony::inOrder(
+            $this->innerValidator->check->calledWith(
                 $this->identicalTo($data),
                 $this->identicalTo($this->schema)
             ),
-            Phake::verify($this->innerValidator)->isValid()
+            $this->innerValidator->isValid->called()
         );
     }
 }
