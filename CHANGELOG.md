@@ -4,8 +4,11 @@
 
 - **[IMPROVED]** Removed dependency on [Isolator].
 - **[FIXED]** Configurations that use repository name can now be parsed
-  ([#10]).
+  ([#10], [#11] - thanks [@spipu]).
 
+[#10]: https://github.com/eloquent/composer-config-reader/issues/10
+[#11]: https://github.com/eloquent/composer-config-reader/pull/11
+[@spipu]: https://github.com/spipu
 [isolator]: https://github.com/IcecaveStudios/isolator
 
 ## 2.0.1 (2016-06-23)
