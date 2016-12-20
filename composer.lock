@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "1e9cffe9fe6d052f6ec575d4582c2879",
-    "content-hash": "06b41806a20c5146dbab0d0bd809b6b0",
+    "hash": "babfc9c0f8e5316f31ed47c14bc1a221",
+    "content-hash": "43b865f2148d2091470f359ad0cbd4be",
     "packages": [
         {
             "name": "eloquent/enumeration",
@@ -57,64 +57,6 @@
                 "type"
             ],
             "time": "2015-11-03 22:21:38"
-        },
-        {
-            "name": "icecave/isolator",
-            "version": "3.0.3",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/IcecaveStudios/isolator.git",
-                "reference": "8fad9e64c393238b01b359e01bd7f25dcdb818e4"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/IcecaveStudios/isolator/zipball/8fad9e64c393238b01b359e01bd7f25dcdb818e4",
-                "reference": "8fad9e64c393238b01b359e01bd7f25dcdb818e4",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3"
-            },
-            "require-dev": {
-                "icecave/archer": "~1"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-develop": "3.0.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Icecave\\Isolator\\": "src"
-                },
-                "files": [
-                    "src/register-autoloader.php"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "James Harris",
-                    "email": "james.harris@icecave.com.au",
-                    "homepage": "https://github.com/jmalloc"
-                }
-            ],
-            "description": "Dependency injection for global functions.",
-            "homepage": "https://github.com/IcecaveStudios/isolator",
-            "keywords": [
-                "Double",
-                "fake",
-                "mock",
-                "phpunit",
-                "stub",
-                "test",
-                "unit"
-            ],
-            "time": "2015-03-27 05:04:19"
         },
         {
             "name": "justinrainbow/json-schema",

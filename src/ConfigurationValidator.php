@@ -13,7 +13,6 @@ namespace Eloquent\Composer\Configuration;
 
 use Eloquent\Composer\Configuration\Exception\ConfigurationExceptionInterface;
 use Eloquent\Composer\Configuration\Exception\InvalidConfigurationException;
-use Icecave\Isolator\Isolator;
 use JsonSchema\Validator;
 use stdClass;
 
@@ -27,15 +26,11 @@ class ConfigurationValidator
      *
      * @param stdClass|null  $schema    The schema to use.
      * @param Validator|null $validator The JSON schema validator to use.
-     * @param Isolator|null  $isolator  The isolator to use.
      */
     public function __construct(
         stdClass $schema = null,
-        Validator $validator = null,
-        Isolator $isolator = null
+        Validator $validator = null
     ) {
-        $this->isolator = Isolator::get($isolator);
-
         if (null === $schema) {
             $schema = $this->loadDefaultSchema();
         }
@@ -83,9 +78,7 @@ class ConfigurationValidator
      */
     protected function loadDefaultSchema()
     {
-        return json_decode(
-            $this->isolator->file_get_contents($this->defaultSchemaPath())
-        );
+        return json_decode(file_get_contents($this->defaultSchemaPath()));
     }
 
     /**
@@ -103,5 +96,4 @@ class ConfigurationValidator
 
     private $schema;
     private $validator;
-    private $isolator;
 }

@@ -19,11 +19,17 @@ class ConfigurationReaderTest extends PHPUnit_Framework_TestCase
 {
     protected function setUp()
     {
-        parent::setUp();
-
         $this->validator = new ConfigurationValidator();
-        $this->isolator = Phony::mock('Icecave\Isolator\Isolator');
-        $this->reader = new ConfigurationReader($this->validator, $this->isolator->get());
+        $this->reader = new ConfigurationReader($this->validator);
+
+        $this->defined = Phony::stubGlobal('defined', __NAMESPACE__);
+        $this->fileGetContents = Phony::stubGlobal('file_get_contents', __NAMESPACE__);
+        $this->getenv = Phony::stubGlobal('getenv', __NAMESPACE__);
+    }
+
+    protected function tearDown()
+    {
+        Phony::restoreGlobalFunctions();
     }
 
     public function testConstructor()
@@ -58,18 +64,18 @@ class ConfigurationReaderTest extends PHPUnit_Framework_TestCase
      */
     public function testRead($name)
     {
-        $jsonData = file_get_contents(__DIR__ . "/../fixture/$name/composer.json");
+        $jsonData = \file_get_contents(__DIR__ . "/../fixture/$name/composer.json");
         $rawData = json_decode($jsonData);
         $expected = require __DIR__ . "/../fixture/$name/expected.php";
-        $this->isolator->file_get_contents->with('/path/to/configuration')->returns($jsonData);
-        $this->isolator->getenv->with('COMPOSER_CACHE_DIR')->returns('/path/to/composer/cache');
+        $this->fileGetContents->with('/path/to/configuration')->returns($jsonData);
+        $this->getenv->with('COMPOSER_CACHE_DIR')->returns('/path/to/composer/cache');
 
         $this->assertEquals($expected, $this->reader->read('/path/to/configuration'));
     }
 
     public function testReadFailureFilesystem()
     {
-        $this->isolator->file_get_contents->returns(false);
+        $this->fileGetContents->returns(false);
 
         $this->setExpectedException(__NAMESPACE__ . '\Exception\ConfigurationReadException');
         $this->reader->read('/path/to/configuration');
@@ -77,19 +83,16 @@ class ConfigurationReaderTest extends PHPUnit_Framework_TestCase
 
     public function testReadFailureInvalidJSON()
     {
-        $this->isolator->file_get_contents->returns('{');
+        $this->fileGetContents->returns('{');
 
-        $this->setExpectedException(
-            __NAMESPACE__ . '\Exception\InvalidJSONException'
-        );
+        $this->setExpectedException(__NAMESPACE__ . '\Exception\InvalidJSONException');
         $this->reader->read('/path/to/configuration');
     }
 
     public function testReadReal()
     {
-        $this->isolator = Phony::partialMock('Icecave\Isolator\Isolator');
-        $this->isolator->getenv->with('COMPOSER_CACHE_DIR')->returns('/path/to/composer/cache');
-        $this->reader = new ConfigurationReader(null, $this->isolator->get());
+        $this->fileGetContents->forwards();
+        $this->getenv->with('COMPOSER_CACHE_DIR')->returns('/path/to/composer/cache');
         $path = __DIR__ . '/../../composer.json';
         $rawData = json_decode(file_get_contents($path));
         $expected = new Element\Configuration(
@@ -114,7 +117,6 @@ class ConfigurationReaderTest extends PHPUnit_Framework_TestCase
             array(
                 'php' => '>=5.3',
                 'eloquent/enumeration' => '^5',
-                'icecave/isolator' => '^3',
                 'justinrainbow/json-schema' => '^4',
             ),
             array(
@@ -241,10 +243,11 @@ class ConfigurationReaderTest extends PHPUnit_Framework_TestCase
     public function testDefaultCacheDir(array $environment, array $constants, $expected)
     {
         foreach ($environment as $name => $value) {
-            $this->isolator->getenv->with($name)->returns($value);
+            $this->getenv->with($name)->returns($value);
         }
+
         foreach ($constants as $name => $value) {
-            $this->isolator->defined->with($name)->returns(true);
+            $this->defined->with($name)->returns(true);
         }
 
         $this->assertSame($expected, Liberator::liberate($this->reader)->defaultCacheDir());

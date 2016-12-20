@@ -27,7 +27,6 @@ use Eloquent\Composer\Configuration\Element\VcsChangePolicy;
 use Eloquent\Composer\Configuration\Exception\ConfigurationExceptionInterface;
 use Eloquent\Composer\Configuration\Exception\ConfigurationReadException;
 use Eloquent\Composer\Configuration\Exception\InvalidJsonException;
-use Icecave\Isolator\Isolator;
 use stdClass;
 
 /**
@@ -39,18 +38,14 @@ class ConfigurationReader
      * Construct a new configuration reader.
      *
      * @param ConfigurationValidator|null $validator The validator to use.
-     * @param Isolator|null               $isolator  The isolator to use.
      */
-    public function __construct(
-        ConfigurationValidator $validator = null,
-        Isolator $isolator = null
-    ) {
+    public function __construct(ConfigurationValidator $validator = null)
+    {
         if (null === $validator) {
             $validator = new ConfigurationValidator();
         }
 
         $this->validator = $validator;
-        $this->isolator = Isolator::get($isolator);
     }
 
     /**
@@ -89,7 +84,7 @@ class ConfigurationReader
      */
     protected function readJson($path)
     {
-        $jsonData = @$this->isolator()->file_get_contents($path);
+        $jsonData = @file_get_contents($path);
 
         if (false === $jsonData) {
             throw new ConfigurationReadException($path);
@@ -388,27 +383,27 @@ class ConfigurationReader
      */
     protected function defaultCacheDir()
     {
-        $cacheDir = $this->isolator()->getenv('COMPOSER_CACHE_DIR');
+        $cacheDir = getenv('COMPOSER_CACHE_DIR');
         if ($cacheDir) {
             return $cacheDir;
         }
 
-        $home = $this->isolator()->getenv('COMPOSER_HOME');
-        $isWindows = $this->isolator()->defined('PHP_WINDOWS_VERSION_MAJOR');
+        $home = getenv('COMPOSER_HOME');
+        $isWindows = defined('PHP_WINDOWS_VERSION_MAJOR');
 
         if (!$home) {
             if ($isWindows) {
-                if ($envAppData = $this->isolator()->getenv('APPDATA')) {
+                if ($envAppData = getenv('APPDATA')) {
                     $home = strtr($envAppData, '\\', '/') . '/Composer';
                 }
-            } elseif ($envHome = $this->isolator()->getenv('HOME')) {
+            } elseif ($envHome = getenv('HOME')) {
                 $home = rtrim($envHome, '/') . '/.composer';
             }
         }
 
         if ($home && !$cacheDir) {
             if ($isWindows) {
-                if ($cacheDir = $this->isolator()->getenv('LOCALAPPDATA')) {
+                if ($cacheDir = getenv('LOCALAPPDATA')) {
                     $cacheDir .= '/Composer';
                 } else {
                     $cacheDir = $home . '/cache';
@@ -552,16 +547,5 @@ class ConfigurationReader
         return $data;
     }
 
-    /**
-     * Get the isolator.
-     *
-     * @return Isolator The isolator.
-     */
-    protected function isolator()
-    {
-        return $this->isolator;
-    }
-
     private $validator;
-    private $isolator;
 }

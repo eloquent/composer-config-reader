@@ -14,7 +14,6 @@
     "require": {
         "php": ">=5.3",
         "eloquent/enumeration": "^5",
-        "icecave/isolator": "^3",
         "justinrainbow/json-schema": "^4"
     },
     "require-dev": {

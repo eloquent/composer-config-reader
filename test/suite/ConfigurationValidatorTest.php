@@ -20,13 +20,9 @@ class ConfigurationValidatorTest extends PHPUnit_Framework_TestCase
 {
     protected function setUp()
     {
-        parent::setUp();
-
         $this->schema = (object) array();
         $this->innerValidator = Phony::mock('JsonSchema\Validator');
-        $this->isolator = Phony::mock('Icecave\Isolator\Isolator');
-        $this->validator =
-            new ConfigurationValidator($this->schema, $this->innerValidator->get(), $this->isolator->get());
+        $this->validator = new ConfigurationValidator($this->schema, $this->innerValidator->get());
 
         $this->errors = array(
             array(
@@ -38,6 +34,13 @@ class ConfigurationValidatorTest extends PHPUnit_Framework_TestCase
                 'message' => 'qux',
             ),
         );
+
+        $this->fileGetContents = Phony::stubGlobal('file_get_contents', __NAMESPACE__);
+    }
+
+    protected function tearDown()
+    {
+        Phony::restoreGlobalFunctions();
     }
 
     public function testConstructor()
@@ -48,19 +51,15 @@ class ConfigurationValidatorTest extends PHPUnit_Framework_TestCase
     public function testConstructorDefaults()
     {
         $schemaJSON = '{"foo": "bar"}';
-        $this->isolator->file_get_contents->returns($schemaJSON);
-        $validator = new ConfigurationValidator(null, null, $this->isolator->get());
+        $this->fileGetContents->returns($schemaJSON);
+        $validator = new ConfigurationValidator();
         $expectedSchema = json_decode($schemaJSON);
-        $expectedSchemaPathAtoms = array(
-            dirname(dirname(__DIR__)),
-            'etc',
-            'composer-schema.json',
-        );
+        $expectedSchemaPathAtoms = array(dirname(dirname(__DIR__)), 'etc', 'composer-schema.json');
         $expectedSchemaPath = implode(DIRECTORY_SEPARATOR, $expectedSchemaPathAtoms);
 
         $this->assertEquals($expectedSchema, $validator->schema());
         $this->assertInstanceOf('JsonSchema\Validator', Liberator::liberate($validator)->validator);
-        $this->isolator->file_get_contents->calledWith($expectedSchemaPath);
+        $this->fileGetContents->calledWith($expectedSchemaPath);
     }
 
     public function testValidate()
