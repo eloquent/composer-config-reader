@@ -131,11 +131,10 @@ class ConfigurationReaderTest extends PHPUnit_Framework_TestCase
                 'php' => '>=5.3',
                 'eloquent/enumeration' => '^5',
                 'icecave/isolator' => '^3',
-                'justinrainbow/json-schema' => '^2',
+                'justinrainbow/json-schema' => '^4',
             ),
             array(
                 'eloquent/liberator' => '^2',
-                'friendsofphp/php-cs-fixer' => '^1',
                 'phake/phake' => '^2',
                 'phpunit/phpunit' => '^4',
             ),

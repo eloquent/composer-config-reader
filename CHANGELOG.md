@@ -1,6 +1,6 @@
 # Composer configuration reader changelog
 
-## 2.0.2 (2016-12-19)
+## Next release
 
 - **[FIXED]** Configurations that use repository name can now be parsed
   ([#10]).

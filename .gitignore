@@ -1,2 +1,3 @@
 /coverage/
+/test/bin/php-cs-fixer
 /vendor/
