@@ -1,9 +1,12 @@
 # Composer configuration reader changelog
 
-## Next release
+## 2.0.2 (2016-12-20)
 
+- **[IMPROVED]** Removed dependency on [Isolator].
 - **[FIXED]** Configurations that use repository name can now be parsed
   ([#10]).
+
+[isolator]: https://github.com/IcecaveStudios/isolator
 
 ## 2.0.1 (2016-06-23)
 
