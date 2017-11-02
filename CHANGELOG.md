@@ -1,5 +1,11 @@
 # Composer configuration reader changelog
 
+## 2.1.0 (2017-11-02)
+
+- **[IMPROVED]** Added support for maps in `config.preferred-install` ([#12]).
+
+[#12]: https://github.com/eloquent/composer-config-reader/issues/12
+
 ## 2.0.2 (2016-12-20)
 
 - **[IMPROVED]** Removed dependency on [Isolator].
