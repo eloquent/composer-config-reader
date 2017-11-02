@@ -19,31 +19,31 @@ class ProjectConfiguration
     /**
      * Construct a new project configuration.
      *
-     * @param int|null                   $processTimeout     The process timeout.
-     * @param bool|null                  $useIncludePath     True if the autoloader should look for classes in the PHP include path.
-     * @param InstallationMethod|null    $preferredInstall   The preffered installation method.
-     * @param array<integer,string>|null $githubProtocols    The protocols to use when cloning from GitHub.
-     * @param array<string,string>|null  $githubOauth        An associative array of domain name to GitHub OAuth token.
-     * @param string|null                $vendorDir          The vendor directory.
-     * @param string|null                $binDir             The binary executable directory.
-     * @param string|null                $cacheDir           The cache directory, or null if unknown.
-     * @param string|null                $cacheFilesDir      The cache directory for package archives, or null if unknown.
-     * @param string|null                $cacheRepoDir       The cache directory for package repositories, or null if unknown.
-     * @param string|null                $cacheVcsDir        The cache directory for version control repositories, or null if unknown.
-     * @param int|null                   $cacheFilesTtl      The cache time-to-live for package archives in seconds.
-     * @param int|null                   $cacheFilesMaxsize  The maximum size of the package archive cache in bytes.
-     * @param bool|null                  $prependAutoloader  True if the autoloader should be prepended to existing autoloaders.
-     * @param string|null                $autoloaderSuffix   The suffix used for the generated autoloader class name.
-     * @param bool|null                  $optimizeAutoloader True if the autoloader should always be optimized.
-     * @param array<integer,string>|null $githubDomains      The list of domains to use in GitHub mode.
-     * @param bool|null                  $notifyOnInstall    True if the repository should be notified on installation.
-     * @param VcsChangePolicy|null       $discardChanges     The policy for how to treat version control changes when installing or updating.
-     * @param mixed                      $rawData            The raw data describing the project configuration.
+     * @param int|null                                                 $processTimeout     The process timeout.
+     * @param bool|null                                                $useIncludePath     True if the autoloader should look for classes in the PHP include path.
+     * @param InstallationMethod|array<string,InstallationMethod>|null $preferredInstall   The preffered installation method.
+     * @param array<integer,string>|null                               $githubProtocols    The protocols to use when cloning from GitHub.
+     * @param array<string,string>|null                                $githubOauth        An associative array of domain name to GitHub OAuth token.
+     * @param string|null                                              $vendorDir          The vendor directory.
+     * @param string|null                                              $binDir             The binary executable directory.
+     * @param string|null                                              $cacheDir           The cache directory, or null if unknown.
+     * @param string|null                                              $cacheFilesDir      The cache directory for package archives, or null if unknown.
+     * @param string|null                                              $cacheRepoDir       The cache directory for package repositories, or null if unknown.
+     * @param string|null                                              $cacheVcsDir        The cache directory for version control repositories, or null if unknown.
+     * @param int|null                                                 $cacheFilesTtl      The cache time-to-live for package archives in seconds.
+     * @param int|null                                                 $cacheFilesMaxsize  The maximum size of the package archive cache in bytes.
+     * @param bool|null                                                $prependAutoloader  True if the autoloader should be prepended to existing autoloaders.
+     * @param string|null                                              $autoloaderSuffix   The suffix used for the generated autoloader class name.
+     * @param bool|null                                                $optimizeAutoloader True if the autoloader should always be optimized.
+     * @param array<integer,string>|null                               $githubDomains      The list of domains to use in GitHub mode.
+     * @param bool|null                                                $notifyOnInstall    True if the repository should be notified on installation.
+     * @param VcsChangePolicy|null                                     $discardChanges     The policy for how to treat version control changes when installing or updating.
+     * @param mixed                                                    $rawData            The raw data describing the project configuration.
      */
     public function __construct(
         $processTimeout = null,
         $useIncludePath = null,
-        InstallationMethod $preferredInstall = null,
+        $preferredInstall = null,
         array $githubProtocols = null,
         array $githubOauth = null,
         $vendorDir = null,
@@ -160,7 +160,7 @@ class ProjectConfiguration
     /**
      * Get the preferred installation method.
      *
-     * @return InstallationMethod The preferred installation method.
+     * @return InstallationMethod|array<string,InstallationMethod> The preferred installation method.
      */
     public function preferredInstall()
     {

@@ -1,0 +1,10 @@
+{
+    "config": {
+        "preferred-install": {
+            "my-organization/stable-package": "dist",
+            "my-organization/*": "source",
+            "partner-organization/*": "auto",
+            "*": "dist"
+        }
+    }
+}

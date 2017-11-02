@@ -425,17 +425,28 @@ class ConfigurationReader
     /**
      * Create a installation method enumeration from the supplied raw data.
      *
-     * @param string|null $method The raw installation method data.
+     * @param string|stdClass|null $method The raw installation method data.
      *
-     * @return InstallationMethod|null The newly created installation method enumeration.
+     * @return InstallationMethod|array<string,InstallationMethod>|null The processed installation method.
      */
     protected function createInstallationMethod($method)
     {
-        if (null !== $method) {
-            $method = InstallationMethod::memberByValue($method, false);
+        if (is_string($method)) {
+            return InstallationMethod::memberByValue($method, false);
         }
 
-        return $method;
+        if (is_object($method)) {
+            $methods = array();
+
+            foreach ($method as $project => $projectMethod) {
+                $methods[$project] =
+                    InstallationMethod::memberByValue($projectMethod, false);
+            }
+
+            return $methods;
+        }
+
+        return null;
     }
 
     /**
