@@ -1,14 +1,5 @@
 <?php
 
-/*
- * This file is part of the Composer configuration reader package.
- *
- * Copyright © 2016 Erin Millard
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
 namespace Eloquent\Composer\Configuration\Element;
 
 /**
@@ -24,7 +15,7 @@ class ArchiveConfiguration
     public function __construct(array $exclude = null, $rawData = null)
     {
         if (null === $exclude) {
-            $exclude = array();
+            $exclude = [];
         }
 
         $this->exclude = $exclude;

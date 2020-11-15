@@ -1,23 +1,16 @@
 <?php
 
-/*
- * This file is part of the Composer configuration reader package.
- *
- * Copyright © 2016 Erin Millard
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
 namespace Eloquent\Composer\Configuration;
 
-use Eloquent\Liberator\Liberator;
+use Eloquent\Composer\Configuration\Exception\ConfigurationReadException;
+use Eloquent\Composer\Configuration\Exception\InvalidJSONException;
 use Eloquent\Phony\Phpunit\Phony;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
+use ReflectionObject;
 
-class ConfigurationReaderTest extends PHPUnit_Framework_TestCase
+class ConfigurationReaderTest extends TestCase
 {
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->validator = new ConfigurationValidator();
         $this->reader = new ConfigurationReader($this->validator);
@@ -27,7 +20,7 @@ class ConfigurationReaderTest extends PHPUnit_Framework_TestCase
         $this->getenv = Phony::stubGlobal('getenv', __NAMESPACE__);
     }
 
-    protected function tearDown()
+    protected function tearDown(): void
     {
         Phony::restoreGlobalFunctions();
     }
@@ -46,14 +39,14 @@ class ConfigurationReaderTest extends PHPUnit_Framework_TestCase
 
     public function readData()
     {
-        $data = array();
+        $data = [];
 
         foreach (scandir(__DIR__ . '/../fixture') as $entry) {
             if ('.' === $entry || '..' === $entry) {
                 continue;
             }
 
-            $data[$entry] = array($entry);
+            $data[$entry] = [$entry];
         }
 
         return $data;
@@ -77,7 +70,7 @@ class ConfigurationReaderTest extends PHPUnit_Framework_TestCase
     {
         $this->fileGetContents->returns(false);
 
-        $this->setExpectedException(__NAMESPACE__ . '\Exception\ConfigurationReadException');
+        $this->expectException(ConfigurationReadException::class);
         $this->reader->read('/path/to/configuration');
     }
 
@@ -85,7 +78,7 @@ class ConfigurationReaderTest extends PHPUnit_Framework_TestCase
     {
         $this->fileGetContents->returns('{');
 
-        $this->setExpectedException(__NAMESPACE__ . '\Exception\InvalidJSONException');
+        $this->expectException(InvalidJSONException::class);
         $this->reader->read('/path/to/configuration');
     }
 
@@ -100,11 +93,11 @@ class ConfigurationReaderTest extends PHPUnit_Framework_TestCase
             'A light-weight component for reading Composer configuration files.',
             null,
             null,
-            array('composer', 'configuration', 'reader', 'parser'),
+            ['composer', 'configuration', 'reader', 'parser'],
             'https://github.com/eloquent/composer-config-reader',
             null,
-            array('MIT'),
-            array(
+            ['MIT'],
+            [
                 new Element\Author(
                     'Erin Millard',
                     'ezzatron@gmail.com',
@@ -112,25 +105,26 @@ class ConfigurationReaderTest extends PHPUnit_Framework_TestCase
                     null,
                     $rawData->authors[0]
                 ),
-            ),
+            ],
             null,
-            array(
-                'php' => '>=5.3',
-                'eloquent/enumeration' => '^5',
-                'justinrainbow/json-schema' => '^4',
-            ),
-            array(
-                'eloquent/liberator' => '^2',
-                'eloquent/phony' => '0.14.4',
-                'phpunit/phpunit' => '^4',
-            ),
+            [
+                'php' => '>=7.2',
+                'eloquent/enumeration' => '^6',
+                'justinrainbow/json-schema' => '^5',
+            ],
+            [
+                'eloquent/code-style' => '^1',
+                'eloquent/phony-phpunit' => '^6',
+                'friendsofphp/php-cs-fixer' => '^2',
+                'phpunit/phpunit' => '^8',
+            ],
             null,
             null,
             null,
             null,
-            array(
-                'Eloquent\Composer\Configuration\\' => array('src'),
-            ),
+            [
+                'Eloquent\Composer\Configuration\\' => ['src'],
+            ],
             null,
             null,
             null,
@@ -150,19 +144,14 @@ class ConfigurationReaderTest extends PHPUnit_Framework_TestCase
                 '/path/to/composer/cache',
                 '/path/to/composer/cache/files',
                 '/path/to/composer/cache/repo',
-                '/path/to/composer/cache/vcs',
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                $rawData->config
+                '/path/to/composer/cache/vcs'
             ),
             null,
-            null,
+            (object) [
+                'branch-alias' => (object) [
+                    'dev-master' => '3.0.x-dev',
+                ],
+            ],
             null,
             null,
             $rawData
@@ -173,68 +162,68 @@ class ConfigurationReaderTest extends PHPUnit_Framework_TestCase
 
     public function defaultCacheDirData()
     {
-        return array(
-            'COMPOSER_CACHE_DIR set' => array(
-                array(
+        return [
+            'COMPOSER_CACHE_DIR set' => [
+                [
                     'COMPOSER_CACHE_DIR' => '/path/to/composer/cache',
-                ),
-                array(),
+                ],
+                [],
                 '/path/to/composer/cache',
-            ),
+            ],
 
-            'COMPOSER_HOME set, non-Windows' => array(
-                array(
+            'COMPOSER_HOME set, non-Windows' => [
+                [
                     'COMPOSER_HOME' => '/path/to/composer/home',
-                ),
-                array(),
+                ],
+                [],
                 '/path/to/composer/home/cache',
-            ),
+            ],
 
-            'COMPOSER_HOME set, Windows, LOCALAPPDATA set' => array(
-                array(
+            'COMPOSER_HOME set, Windows, LOCALAPPDATA set' => [
+                [
                     'COMPOSER_HOME' => 'C:\path\to\composer\home',
                     'LOCALAPPDATA' => 'C:\path\to\localappdata',
-                ),
-                array(
+                ],
+                [
                     'PHP_WINDOWS_VERSION_MAJOR' => 5,
-                ),
+                ],
                 'C:/path/to/localappdata/Composer',
-            ),
+            ],
 
-            'COMPOSER_HOME set, Windows, LOCALAPPDATA not set' => array(
-                array(
+            'COMPOSER_HOME set, Windows, LOCALAPPDATA not set' => [
+                [
                     'COMPOSER_HOME' => 'C:\path\to\composer\home',
-                ),
-                array(
+                ],
+                [
                     'PHP_WINDOWS_VERSION_MAJOR' => 5,
-                ),
+                ],
                 'C:/path/to/composer/home/cache',
-            ),
+            ],
 
-            'HOME set, non-Windows' => array(
-                array(
+            'HOME set, non-Windows' => [
+                [
                     'HOME' => '/path/to/home/',
-                ),
-                array(),
+                ],
+                [],
                 '/path/to/home/.composer/cache',
-            ),
+            ],
 
-            'APPDATA set, Windows' => array(
-                array(
+            'APPDATA set, Windows' => [
+                [
                     'APPDATA' => 'C:\path\to\appdata',
-                ),
-                array(
+                ],
+                [
                     'PHP_WINDOWS_VERSION_MAJOR' => 5,
-                ),
+                ],
                 'C:/path/to/appdata/Composer/cache',
-            ),
+            ],
 
-            'No environment variables set' => array(
-                array(),
-                array(),
+            'No environment variables set' => [
+                [],
+                [],
                 null,
-            ),
-        );
+            ],
+        ];
     }
 
     /**
@@ -250,6 +239,10 @@ class ConfigurationReaderTest extends PHPUnit_Framework_TestCase
             $this->defined->with($name)->returns(true);
         }
 
-        $this->assertSame($expected, Liberator::liberate($this->reader)->defaultCacheDir());
+        $readerObject = new ReflectionObject($this->reader);
+        $defaultCacheDirMethod = $readerObject->getMethod('defaultCacheDir');
+        $defaultCacheDirMethod->setAccessible(true);
+
+        $this->assertSame($expected, $defaultCacheDirMethod->invoke($this->reader));
     }
 }

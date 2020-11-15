@@ -1,14 +1,5 @@
 <?php
 
-/*
- * This file is part of the Composer configuration reader package.
- *
- * Copyright © 2016 Erin Millard
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
 namespace Eloquent\Composer\Configuration\Element;
 
 /**
@@ -57,52 +48,52 @@ class ScriptConfiguration
         $rawData = null
     ) {
         if (null === $preInstallCmd) {
-            $preInstallCmd = array();
+            $preInstallCmd = [];
         }
         if (null === $postInstallCmd) {
-            $postInstallCmd = array();
+            $postInstallCmd = [];
         }
         if (null === $preUpdateCmd) {
-            $preUpdateCmd = array();
+            $preUpdateCmd = [];
         }
         if (null === $postUpdateCmd) {
-            $postUpdateCmd = array();
+            $postUpdateCmd = [];
         }
         if (null === $preStatusCmd) {
-            $preStatusCmd = array();
+            $preStatusCmd = [];
         }
         if (null === $postStatusCmd) {
-            $postStatusCmd = array();
+            $postStatusCmd = [];
         }
         if (null === $prePackageInstall) {
-            $prePackageInstall = array();
+            $prePackageInstall = [];
         }
         if (null === $postPackageInstall) {
-            $postPackageInstall = array();
+            $postPackageInstall = [];
         }
         if (null === $prePackageUpdate) {
-            $prePackageUpdate = array();
+            $prePackageUpdate = [];
         }
         if (null === $postPackageUpdate) {
-            $postPackageUpdate = array();
+            $postPackageUpdate = [];
         }
         if (null === $prePackageUninstall) {
-            $prePackageUninstall = array();
+            $prePackageUninstall = [];
         }
         if (null === $postPackageUninstall) {
-            $postPackageUninstall = array();
+            $postPackageUninstall = [];
         }
         if (null === $preAutoloadDump) {
-            $preAutoloadDump = array();
+            $preAutoloadDump = [];
         }
         if (null === $postAutoloadDump) {
-            $postAutoloadDump = array();
+            $postAutoloadDump = [];
         }
         if (null === $postRootPackageInstall) {
-            $postRootPackageInstall = array();
+            $postRootPackageInstall = [];
         }
         if (null === $postCreateProjectCmd) {
-            $postCreateProjectCmd = array();
+            $postCreateProjectCmd = [];
         }
 
         $this->preInstallCmd = $preInstallCmd;

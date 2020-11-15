@@ -1,25 +1,17 @@
 <?php
 
-/*
- * This file is part of the Composer configuration reader package.
- *
- * Copyright © 2016 Erin Millard
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
 namespace Eloquent\Composer\Configuration;
 
-use PHPUnit_Framework_TestCase;
+use Eloquent\Composer\Configuration\Exception\UndefinedPropertyException;
+use PHPUnit\Framework\TestCase;
 
-class ObjectAccessTest extends PHPUnit_Framework_TestCase
+class ObjectAccessTest extends TestCase
 {
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
-        $this->data = (object) array();
+        $this->data = (object) [];
         $this->data->foo = 'bar';
         $this->objectAccess = new ObjectAccess($this->data);
     }
@@ -42,7 +34,7 @@ class ObjectAccessTest extends PHPUnit_Framework_TestCase
 
     public function testGetFailure()
     {
-        $this->setExpectedException(__NAMESPACE__ . '\Exception\UndefinedPropertyException');
+        $this->expectException(UndefinedPropertyException::class);
         $this->objectAccess->get('bar');
     }
 

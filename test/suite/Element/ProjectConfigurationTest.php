@@ -1,19 +1,10 @@
 <?php
 
-/*
- * This file is part of the Composer configuration reader package.
- *
- * Copyright © 2016 Erin Millard
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
 namespace Eloquent\Composer\Configuration\Element;
 
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
-class ProjectConfigurationTest extends PHPUnit_Framework_TestCase
+class ProjectConfigurationTest extends TestCase
 {
     public function testConstructor()
     {
@@ -21,8 +12,8 @@ class ProjectConfigurationTest extends PHPUnit_Framework_TestCase
             111,
             true,
             InstallationMethod::DIST(),
-            array('ftp', 'otp'),
-            array('hostA' => 'tokenA', 'hostB' => 'tokenB'),
+            ['ftp', 'otp'],
+            ['hostA' => 'tokenA', 'hostB' => 'tokenB'],
             'vendorDir',
             'binDir',
             'cacheDir',
@@ -34,7 +25,7 @@ class ProjectConfigurationTest extends PHPUnit_Framework_TestCase
             false,
             'autoloaderSuffix',
             true,
-            array('hostC', 'hostD'),
+            ['hostC', 'hostD'],
             false,
             VcsChangePolicy::STASH(),
             'rawData'
@@ -43,8 +34,8 @@ class ProjectConfigurationTest extends PHPUnit_Framework_TestCase
         $this->assertSame(111, $config->processTimeout());
         $this->assertTrue($config->useIncludePath());
         $this->assertSame(InstallationMethod::DIST(), $config->preferredInstall());
-        $this->assertSame(array('ftp', 'otp'), $config->githubProtocols());
-        $this->assertSame(array('hostA' => 'tokenA', 'hostB' => 'tokenB'), $config->githubOauth());
+        $this->assertSame(['ftp', 'otp'], $config->githubProtocols());
+        $this->assertSame(['hostA' => 'tokenA', 'hostB' => 'tokenB'], $config->githubOauth());
         $this->assertSame('vendorDir', $config->vendorDir());
         $this->assertSame('binDir', $config->binDir());
         $this->assertSame('cacheDir', $config->cacheDir());
@@ -56,7 +47,7 @@ class ProjectConfigurationTest extends PHPUnit_Framework_TestCase
         $this->assertFalse($config->prependAutoloader());
         $this->assertSame('autoloaderSuffix', $config->autoloaderSuffix());
         $this->assertTrue($config->optimizeAutoloader());
-        $this->assertSame(array('hostC', 'hostD'), $config->githubDomains());
+        $this->assertSame(['hostC', 'hostD'], $config->githubDomains());
         $this->assertFalse($config->notifyOnInstall());
         $this->assertSame(VcsChangePolicy::STASH(), $config->discardChanges());
         $this->assertSame('rawData', $config->rawData());
@@ -69,8 +60,8 @@ class ProjectConfigurationTest extends PHPUnit_Framework_TestCase
         $this->assertSame(300, $config->processTimeout());
         $this->assertFalse($config->useIncludePath());
         $this->assertSame(InstallationMethod::AUTO(), $config->preferredInstall());
-        $this->assertSame(array('git', 'https'), $config->githubProtocols());
-        $this->assertSame(array(), $config->githubOauth());
+        $this->assertSame(['git', 'https'], $config->githubProtocols());
+        $this->assertSame([], $config->githubOauth());
         $this->assertSame('vendor', $config->vendorDir());
         $this->assertSame('vendor/bin', $config->binDir());
         $this->assertNull($config->cacheDir());
@@ -82,7 +73,7 @@ class ProjectConfigurationTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($config->prependAutoloader());
         $this->assertNull($config->autoloaderSuffix());
         $this->assertFalse($config->optimizeAutoloader());
-        $this->assertSame(array('github.com'), $config->githubDomains());
+        $this->assertSame(['github.com'], $config->githubDomains());
         $this->assertTrue($config->notifyOnInstall());
         $this->assertSame(VcsChangePolicy::IGNORE(), $config->discardChanges());
         $this->assertNull($config->rawData());

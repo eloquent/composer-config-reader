@@ -1,14 +1,5 @@
 <?php
 
-/*
- * This file is part of the Composer configuration reader package.
- *
- * Copyright © 2016 Erin Millard
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
 namespace Eloquent\Composer\Configuration\Element;
 
 /**
@@ -72,10 +63,10 @@ class ProjectConfiguration
             $preferredInstall = InstallationMethod::AUTO();
         }
         if (null === $githubProtocols) {
-            $githubProtocols = array('git', 'https');
+            $githubProtocols = ['git', 'https'];
         }
         if (null === $githubOauth) {
-            $githubOauth = array();
+            $githubOauth = [];
         }
         if (null === $vendorDir) {
             $vendorDir = 'vendor';
@@ -105,7 +96,7 @@ class ProjectConfiguration
             $optimizeAutoloader = false;
         }
         if (null === $githubDomains) {
-            $githubDomains = array('github.com');
+            $githubDomains = ['github.com'];
         }
         if (null === $notifyOnInstall) {
             $notifyOnInstall = true;

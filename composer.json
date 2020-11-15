@@ -12,23 +12,24 @@
         }
     ],
     "require": {
-        "php": ">=5.3",
-        "eloquent/enumeration": "^5",
-        "justinrainbow/json-schema": "^4"
+        "php": ">=7.2",
+        "eloquent/enumeration": "^6",
+        "justinrainbow/json-schema": "^5"
     },
     "require-dev": {
-        "eloquent/liberator": "^2",
-        "eloquent/phony": "0.14.4",
-        "phpunit/phpunit": "^4"
+        "eloquent/code-style": "^1",
+        "eloquent/phony-phpunit": "^6",
+        "friendsofphp/php-cs-fixer": "^2",
+        "phpunit/phpunit": "^8"
     },
     "autoload": {
         "psr-4": {
             "Eloquent\\Composer\\Configuration\\": "src"
         }
     },
-    "config": {
-        "platform": {
-            "php": "5.3.99"
+    "extra": {
+        "branch-alias": {
+            "dev-master": "3.0.x-dev"
         }
     }
 }

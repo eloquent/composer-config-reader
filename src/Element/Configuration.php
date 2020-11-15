@@ -1,14 +1,5 @@
 <?php
 
-/*
- * This file is part of the Composer configuration reader package.
- *
- * Copyright © 2016 Erin Millard
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
 namespace Eloquent\Composer\Configuration\Element;
 
 use DateTime;
@@ -96,49 +87,49 @@ class Configuration
             $type = 'library';
         }
         if (null === $keywords) {
-            $keywords = array();
+            $keywords = [];
         }
         if (null === $license) {
-            $license = array();
+            $license = [];
         }
         if (null === $authors) {
-            $authors = array();
+            $authors = [];
         }
         if (null === $support) {
             $support = new SupportInformation();
         }
         if (null === $dependencies) {
-            $dependencies = array();
+            $dependencies = [];
         }
         if (null === $devDependencies) {
-            $devDependencies = array();
+            $devDependencies = [];
         }
         if (null === $conflict) {
-            $conflict = array();
+            $conflict = [];
         }
         if (null === $replace) {
-            $replace = array();
+            $replace = [];
         }
         if (null === $provide) {
-            $provide = array();
+            $provide = [];
         }
         if (null === $suggest) {
-            $suggest = array();
+            $suggest = [];
         }
         if (null === $autoloadPsr4) {
-            $autoloadPsr4 = array();
+            $autoloadPsr4 = [];
         }
         if (null === $autoloadPsr0) {
-            $autoloadPsr0 = array();
+            $autoloadPsr0 = [];
         }
         if (null === $autoloadClassmap) {
-            $autoloadClassmap = array();
+            $autoloadClassmap = [];
         }
         if (null === $autoloadFiles) {
-            $autoloadFiles = array();
+            $autoloadFiles = [];
         }
         if (null === $includePath) {
-            $includePath = array();
+            $includePath = [];
         }
         if (null === $minimumStability) {
             $minimumStability = Stability::STABLE();
@@ -147,7 +138,7 @@ class Configuration
             $preferStable = false;
         }
         if (null === $repositories) {
-            $repositories = array();
+            $repositories = [];
         }
         if (null === $config) {
             $config = new ProjectConfiguration();
@@ -159,7 +150,7 @@ class Configuration
             $archive = new ArchiveConfiguration();
         }
         if (null === $bin) {
-            $bin = array();
+            $bin = [];
         }
 
         $this->name = $name;
@@ -464,7 +455,7 @@ class Configuration
      */
     public function allPsr4SourcePaths()
     {
-        $autoloadPsr4Paths = array();
+        $autoloadPsr4Paths = [];
         foreach ($this->autoloadPsr4() as $namespace => $paths) {
             $autoloadPsr4Paths = array_merge($autoloadPsr4Paths, $paths);
         }
@@ -479,7 +470,7 @@ class Configuration
      */
     public function allPsr0SourcePaths()
     {
-        $autoloadPsr0Paths = array();
+        $autoloadPsr0Paths = [];
         foreach ($this->autoloadPsr0() as $namespace => $paths) {
             $autoloadPsr0Paths = array_merge($autoloadPsr0Paths, $paths);
         }

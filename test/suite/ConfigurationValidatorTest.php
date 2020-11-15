@@ -1,44 +1,35 @@
 <?php
 
-/*
- * This file is part of the Composer configuration reader package.
- *
- * Copyright © 2016 Erin Millard
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
 namespace Eloquent\Composer\Configuration;
 
 use Eloquent\Composer\Configuration\Exception\InvalidConfigurationException;
-use Eloquent\Liberator\Liberator;
 use Eloquent\Phony\Phpunit\Phony;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
+use ReflectionObject;
 
-class ConfigurationValidatorTest extends PHPUnit_Framework_TestCase
+class ConfigurationValidatorTest extends TestCase
 {
-    protected function setUp()
+    protected function setUp(): void
     {
-        $this->schema = (object) array();
+        $this->schema = (object) [];
         $this->innerValidator = Phony::mock('JsonSchema\Validator');
         $this->validator = new ConfigurationValidator($this->schema, $this->innerValidator->get());
 
-        $this->errors = array(
-            array(
+        $this->errors = [
+            [
                 'property' => 'foo',
                 'message' => 'bar',
-            ),
-            array(
+            ],
+            [
                 'property' => 'baz',
                 'message' => 'qux',
-            ),
-        );
+            ],
+        ];
 
         $this->fileGetContents = Phony::stubGlobal('file_get_contents', __NAMESPACE__);
     }
 
-    protected function tearDown()
+    protected function tearDown(): void
     {
         Phony::restoreGlobalFunctions();
     }
@@ -53,19 +44,22 @@ class ConfigurationValidatorTest extends PHPUnit_Framework_TestCase
         $schemaJSON = '{"foo": "bar"}';
         $this->fileGetContents->returns($schemaJSON);
         $validator = new ConfigurationValidator();
+        $validatorObject = new ReflectionObject($validator);
+        $validatorProperty = $validatorObject->getProperty('validator');
+        $validatorProperty->setAccessible(true);
         $expectedSchema = json_decode($schemaJSON);
-        $expectedSchemaPathAtoms = array(dirname(dirname(__DIR__)), 'etc', 'composer-schema.json');
+        $expectedSchemaPathAtoms = [dirname(dirname(__DIR__)), 'etc', 'composer-schema.json'];
         $expectedSchemaPath = implode(DIRECTORY_SEPARATOR, $expectedSchemaPathAtoms);
 
         $this->assertEquals($expectedSchema, $validator->schema());
-        $this->assertInstanceOf('JsonSchema\Validator', Liberator::liberate($validator)->validator);
+        $this->assertInstanceOf('JsonSchema\Validator', $validatorProperty->getValue($validator));
         $this->fileGetContents->calledWith($expectedSchemaPath);
     }
 
     public function testValidate()
     {
         $this->innerValidator->isValid->returns(true);
-        $data = (object) array();
+        $data = (object) [];
         $this->validator->validate($data);
 
         Phony::inOrder(
@@ -81,7 +75,7 @@ class ConfigurationValidatorTest extends PHPUnit_Framework_TestCase
     {
         $this->innerValidator->isValid->returns(false);
         $this->innerValidator->getErrors->returns($this->errors);
-        $data = (object) array();
+        $data = (object) [];
 
         $error = null;
         try {

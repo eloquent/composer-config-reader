@@ -27,9 +27,9 @@ return new Configuration(
     null,
     null,
     null,
-    array(
+    [
         new PackagistRepository(false, $rawData->repositories[0]),
-    ),
+    ],
     new ProjectConfiguration(
         null,
         null,

@@ -2,8 +2,6 @@
 
 namespace Eloquent\Composer\Configuration\Element;
 
-use Eloquent\Composer\Configuration\Element\InstallationMethod;
-
 return new Configuration(
     null,
     null,
@@ -33,12 +31,12 @@ return new Configuration(
     new ProjectConfiguration(
         null,
         null,
-        array(
+        [
             'my-organization/stable-package' => InstallationMethod::DIST(),
             'my-organization/*' => InstallationMethod::SOURCE(),
             'partner-organization/*' => InstallationMethod::AUTO(),
             '*' => InstallationMethod::DIST(),
-        ),
+        ],
         null,
         null,
         null,

@@ -1,33 +1,24 @@
 <?php
 
-/*
- * This file is part of the Composer configuration reader package.
- *
- * Copyright © 2016 Erin Millard
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
 namespace Eloquent\Composer\Configuration\Element;
 
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use ReflectionObject;
 
-class RepositoryTest extends PHPUnit_Framework_TestCase
+class RepositoryTest extends TestCase
 {
     public function testConstructor()
     {
         $repository = new Repository(
             'foo',
             'bar',
-            array('baz' => 'qux'),
+            ['baz' => 'qux'],
             'doom'
         );
 
         $this->assertSame('foo', $repository->type());
         $this->assertSame('bar', $repository->uri());
-        $this->assertSame(array('baz' => 'qux'), $repository->options());
+        $this->assertSame(['baz' => 'qux'], $repository->options());
         $this->assertSame('doom', $repository->rawData());
     }
 
@@ -38,7 +29,7 @@ class RepositoryTest extends PHPUnit_Framework_TestCase
         );
 
         $this->assertNull($repository->uri());
-        $this->assertSame(array(), $repository->options());
+        $this->assertSame([], $repository->options());
         $this->assertNull($repository->rawData());
     }
 

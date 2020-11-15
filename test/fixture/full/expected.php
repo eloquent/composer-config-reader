@@ -9,11 +9,11 @@ return new Configuration(
     'Logging for PHP 5.3',
     '1.1.0',
     'custom-package-type',
-    array('logging', 'events', 'database', 'redis', 'templating'),
+    ['logging', 'events', 'database', 'redis', 'templating'],
     'http://example.org/',
     new DateTime('2011-11-11 11:11:11'),
-    array('LGPL-2.1', 'GPL-3.0+'),
-    array(
+    ['LGPL-2.1', 'GPL-3.0+'],
+    [
         new Author(
             'Nils Adermann',
             'naderman@naderman.de',
@@ -28,7 +28,7 @@ return new Configuration(
             'Developer',
             $rawData->authors[1]
         ),
-    ),
+    ],
     new SupportInformation(
         'support@example.org',
         'https://github.com/composer/composer/issues',
@@ -38,45 +38,45 @@ return new Configuration(
         'https://github.com/composer/composer',
         $rawData->support
     ),
-    array(
+    [
         'monolog/monolog' => '1.0.*@beta',
         'acme/foo' => '@dev',
-    ),
-    array(
+    ],
+    [
         'eloquent/liberator' => '1.*',
         'eloquent/phony' => '1.*',
-    ),
-    array(
+    ],
+    [
         'eloquent/asplode' => '*',
         'eloquent/blox' => '*',
-    ),
-    array(
+    ],
+    [
         'eloquent/cosmos' => '*',
         'eloquent/enumeration' => '*',
-    ),
-    array(
+    ],
+    [
         'eloquent/typhax' => '*',
         'icecave/visita' => '*',
-    ),
-    array(
+    ],
+    [
         'symfony/console' => '*',
         'symfony/filesystem' => '*',
-    ),
-    array(
-        'Nermsperce' => array('serse', 'lerb'),
-        'Vernder\Nermsperce' => array('serse'),
-    ),
-    array(
-        'Monolog' => array('src', 'lib'),
-        'Vendor\Namespace' => array('src'),
-    ),
-    array('src', 'lib', 'Something.php'),
-    array('src/MyLibrary/init.php', 'src/MyLibrary/functions.php'),
-    array('lib-old', 'src-old'),
+    ],
+    [
+        'Nermsperce' => ['serse', 'lerb'],
+        'Vernder\Nermsperce' => ['serse'],
+    ],
+    [
+        'Monolog' => ['src', 'lib'],
+        'Vendor\Namespace' => ['src'],
+    ],
+    ['src', 'lib', 'Something.php'],
+    ['src/MyLibrary/init.php', 'src/MyLibrary/functions.php'],
+    ['lib-old', 'src-old'],
     'Symfony/Component/Yaml',
     Stability::DEV(),
     true,
-    array(
+    [
         new Repository(
             'composer',
             'http://packages.example.com',
@@ -86,11 +86,11 @@ return new Configuration(
         new Repository(
             'composer',
             'https://packages.example.com',
-            array(
-                'ssl' => array(
+            [
+                'ssl' => [
                     'verify_peer' => true,
-                ),
-            ),
+                ],
+            ],
             $rawData->repositories[1]
         ),
         new Repository(
@@ -106,29 +106,29 @@ return new Configuration(
             $rawData->repositories[3]
         ),
         new PackageRepository(
-            array(
+            [
                 'name' => 'smarty/smarty',
                 'version' => '3.1.7',
-                'dist' => array(
+                'dist' => [
                     'url' => 'http://www.smarty.net/files/Smarty-3.1.7.zip',
                     'type' => 'zip',
-                ),
-                'source' => array(
+                ],
+                'source' => [
                     'url' => 'http://smarty-php.googlecode.com/svn/',
                     'type' => 'svn',
                     'reference' => 'tags/Smarty_3_1_7/distribution/',
-                ),
-            ),
+                ],
+            ],
             null,
             $rawData->repositories[4]
         ),
-    ),
+    ],
     new ProjectConfiguration(
         111,
         true,
         InstallationMethod::DIST(),
-        array('ftp', 'otp'),
-        array('hostA' => 'tokenA', 'hostB' => 'tokenB'),
+        ['ftp', 'otp'],
+        ['hostA' => 'tokenA', 'hostB' => 'tokenB'],
         'ext',
         'bin',
         'cache',
@@ -140,37 +140,37 @@ return new Configuration(
         false,
         'autoloaderSuffix',
         true,
-        array('hostC', 'hostD'),
+        ['hostC', 'hostD'],
         false,
         VcsChangePolicy::DISCARD(),
         $rawData->config
     ),
     new ScriptConfiguration(
-        array('MyVendor\MyClass::preInstall'),
-        array('MyVendor\MyClass::postInstall'),
-        array('MyVendor\MyClass::preUpdate'),
-        array('MyVendor\MyClass::postUpdate'),
-        array('MyVendor\MyClass::preStatus'),
-        array('MyVendor\MyClass::postStatus'),
-        array('MyVendor\MyClass::prePackageInstall'),
-        array('MyVendor\MyClass::postPackageInstall'),
-        array('MyVendor\MyClass::prePackageUpdate'),
-        array('MyVendor\MyClass::postPackageUpdate'),
-        array('MyVendor\MyClass::prePackageUninstall'),
-        array(
+        ['MyVendor\MyClass::preInstall'],
+        ['MyVendor\MyClass::postInstall'],
+        ['MyVendor\MyClass::preUpdate'],
+        ['MyVendor\MyClass::postUpdate'],
+        ['MyVendor\MyClass::preStatus'],
+        ['MyVendor\MyClass::postStatus'],
+        ['MyVendor\MyClass::prePackageInstall'],
+        ['MyVendor\MyClass::postPackageInstall'],
+        ['MyVendor\MyClass::prePackageUpdate'],
+        ['MyVendor\MyClass::postPackageUpdate'],
+        ['MyVendor\MyClass::prePackageUninstall'],
+        [
             'MyVendor\MyClass::postPackageUninstallA',
             'MyVendor\MyClass::postPackageUninstallB',
-        ),
-        array('MyVendor\MyClass::preAutoloadDump'),
-        array('MyVendor\MyClass::postAutoloadDump'),
-        array('MyVendor\MyClass::postRootPackageInstall'),
-        array('MyVendor\MyClass::postCreateProjectCmd'),
+        ],
+        ['MyVendor\MyClass::preAutoloadDump'],
+        ['MyVendor\MyClass::postAutoloadDump'],
+        ['MyVendor\MyClass::postRootPackageInstall'],
+        ['MyVendor\MyClass::postCreateProjectCmd'],
         $rawData->scripts
     ),
     $rawData->extra,
-    array('bin/my-script', 'bin/my-other-script'),
+    ['bin/my-script', 'bin/my-other-script'],
     new ArchiveConfiguration(
-        array('patternA', 'patternB'),
+        ['patternA', 'patternB'],
         $rawData->archive
     ),
     $rawData

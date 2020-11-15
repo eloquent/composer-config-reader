@@ -1,20 +1,11 @@
 <?php
 
-/*
- * This file is part of the Composer configuration reader package.
- *
- * Copyright © 2016 Erin Millard
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
 namespace Eloquent\Composer\Configuration\Exception;
 
 use Exception;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
-class ConfigurationReadExceptionTest extends PHPUnit_Framework_TestCase
+class ConfigurationReadExceptionTest extends TestCase
 {
     public function testConstructor()
     {

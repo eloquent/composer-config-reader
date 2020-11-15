@@ -1,29 +1,20 @@
 <?php
 
-/*
- * This file is part of the Composer configuration reader package.
- *
- * Copyright © 2016 Erin Millard
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
 namespace Eloquent\Composer\Configuration\Element;
 
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use ReflectionObject;
 
-class ArchiveConfigurationTest extends PHPUnit_Framework_TestCase
+class ArchiveConfigurationTest extends TestCase
 {
     public function testConstructor()
     {
         $archive = new ArchiveConfiguration(
-            array('foo', 'bar'),
+            ['foo', 'bar'],
             'baz'
         );
 
-        $this->assertSame(array('foo', 'bar'), $archive->exclude());
+        $this->assertSame(['foo', 'bar'], $archive->exclude());
         $this->assertSame('baz', $archive->rawData());
     }
 
@@ -31,7 +22,7 @@ class ArchiveConfigurationTest extends PHPUnit_Framework_TestCase
     {
         $archive = new ArchiveConfiguration();
 
-        $this->assertSame(array(), $archive->exclude());
+        $this->assertSame([], $archive->exclude());
         $this->assertNull($archive->rawData());
     }
 
