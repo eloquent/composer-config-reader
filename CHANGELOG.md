@@ -1,5 +1,9 @@
 # Composer configuration reader changelog
 
+## 3.0.0 (2020-11-16)
+
+- **[BC BREAK]** PHP <7.2 is no longer supported.
+
 ## 2.1.0 (2017-11-02)
 
 - **[IMPROVED]** Added support for maps in `config.preferred-install` ([#12]).
