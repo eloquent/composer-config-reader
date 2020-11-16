@@ -1,8 +1,15 @@
 # Composer configuration reader changelog
 
+## 4.0.0 (2020-11-16)
+
+- **[BC BREAK]** Added a requirement for `composer/composer@^2`.
+- **[IMPROVED]** The config schema is now used directly from Composer itself,
+  meaning it should always be up-to-date.
+
 ## 3.0.0 (2020-11-16)
 
 - **[BC BREAK]** PHP <7.2 is no longer supported.
+- **[IMPROVED]** Updated the config schema to the one used by Composer `1.10`.
 
 ## 2.1.0 (2017-11-02)
 

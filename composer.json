@@ -13,6 +13,7 @@
     ],
     "require": {
         "php": ">=7.2",
+        "composer/composer": "^2",
         "eloquent/enumeration": "^6",
         "justinrainbow/json-schema": "^5"
     },

@@ -69,7 +69,13 @@ class ConfigurationValidator
      */
     protected function loadDefaultSchema()
     {
-        return json_decode(file_get_contents($this->defaultSchemaPath()));
+        $schema = json_decode(file_get_contents($this->defaultSchemaPath()));
+
+        // imitate Composer's own "lax" schema mode
+        $schema->additionalProperties = true;
+        $schema->required = [];
+
+        return $schema;
     }
 
     /**
@@ -81,7 +87,7 @@ class ConfigurationValidator
     {
         return implode(
             DIRECTORY_SEPARATOR,
-            [dirname(__DIR__), 'etc', 'composer-schema.json']
+            [dirname(__DIR__), 'vendor', 'composer', 'composer', 'res', 'composer-schema.json']
         );
     }
 

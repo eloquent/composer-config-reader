@@ -12,12 +12,13 @@ class ConfigurationReaderTest extends TestCase
 {
     protected function setUp(): void
     {
-        $this->validator = new ConfigurationValidator();
-        $this->reader = new ConfigurationReader($this->validator);
 
         $this->defined = Phony::stubGlobal('defined', __NAMESPACE__);
-        $this->fileGetContents = Phony::stubGlobal('file_get_contents', __NAMESPACE__);
+        $this->fileGetContents = Phony::stubGlobal('file_get_contents', __NAMESPACE__)->forwards();
         $this->getenv = Phony::stubGlobal('getenv', __NAMESPACE__);
+
+        $this->validator = new ConfigurationValidator();
+        $this->reader = new ConfigurationReader($this->validator);
     }
 
     protected function tearDown(): void
@@ -109,6 +110,7 @@ class ConfigurationReaderTest extends TestCase
             null,
             [
                 'php' => '>=7.2',
+                'composer/composer' => '^2',
                 'eloquent/enumeration' => '^6',
                 'justinrainbow/json-schema' => '^5',
             ],

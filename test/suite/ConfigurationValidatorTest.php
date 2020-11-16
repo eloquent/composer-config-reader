@@ -43,12 +43,18 @@ class ConfigurationValidatorTest extends TestCase
     {
         $schemaJSON = '{"foo": "bar"}';
         $this->fileGetContents->returns($schemaJSON);
+
         $validator = new ConfigurationValidator();
+
         $validatorObject = new ReflectionObject($validator);
         $validatorProperty = $validatorObject->getProperty('validator');
         $validatorProperty->setAccessible(true);
+
         $expectedSchema = json_decode($schemaJSON);
-        $expectedSchemaPathAtoms = [dirname(dirname(__DIR__)), 'etc', 'composer-schema.json'];
+        $expectedSchema->additionalProperties = true;
+        $expectedSchema->required = [];
+
+        $expectedSchemaPathAtoms = [dirname(dirname(__DIR__)), 'vendor', 'composer', 'composer', 'res', 'composer-schema.json'];
         $expectedSchemaPath = implode(DIRECTORY_SEPARATOR, $expectedSchemaPathAtoms);
 
         $this->assertEquals($expectedSchema, $validator->schema());
